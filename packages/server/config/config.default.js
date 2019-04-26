@@ -17,6 +17,19 @@ module.exports = appInfo => {
 
   // add your middleware config here
   config.middleware = [];
+  
+  // 跨域配置
+  config.security = {
+    csrf: {
+      enable: false,
+      ignoreJSON: true
+    },
+    domainWhiteList: ['http://localhost:7001']
+  };
+  config.cors = {
+    origin:'*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+  };
 
   // add your user config here
   const userConfig = {

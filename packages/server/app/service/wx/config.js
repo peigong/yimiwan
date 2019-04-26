@@ -49,15 +49,6 @@ class WxService extends Service {
             break;
           case 'ticket':
             ticket = json.token = json[key]
-            const params = {
-              noncestr: nonceStr,
-              jsapi_ticket: ticket,
-              timestamp: timestamp,
-              url: ctx.request.url
-            }
-            const str1 = Object.keys(params).sort().map(key => [key, params[key]].join('=')).join('&')
-            const hashCode = crypto.createHash('sha1'); //创建加密类型
-            json.signature = signature = hashCode.update(str1, 'utf8').digest('hex'); //对传入的字符串进行加密
             break;
           default:
 
@@ -129,11 +120,22 @@ class WxService extends Service {
     }
     return ak
   }
-  async getConfig() {
+  async getConfig(url) {
     const { ctx, config } = this
     const { appId } = config.wx
     token = await this.getAccessToken()
     ticket = await this.getJsApiTicket(token)
+    if(!signature){
+      const params = {
+        noncestr: nonceStr,
+        jsapi_ticket: ticket,
+        timestamp: timestamp,
+        url: url
+      }
+      const str1 = Object.keys(params).sort().map(key => [key, params[key]].join('=')).join('&')
+      const hashCode = crypto.createHash('sha1'); //创建加密类型
+      signature = hashCode.update(str1, 'utf8').digest('hex'); //对传入的字符串进行加密
+    }
     return {
       appId: appId, // 必填，公众号的唯一标识
       timestamp: timestamp, // 必填，生成签名的时间戳
