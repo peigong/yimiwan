@@ -6,6 +6,13 @@
 module.exports = app => {
   const { router, controller } = app;
   router.get('/', controller.home.index);
-  router.all('/wx/proxy/config', controller.wx.proxy.getConfig);
+
+  // 代理来自客户端的请求
+  router.post('/wx/proxy/config', controller.wx.proxy.getConfig);
+
+  // 处理来自微信的请求
+  router.get('/wx/handle/token', controller.wx.handle.checkToken);
+
+  // 业务接口
   router.resources('flow', '/api/flow', controller.api.flow)
 };
