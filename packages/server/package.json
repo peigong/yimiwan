@@ -1,6 +1,6 @@
 {
-  "name": "server",
-  "version": "1.0.0",
+  "name": "@yimiwan/server",
+  "version": "0.0.1",
   "description": "",
   "private": true,
   "egg": {
