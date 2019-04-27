@@ -5,7 +5,7 @@ const Controller = require('egg').Controller;
 
 class WxHandleController extends Controller {
   async checkToken(){
-    const result = ''
+    let result = ''
     const { ctx, config } = this
     const token = config.wx.token
     const { signature, timestamp, nonce, echostr } = ctx.request.query
