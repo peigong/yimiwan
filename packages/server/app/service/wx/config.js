@@ -44,7 +44,7 @@ class WxService extends Service {
           case 'access_token':
             token = json.token = json[key]
             expired = now + expires * 999
-            json.timestamp = timestamp = now + ''
+            json.timestamp = timestamp = Math.floor(now / 1e3) + '' // 时间戳以秒为单位
             json.nonceStr = nonceStr = (Math.random() + '').substring(2)
             break;
           case 'ticket':
@@ -132,9 +132,12 @@ class WxService extends Service {
         timestamp: timestamp,
         url: url
       }
+      console.log(params);
       const str1 = Object.keys(params).sort().map(key => [key, params[key]].join('=')).join('&')
+      console.log(str1);
       const hashCode = crypto.createHash('sha1'); //创建加密类型
       signature = hashCode.update(str1, 'utf8').digest('hex'); //对传入的字符串进行加密
+      console.log(signature);
     }
     return {
       appId: appId, // 必填，公众号的唯一标识

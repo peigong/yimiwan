@@ -1,15 +1,17 @@
 import axios from 'axios'
 import { baseURL } from '@/conf/wx'
 
-const conf = {
-  transformResponse: [function (res) {
-    return res.data;
-  }]
-}
-export const proxy = axios.create(Object.assign({
+const proxy = axios.create({
   baseURL: `${ baseURL }/wx/proxy/`
-}, conf))
+})
+proxy.interceptors.response.use(res => res.data);
 
-export const api = axios.create(Object.assign({
+const api = axios.create({
   baseURL: `${ baseURL }/api/`
-}, conf))
+})
+api.interceptors.response.use(res => res.data);
+
+export {
+  proxy,
+  api
+}
