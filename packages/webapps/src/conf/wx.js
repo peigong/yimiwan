@@ -4,7 +4,8 @@ const jsApiList = [
   'checkJsApi',
   'getNetworkType',
   'chooseImage',
-  'getLocation'
+  'getLocation',
+  'geoLocation'
 ]
 
 export { debug, baseURL, jsApiList }

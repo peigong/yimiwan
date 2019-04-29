@@ -13,6 +13,9 @@ let nonceStr = ''
 let signature = ''
 
 class WxService extends Service {
+  getTimestamp(){
+    return Math.floor(Date.now() / 1e3)
+  }
   getCachePath(key){
     const root = this.config.wx.root
     return path.join(root, '_cache', `${ key }.json`)
@@ -21,7 +24,8 @@ class WxService extends Service {
     let { token, expired } = o
     expired = expired || 0
     if(expired){ // 曾经获取过token
-      if(Date.now() > +expired){ // token过期
+      let now = this.getTimestamp()
+      if(now > +expired){ // token过期
         return ''
       }else if(token){ // 既没有过期，又有token
         return token
@@ -38,13 +42,13 @@ class WxService extends Service {
       const result = await ctx.curl(url)
       const json = JSON.parse(result.data)
       if(json[key] && json.expires_in){
-        let now = Date.now() // 更新时间戳
+        let now = this.getTimestamp() // 更新时间戳，以秒为单位
         let expires = +json.expires_in
         switch (key) {
           case 'access_token':
             token = json.token = json[key]
-            expired = now + expires * 999
-            json.timestamp = timestamp = Math.floor(now / 1e3) + '' // 时间戳以秒为单位
+            expired = now + expires
+            json.timestamp = timestamp = now + ''
             json.nonceStr = nonceStr = (Math.random() + '').substring(2)
             break;
           case 'ticket':
@@ -57,7 +61,7 @@ class WxService extends Service {
         // 存储本地
         fs.writeFile(this.getCachePath(key), JSON.stringify(json))
         ctx.logger.info(`${ key } from network`)
-        return token
+        return json.token
       }else{
         return ''
       }
@@ -79,7 +83,6 @@ class WxService extends Service {
           nonceStr = json.nonceStr || ''
           break;
         case 'ticket':
-          signature = json.signature || ''
           break;
         default:
       }
@@ -132,12 +135,9 @@ class WxService extends Service {
         timestamp: timestamp,
         url: url
       }
-      console.log(params);
       const str1 = Object.keys(params).sort().map(key => [key, params[key]].join('=')).join('&')
-      console.log(str1);
       const hashCode = crypto.createHash('sha1'); //创建加密类型
       signature = hashCode.update(str1, 'utf8').digest('hex'); //对传入的字符串进行加密
-      console.log(signature);
     }
     return {
       appId: appId, // 必填，公众号的唯一标识
