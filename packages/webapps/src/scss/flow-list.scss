@@ -1,0 +1,15 @@
+@import "./base/fn.scss";
+
+.flow-list {
+
+}
+.flow-list__item {
+  position: relative;
+  padding: 10px;
+  line-height: 150%;
+  color: #666666;
+  &:after {
+    @include setBottomLine($weui-line-color-light);
+    left: 10px;
+  }
+}

@@ -1,3 +1,4 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const glob = require('glob')
 const pages = {};
@@ -12,6 +13,38 @@ glob.sync('src/pages/wx/*/*/main.js').forEach((entry) => {
   }
 })
 
+const scssLoaders = [
+  // 'style-loader',
+  MiniCssExtractPlugin.loader,
+  { loader: 'css-loader' },
+  {
+    loader: 'postcss-loader',
+    options: { sourceMap: true },
+  },
+  {
+    loader: 'sass-loader',
+    options: {
+      implementation: require('sass'),
+    },
+  },
+]
+
+const configureWebpack = {
+  resolve: {
+    symlinks: false
+  }
+  /*
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: scssLoaders
+      }
+    ]
+  }*/
+}
+
 module.exports = {
-  pages
+  pages,
+  configureWebpack
 }

@@ -12,7 +12,7 @@ let timestamp = ''
 let nonceStr = ''
 let signature = ''
 
-class WxService extends Service {
+class WxConfigService extends Service {
   getTimestamp(){
     return Math.floor(Date.now() / 1e3)
   }
@@ -148,4 +148,4 @@ class WxService extends Service {
   }
 }
 
-module.exports = WxService;
+module.exports = WxConfigService;
