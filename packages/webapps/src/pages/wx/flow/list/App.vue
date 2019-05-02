@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="post-editor">
     <wv-tabs>
       <wv-tab title="招聘">
         <flow-list>
@@ -60,4 +60,7 @@ export default {
 </script>
 
 <style>
+.post-editor {
+  padding-top: 10px;
+}
 </style>

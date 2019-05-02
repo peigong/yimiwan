@@ -1,0 +1,25 @@
+<template>
+  <div>
+      简历
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'cv-description-details',
+  props: [ 'itemId' ],
+  components: {
+  },
+  data(){
+    return {
+    }
+  },
+  computed: {
+  },
+  methods: {
+  }
+}
+</script>
+
+<style>
+</style>

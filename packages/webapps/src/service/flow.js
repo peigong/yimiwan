@@ -6,9 +6,9 @@ const FlowType = {
 }
 
 export const getJobs = async function(){
-  return await api.get('flow', { params: { type: FlowType.Job }  })
+  return await api.get('flow', { type: FlowType.Job })
 }
 
 export const getApplicants = async function(){
-  return await api.get('flow', { params: { type: FlowType.Applicant }  })
+  return await api.get('flow', { type: FlowType.Applicant })
 }
