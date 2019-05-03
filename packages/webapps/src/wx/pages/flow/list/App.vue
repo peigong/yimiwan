@@ -19,12 +19,13 @@
 </template>
 
 <script>
-import { catchHandler } from '@/util/ui'
-import flowList from '@/components/flow-list'
-import flowApplicantItem from '@/components/flow-applicant-item'
-import flowJobItem from '@/components/flow-job-item'
-import postEditor from '@/components/post-editor'
+import { catchHandler } from '@/wx/util/ui'
+import flowList from '@/wx/components/flow-list'
+import flowApplicantItem from '@/wx/components/flow-applicant-item'
+import flowJobItem from '@/wx/components/flow-job-item'
+import postEditor from '@/wx/components/post-editor'
 import { getJobs, getApplicants } from '@/service/flow'
+
 export default {
   name: 'app',
   components: {

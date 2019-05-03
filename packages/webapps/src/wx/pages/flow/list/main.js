@@ -2,7 +2,7 @@ import Vue from 'vue'
 import WeVue from 'we-vue'
 import 'we-vue/lib/style.css'
 import App from './App.vue'
-import '@/scss/flow-list.scss'
+import '@/wx/scss/flow-list.scss'
 // import { getNetworkType, getLocation } from '@/util/wx'
 
 Vue.config.productionTip = false

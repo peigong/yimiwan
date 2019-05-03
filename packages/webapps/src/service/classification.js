@@ -1,5 +1,5 @@
 import { api } from '@/util/axios'
 
-export const getList = async function(){
+export const getClassificationList = async function(){
   return await api.get('classification')
 }

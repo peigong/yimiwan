@@ -1,14 +1,14 @@
 <template>
   <div>
-      简历edit
   </div>
 </template>
 
 <script>
 export default {
-  name: 'cv-edit',
-  props: [ 'itemId' ],
+  name: 'app',
   components: {
+  },
+  mounted(){
   },
   data(){
     return {

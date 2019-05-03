@@ -15,5 +15,5 @@ module.exports = app => {
 
   // 业务接口
   router.resources('flow', '/api/flow', controller.api.flow)
-  router.resources('classification', '/api/classification', controller.api.flow)
+  router.resources('classification', '/api/classification', controller.api.classification)
 };

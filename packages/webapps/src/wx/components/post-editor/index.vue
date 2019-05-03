@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import companyEdit from '@/components/company-edit'
-import cvEdit from '@/components/cv-edit'
-import jobEdit from '@/components/job-edit'
+import companyEdit from '@/wx/components/company-edit'
+import cvEdit from '@/wx/components/cv-edit'
+import jobEdit from '@/wx/components/job-edit'
 export default {
   name: 'post-editor',
   components: {

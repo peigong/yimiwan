@@ -2,6 +2,8 @@
 
 'use strict';
 
+const path = require('path');
+
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -16,6 +18,12 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1555799729136_6764';
   // add your middleware config here
   config.middleware = [];
+
+  const webapps_root = path.join(appInfo.baseDir, '..', 'webapps/dist');
+  console.log(webapps_root);
+  config.static =  {
+    prefix: '/', dir: webapps_root
+  }
 
   // 跨域配置
   config.security = {

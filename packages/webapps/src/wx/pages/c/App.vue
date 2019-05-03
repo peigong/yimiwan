@@ -1,14 +1,14 @@
 <template>
   <div>
-      JD  edit
   </div>
 </template>
 
 <script>
 export default {
-  name: 'job-edit',
-  props: [ 'itemId' ],
+  name: 'app',
   components: {
+  },
+  mounted(){
   },
   data(){
     return {

@@ -1,5 +1,4 @@
 const debug = false
-const baseURL = 'http://192.168.1.3:7001'
 const jsApiList = [
   'checkJsApi',
   'getNetworkType',
@@ -8,4 +7,4 @@ const jsApiList = [
   'geoLocation'
 ]
 
-export { debug, baseURL, jsApiList }
+export { debug, jsApiList }

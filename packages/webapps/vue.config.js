@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const glob = require('glob')
 const pages = {};
 
-glob.sync('src/pages/wx/*/*/main.js').forEach((entry) => {
+glob.sync('src/wx/pages/**/main.js').forEach((entry) => {
   let { groups: { filename } } = /^src\/(?<filename>[\w|\/]+)\/main.js$/.exec(entry)
   const key = filename.split('/').slice(1).join('-')
   pages[key] = {

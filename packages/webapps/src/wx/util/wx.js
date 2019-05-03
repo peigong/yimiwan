@@ -1,4 +1,4 @@
-import { proxy } from './axios'
+import { proxy } from '@/util/axios'
 import { debug, jsApiList } from '../conf/wx'
 
 const wx = window.wx || null

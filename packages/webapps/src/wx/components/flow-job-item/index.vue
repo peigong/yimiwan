@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import companyDescriptionDetails from '@/components/company-description-details'
-import jobDescriptionDetails from '@/components/job-description-details'
-import cvPost from '@/components/cv-post'
+import companyDescriptionDetails from '@/wx/components/company-description-details'
+import jobDescriptionDetails from '@/wx/components/job-description-details'
+import cvPost from '@/wx/components/cv-post'
 
 export default {
   name: 'flow-job-item',

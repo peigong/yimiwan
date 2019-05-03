@@ -1,14 +1,14 @@
 <template>
   <div>
-      公司介绍edit
   </div>
 </template>
 
 <script>
 export default {
-  name: 'company-edit',
-  props: [ 'itemId' ],
+  name: 'app',
   components: {
+  },
+  mounted(){
   },
   data(){
     return {

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { baseURL } from '@/conf/wx'
+import { baseURL } from '@/conf/server'
 
 const proxyHandler = axios.create({
   baseURL: `${ baseURL }/wx/proxy/`
