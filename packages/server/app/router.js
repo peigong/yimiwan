@@ -14,6 +14,7 @@ module.exports = app => {
   router.get('/wx/handle/token', controller.wx.handle.checkToken);
 
   // 业务接口
-  router.resources('flow', '/api/flow', controller.api.flow)
+  router.resources('company', '/api/company', controller.api.company)
+  router.resources('applicant', '/api/applicant', controller.api.applicant)
   router.resources('classification', '/api/classification', controller.api.classification)
 };

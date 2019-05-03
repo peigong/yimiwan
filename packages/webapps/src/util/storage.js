@@ -1,7 +1,7 @@
 
 
 export const create = (key) => {
-  const storage = window.storage || null;
+  const storage = window.localStorage || null;
   return {
     get(){
       if(storage){
@@ -15,7 +15,9 @@ export const create = (key) => {
       }
     },
     set(json){
-      storage.setItem(key, JSON.stringify(json))
+      if(storage){
+        storage.setItem(key, JSON.stringify(json))
+      }
     }
   }
 }

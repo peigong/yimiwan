@@ -29,19 +29,20 @@ const UserType = {
   Administrator: 8
 }
 
-const get = () => {
+const getUser = () => {
   const u = user.get()
   return { type: UserType.None, ... u }
 }
 
-const setType = (type) => {
-  const u = get()
+const setUserType = (type) => {
+  const u = getUser()
   u.type = type
+  console.log(u);
   user.set(u)
 }
 
 export {
   UserType,
-  get,
-  setType
+  getUser,
+  setUserType
 }

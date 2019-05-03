@@ -2,12 +2,10 @@
 
 const Controller = require('egg').Controller;
 
-class APIFlowController extends Controller {
+class APIController extends Controller {
   async index(){
-    const { ctx } = this
-    const { query, service } = ctx
-    const { api } = service
-    const data = await api.mock.getData(`flow-list/${ query.type }`)
+    const { api } = this.ctx.service
+    const data = await api.mock.getData('applicant')
     this.ctx.body = data;
   }
   /*
@@ -20,4 +18,4 @@ class APIFlowController extends Controller {
     */
 }
 
-module.exports = APIFlowController;
+module.exports = APIController;

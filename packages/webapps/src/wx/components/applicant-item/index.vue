@@ -18,7 +18,7 @@
 import cvDescriptionDetails from '@/wx/components/cv-description-details'
 import jobPost from '@/wx/components/job-post'
 export default {
-  name: 'flow-applicant-item',
+  name: 'applicant-item',
   props: [ 'item' ],
   components: {
     cvDescriptionDetails,
