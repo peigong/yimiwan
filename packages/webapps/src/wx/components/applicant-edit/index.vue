@@ -30,7 +30,7 @@
 import dayjs from 'dayjs'
 
 export default {
-  name: 'cv-edit',
+  name: 'applicant-edit',
   props: [ 'itemId' ],
   components: {
   },

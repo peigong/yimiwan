@@ -6,6 +6,7 @@ import Vue from 'vue'
 import WeVue from 'we-vue'
 import 'we-vue/lib/style.css'
 import App from './App.vue'
+import '@/wx/scss/global.scss'
 import '@/wx/scss/flow-list.scss'
 
 Vue.config.productionTip = false
