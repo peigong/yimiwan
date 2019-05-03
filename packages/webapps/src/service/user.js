@@ -37,7 +37,6 @@ const getUser = () => {
 const setUserType = (type) => {
   const u = getUser()
   u.type = type
-  console.log(u);
   user.set(u)
 }
 

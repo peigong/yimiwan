@@ -1,9 +1,9 @@
 <template>
   <div>
     <wv-tabbar :fixed="true" class="bottom-menu">
-      <wv-tabbar-item to="./a.hml" :is-on="ctrl.a">贤才</wv-tabbar-item>
-      <wv-tabbar-item to="./i.hml" :is-on="ctrl.i">位子</wv-tabbar-item>
-      <wv-tabbar-item to="./c.hml" :is-on="ctrl.c">东家</wv-tabbar-item>
+      <wv-tabbar-item url="./a.html" :is-on="ctrl.a">贤才</wv-tabbar-item>
+      <wv-tabbar-item url="./i.html" :is-on="ctrl.i">位子</wv-tabbar-item>
+      <wv-tabbar-item url="./c.html" :is-on="ctrl.c">东家</wv-tabbar-item>
     </wv-tabbar>
   </div>
 </template>
