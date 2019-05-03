@@ -1,6 +1,6 @@
 <template>
   <div>
-    <wv-group title="周培公">
+    <wv-group title="选择简历">
       <wv-cell title="简历" is-link :value="cv.title" @click.native="ctrl.cv = true" />
       <wv-input label="附言" placeholder="请输入"></wv-input>
       <wv-button type="primary">投简历</wv-button>
@@ -15,10 +15,20 @@
 </template>
 
 <script>
+import { catchHandler } from '@/wx/util/ui'
+import { getCVList } from '@/service/cv'
+
 export default {
   name: 'cv-post',
   props: [ 'itemId' ],
   components: {
+  },
+  mounted(){
+    getCVList()
+    .then((data) => {
+      this.cvList[0].values = data
+    })
+    .catch(catchHandler)
   },
   data(){
     return {
@@ -26,15 +36,7 @@ export default {
         cv: false
       },
       cv: {},
-      cvList: [
-        {
-          values: [
-            { id: '1', title: '初级工程师简历' },
-            { id: '2', title: '中级工程师简历' },
-            { id: '3', title: '高级工程师简历' }
-          ]
-        }
-      ]
+      cvList: [{  values: [] }]
     }
   },
   computed: {

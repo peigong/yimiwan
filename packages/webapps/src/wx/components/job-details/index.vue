@@ -1,13 +1,15 @@
 <template>
   <div>
-      JD
+    <wv-group title="岗位说明">
+      <wv-cell title="工作内容" value=""></wv-cell>
+    </wv-group>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'job-description-details',
-  props: [ 'itemId' ],
+  name: 'job-details',
+  props: [ 'item' ],
   components: {
   },
   data(){

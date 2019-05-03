@@ -1,6 +1,5 @@
 <template>
   <div class="page">
-    <wv-button type="default" :mini="true" @click="resetUserType" class="user-reset">重置</wv-button>
     <div v-if="showUserSwitch">
       <wv-header title="乐龄伯乐" :fixed="false" background-color="rgb(76, 175, 80)" />
       <user-switch v-model="userType" />
@@ -13,6 +12,7 @@
     </div>
     <!--<wv-footer class="wx-footer" text="Copyright © 2019 yimiwan.com"></wv-footer>-->
     <bottom-menu type="c" />
+    <wv-button type="default" :mini="true" @click="resetUserType" class="user-reset">重置</wv-button>
   </div>
 </template>
 

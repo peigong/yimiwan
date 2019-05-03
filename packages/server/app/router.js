@@ -15,6 +15,8 @@ module.exports = app => {
 
   // 业务接口
   router.resources('company', '/api/company', controller.api.company)
+  router.resources('job', '/api/job', controller.api.job)
   router.resources('applicant', '/api/applicant', controller.api.applicant)
+  router.resources('cv', '/api/cv', controller.api.cv)
   router.resources('classification', '/api/classification', controller.api.classification)
 };

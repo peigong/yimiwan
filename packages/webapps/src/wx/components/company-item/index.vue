@@ -4,39 +4,32 @@
   <dd>
     <wv-button type="default" :mini="true" class="flow-list__item_btn" @click="toggleCompany">公司介绍</wv-button>
     <wv-button type="default" :mini="true" class="flow-list__item_btn" @click="toggleJD">职位信息</wv-button>
-    <wv-button type="default" :mini="true" class="flow-list__item_btn" @click="togglePost">应聘</wv-button>
   </dd>
   <dd v-if="ctrl.company">
-    <company-description-details />
+    <company-details />
   </dd>
   <dd v-if="ctrl.jd">
-    <job-description-details />
-  </dd>
-  <dd v-if="ctrl.post">
-    <cv-post />
+    <job-list />
   </dd>
 </dl>
 </template>
 
 <script>
-import companyDescriptionDetails from '@/wx/components/company-description-details'
-import jobDescriptionDetails from '@/wx/components/job-description-details'
-import cvPost from '@/wx/components/cv-post'
+import companyDetails from '@/wx/components/company-details'
+import jobList from '@/wx/components/job-list'
 
 export default {
   name: 'company-item',
   props: [ 'item' ],
   components: {
-    companyDescriptionDetails,
-    jobDescriptionDetails,
-    cvPost
+    companyDetails,
+    jobList
   },
   data(){
     return {
       ctrl: {
         company: false,
-        jd: false,
-        post: false
+        jd: false
       }
     }
   },
@@ -60,14 +53,6 @@ export default {
     },
     toggleJD(){
       const type = 'jd'
-      if(this.ctrl[type]){
-        this.toggle()
-      }else{
-        this.toggle(type)
-      }
-    },
-    togglePost(){
-      const type = 'post'
       if(this.ctrl[type]){
         this.toggle()
       }else{
