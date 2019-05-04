@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'company-description-details',
+  name: 'company-details',
   props: [ 'itemId' ],
   components: {
   },

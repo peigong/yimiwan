@@ -1,7 +1,7 @@
 <template>
   <div>
     <wv-group title="岗位说明">
-      <wv-cell title="工作内容" value=""></wv-cell>
+      <wv-cell title="工作内容" value="工作内容工作内容"></wv-cell>
     </wv-group>
   </div>
 </template>

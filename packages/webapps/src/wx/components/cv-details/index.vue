@@ -1,6 +1,6 @@
 <template>
   <div>
-      简历
+      简历内容
   </div>
 </template>
 

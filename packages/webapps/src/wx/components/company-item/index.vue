@@ -2,8 +2,8 @@
 <dl class="flow-list__item">
   <dt>[{{ item.classification.name }}]{{ item.title }}</dt>
   <dd>
-    <wv-button type="default" :mini="true" class="flow-list__item_btn" @click="toggleCompany">公司介绍</wv-button>
-    <wv-button type="default" :mini="true" class="flow-list__item_btn" @click="toggleJD">职位信息</wv-button>
+    <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleCompany">公司介绍</wv-button>
+    <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleJD">职位信息</wv-button>
   </dd>
   <dd v-if="ctrl.company">
     <company-details />

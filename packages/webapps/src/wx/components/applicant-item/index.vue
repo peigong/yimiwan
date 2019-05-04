@@ -2,8 +2,8 @@
   <dl class="flow-list__item">
     <dt>[{{ item.classification.name }}]{{ item.title }}</dt>
     <dd>
-      <wv-button type="default" :mini="true" class="flow-list__item_btn" @click="toggleCV">看简历</wv-button>
-      <wv-button type="default" :mini="true" class="flow-list__item_btn" @click="toggleInterview">约面试</wv-button>
+      <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleCV">看简历</wv-button>
+      <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleInterview">约面试</wv-button>
     </dd>
     <dd v-if="ctrl.cv">
       <cv-details />

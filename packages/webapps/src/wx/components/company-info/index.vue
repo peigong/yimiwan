@@ -15,6 +15,7 @@
         <wv-button type="default" class="btn-handler" :mini="true" @click="showJobEdit()">添加岗位信息</wv-button>
       </wv-tab>
       <wv-tab title="我的信息">
+        <message-cv-list />
       </wv-tab>
     </wv-tabs>
     <wv-popup :visible.sync="ctrl.company">
@@ -45,13 +46,15 @@ import { getJobList } from '@/service/job'
 import { getCompanyList } from '@/service/company'
 import companyEdit from '@/wx/components/company-edit'
 import jobEdit from '@/wx/components/job-edit'
+import messageCvList from '@/wx/components/message-cv-list'
 
 export default {
   name: 'company-info',
   props: [],
   components: {
     companyEdit,
-    jobEdit
+    jobEdit,
+    messageCvList
   },
   mounted(){
     getJobList()
