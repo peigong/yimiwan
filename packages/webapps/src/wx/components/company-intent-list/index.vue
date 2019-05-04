@@ -1,21 +1,22 @@
 <template>
-  <div class="flow-list">
-    <company-item v-for="(item, key) in items" :item="item" :key="key" />
+  <div>
+    <wv-group title="意向列表">
+      <wv-cell :title="item.title" is-link @click="showEdit(item)" v-for="(item, key) in items" :key="key" />
+    </wv-group>
   </div>
 </template>
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getCompanyList } from '@/service/company'
-import companyItem from '@/wx/components/company-item'
+import { getIntentList } from '@/service/intent'
 
 export default {
-  name: 'company-list',
+  name: 'company-intent-list',
+  props: [ 'itemId' ],
   components: {
-    companyItem
   },
   mounted(){
-    getCompanyList()
+    getIntentList()
     .then((data) => {
       this.items = data
     })

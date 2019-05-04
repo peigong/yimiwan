@@ -19,5 +19,6 @@ module.exports = app => {
   router.resources('applicant', '/api/applicant', controller.api.applicant)
   router.resources('cv', '/api/cv', controller.api.cv)
   router.resources('message', '/api/message', controller.api.message)
+  router.resources('intent', '/api/intent', controller.api.intent)
   router.resources('classification', '/api/classification', controller.api.classification)
 };
