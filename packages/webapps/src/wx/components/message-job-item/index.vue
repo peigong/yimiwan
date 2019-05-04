@@ -20,7 +20,7 @@
       </dd>
     </dl>
     <wv-popup :visible.sync="ctrl.reply">
-      <wv-switch title="关闭" v-model="ctrl.reply"/>
+      <wv-switch title="关闭" v-model="ctrl.reply" />
       <message-reply />
     </wv-popup>
   </div>

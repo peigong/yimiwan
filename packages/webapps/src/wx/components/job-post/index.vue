@@ -4,8 +4,8 @@
       <wv-cell :title="item.title" is-link @click="showJob(item)" v-for="(item, key) in companyList" :key="key" />
     </wv-group>
     <wv-popup :visible.sync="ctrl.job">
+      <wv-switch title="关闭" v-model="ctrl.job" />
       <wv-group>
-        <wv-switch title="关闭" v-model="ctrl.job"/>
         <wv-radio title="选择岗位" v-model="jobId" :options="jobList" @change="onChange"></wv-radio>
         <wv-input label="附言" placeholder="请输入"></wv-input>
         <wv-button type="primary">约面试</wv-button>

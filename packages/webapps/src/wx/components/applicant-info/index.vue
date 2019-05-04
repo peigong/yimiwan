@@ -5,6 +5,7 @@
         <applicant-edit />
       </wv-tab>
       <wv-tab title="我的简历">
+        <cv-info />
       </wv-tab>
       <wv-tab title="我的信息">
         <message-job-list />
@@ -15,6 +16,7 @@
 
 <script>
 import applicantEdit from '@/wx/components/applicant-edit'
+import cvInfo from '@/wx/components/cv-info'
 import messageJobList from '@/wx/components/message-job-list'
 
 export default {
@@ -22,6 +24,7 @@ export default {
   props: [],
   components: {
     applicantEdit,
+    cvInfo,
     messageJobList
   },
   data(){

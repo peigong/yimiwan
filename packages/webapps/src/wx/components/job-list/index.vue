@@ -4,8 +4,8 @@
       <wv-cell :title="item.title" is-link @click="showJobDetails(item)" v-for="(item, key) in items" :key="key" />
     </wv-group>
     <wv-popup :visible.sync="ctrl.jd">
+      <wv-switch title="关闭" v-model="ctrl.jd" />
       <wv-group>
-        <wv-switch title="关闭" v-model="ctrl.jd"/>
         <job-details :item="item"  />
         <cv-post />
       </wv-group>
