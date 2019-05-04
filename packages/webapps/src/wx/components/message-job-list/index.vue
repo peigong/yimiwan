@@ -1,21 +1,21 @@
 <template>
   <div class="flow-list">
-    <company-item v-for="(item, key) in items" :item="item" :key="key" />
+    <message-job-item v-for="(item, key) in items" :item="item" :key="key" />
   </div>
 </template>
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getCompanyList } from '@/service/company'
-import companyItem from '@/wx/components/company-item'
+import { getMessageList } from '@/service/message'
+import messageJobItem from '@/wx/components/message-job-item'
 
 export default {
-  name: 'company-list',
+  name: 'message-job-list',
   components: {
-    companyItem
+    messageJobItem
   },
   mounted(){
-    getCompanyList()
+    getMessageList()
     .then((data) => {
       this.items = data
     })

@@ -7,6 +7,7 @@
       <wv-tab title="我的简历">
       </wv-tab>
       <wv-tab title="我的信息">
+        <message-job-list />
       </wv-tab>
     </wv-tabs>
   </div>
@@ -14,12 +15,14 @@
 
 <script>
 import applicantEdit from '@/wx/components/applicant-edit'
+import messageJobList from '@/wx/components/message-job-list'
 
 export default {
   name: 'applicant-info',
   props: [],
   components: {
-    applicantEdit
+    applicantEdit,
+    messageJobList
   },
   data(){
     return {
