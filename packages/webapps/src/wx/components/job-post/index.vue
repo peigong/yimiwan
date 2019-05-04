@@ -1,47 +1,65 @@
 <template>
   <div>
-    <wv-group title="新时代教育公司">
-      <wv-cell title="JD" is-link :value="job.title" @click.native="ctrl.job = true" />
-      <wv-input label="附言" placeholder="请输入"></wv-input>
-      <wv-button type="primary">约面试</wv-button>
+    <wv-group title="我的公司">
+      <wv-cell :title="item.title" is-link @click="showJob(item)" v-for="(item, key) in companyList" :key="key" />
     </wv-group>
-    <wv-picker
-      :visible.sync="ctrl.job"
-      :columns="jobList"
-      value-key="title"
-      @change="onChange"
-    />
+    <wv-popup :visible.sync="ctrl.job">
+      <wv-group>
+        <wv-switch title="关闭" v-model="ctrl.job"/>
+        <wv-radio title="选择岗位" v-model="jobId" :options="jobList" @change="onChange"></wv-radio>
+        <wv-input label="附言" placeholder="请输入"></wv-input>
+        <wv-button type="primary">约面试</wv-button>
+      </wv-group>
+    </wv-popup>
   </div>
 </template>
 
 <script>
+import { catchHandler } from '@/wx/util/ui'
+import { getJobList } from '@/service/job'
+import { getCompanyList } from '@/service/company'
+
 export default {
   name: 'job-post',
   props: [ 'itemId' ],
   components: {
   },
+  mounted(){
+    getJobList()
+    .then((data) => {
+      const items = data ||[];
+      this.jobList = items.map(it => {
+        return { value: it.id, label: it.title }
+      })
+    })
+    .catch(catchHandler)
+    getCompanyList()
+    .then((data) => {
+      this.companyList = data
+    })
+    .catch(catchHandler)
+  },
   data(){
     return {
       ctrl: {
-        job: false
+        job: false,
+        jd: false
       },
-      job: {},
-      jobList: [
-        {
-          values: [
-            { id: '1', title: '初级教师JD' },
-            { id: '2', title: '中级教师JD' },
-            { id: '3', title: '高级教师JD' }
-          ]
-        }
-      ]
+      company: {},
+      companyList: [],
+      jobId: '',
+      jobList: [{ values: []}]
     }
   },
   computed: {
   },
   methods: {
-    onChange(picker, values){
-      this.job = values[0]
+    showJob(item){
+      this.company = item
+      this.ctrl.job = true
+    },
+    onChange(val){
+      this.jobId = val
     }
   }
 }
