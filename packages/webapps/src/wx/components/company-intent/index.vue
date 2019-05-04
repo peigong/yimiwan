@@ -29,7 +29,7 @@ export default {
   computed: {
   },
   methods: {
-    onEdit(item){
+    onEdit(){
       this.$refs.tabs.setCurActive(1)
     }
   }

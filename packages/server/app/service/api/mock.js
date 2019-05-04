@@ -6,7 +6,7 @@ const Service = require('egg').Service
 
 class APIMockService extends Service {
   getPath(key){
-    const root = this.config.wx.root
+    const root = this.config.baseDir
     return path.join(root, '_mock', `${ key }.json`)
   }
   async getData(key){
