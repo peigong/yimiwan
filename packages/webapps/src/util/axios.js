@@ -1,8 +1,7 @@
 import axios from 'axios'
-import { baseURL } from '@/conf/production/server'
 
 const proxyHandler = axios.create({
-  baseURL: `${ baseURL }/wx/proxy/`
+  baseURL: '/wx/proxy/'
 })
 proxyHandler.interceptors.response.use(res => res.data);
 const proxy = {
@@ -10,7 +9,7 @@ const proxy = {
 }
 
 const apiHandler = axios.create({
-  baseURL: `${ baseURL }/api/`
+  baseURL: '/api/'
 })
 apiHandler.interceptors.response.use(res => res.data);
 const api = {

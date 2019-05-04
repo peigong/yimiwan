@@ -13,38 +13,18 @@ glob.sync('src/wx/pages/**/main.js').forEach((entry) => {
   }
 })
 
-const scssLoaders = [
-  // 'style-loader',
-  MiniCssExtractPlugin.loader,
-  { loader: 'css-loader' },
-  {
-    loader: 'postcss-loader',
-    options: { sourceMap: true },
-  },
-  {
-    loader: 'sass-loader',
-    options: {
-      implementation: require('sass'),
+const devServer = {
+  proxy: {
+    '/wx/proxy': {
+      target: 'http://localhost:7001'
     },
-  },
-]
-
-const configureWebpack = {
-  resolve: {
-    symlinks: false
+    '/api': {
+      target: 'http://localhost:7001'
+    }
   }
-  /*
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        use: scssLoaders
-      }
-    ]
-  }*/
 }
 
 module.exports = {
   pages,
-  configureWebpack
+  devServer
 }
