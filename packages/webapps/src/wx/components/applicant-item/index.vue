@@ -6,7 +6,7 @@
       <wv-button type="default" :mini="true" class="flow-list__item_btn" @click="toggleInterview">约面试</wv-button>
     </dd>
     <dd v-if="ctrl.cv">
-      <cv-description-details />
+      <cv-details />
     </dd>
     <dd v-if="ctrl.interview">
       <job-post />
@@ -15,13 +15,13 @@
 </template>
 
 <script>
-import cvDescriptionDetails from '@/wx/components/cv-description-details'
+import cvDetails from '@/wx/components/cv-details'
 import jobPost from '@/wx/components/job-post'
 export default {
   name: 'applicant-item',
   props: [ 'item' ],
   components: {
-    cvDescriptionDetails,
+    cvDetails,
     jobPost
   },
   data(){
