@@ -16,8 +16,11 @@ module.exports = appInfo => {
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1555799729136_6764';
-  // add your middleware config here
   config.middleware = [];
+
+  // 配置安全验证中间件
+  config.auth = {
+  };
 
   const webapps_root = path.join(appInfo.baseDir, '..', 'webapps/dist');
   console.log(webapps_root);
@@ -29,12 +32,19 @@ module.exports = appInfo => {
   config.security = {
     csrf: {
       enable: false,
-      ignoreJSON: true
+      ignoreJSON: false
     }
   };
   config.cors = {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+  };
+
+  config.mongoose = {
+    client: {
+      url: 'mongodb://127.0.0.1/db',
+      options: {},
+    },
   };
 
   // add your user config here

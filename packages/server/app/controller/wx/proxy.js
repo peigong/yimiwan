@@ -4,10 +4,16 @@ const Controller = require('egg').Controller;
 
 class WxProxyController extends Controller {
   async getConfig(){
-    const { wx } = this.ctx.service
-    const url = this.ctx.request.body.url || ''
+    const { ctx } = this;
+    const { wx } = ctx.service
+    const url = ctx.request.body.url || ''
     const conf = await wx.config.getConfig(url)
-    this.ctx.body = conf;
+    ctx.body = conf;
+  }
+  async authorize(){
+    const { ctx } = this;
+    const { request } = ctx;
+    ctx.body = request.query.url;
   }
 }
 

@@ -2,7 +2,7 @@
 
 const Controller = require('egg').Controller;
 
-class APIFlowController extends Controller {
+class APIController extends Controller {
   /*
   async index() => {},
   async new() => {},
@@ -14,4 +14,4 @@ class APIFlowController extends Controller {
   */
 }
 
-module.exports = APIFlowController;
+module.exports = APIController;

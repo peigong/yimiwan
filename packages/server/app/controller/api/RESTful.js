@@ -1,9 +1,21 @@
 'use strict';
 
-exports.index = async () => {}
-exports.new = async () => {}
-exports.create = async () => {}
-exports.show = async () => {}
-exports.edit = async () => {}
-exports.update = async () => {}
-exports.destroy = async () => {}
+const Controller = require('egg').Controller;
+
+class APIController extends Controller {
+  async index(){
+    const { api } = this.ctx.service
+    const data = await api.mock.getData('message')
+    this.ctx.body = data;
+  }
+  /*
+  async new() => {},
+  async create() => {},
+  async show() => {},
+  async edit() => {},
+  async update() => {},
+  async destroy() => {}
+    */
+}
+
+module.exports = APIController;
