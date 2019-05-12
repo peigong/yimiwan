@@ -14,4 +14,5 @@ module.exports = app => {
 
   // 处理来自微信的请求
   router.get('/wx/handle/token', controller.wx.handle.checkToken);
+  router.get('/wx/handle/oauth2', controller.wx.handle.oauth2);
 };

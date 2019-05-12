@@ -24,6 +24,13 @@ class WxHandleController extends Controller {
     }
     this.ctx.body = result;
   }
+  async oauth2(){
+    const { ctx } = this;
+    const { request } = ctx;
+    const code = request.query.code;
+    const url = request.query.url;
+    ctx.body = { code, url };
+  }
 }
 
 module.exports = WxHandleController;

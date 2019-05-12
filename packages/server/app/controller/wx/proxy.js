@@ -11,9 +11,12 @@ class WxProxyController extends Controller {
     ctx.body = conf;
   }
   async authorize(){
-    const { ctx } = this;
-    const { request } = ctx;
-    ctx.body = request.query.url;
+    const { ctx, config } = this;
+    // const { request } = ctx;
+    //  ctx.body = request.query.url;
+    const redirect = `http://localhost:8080/wx/handle/oauth2`;
+    const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${ config.wx.appId }&redirect_uri=${ redirect }&response_type=code&scope=snsapi_base&state=auth#wechat_redirect`;
+    ctx.redirect(url);
   }
 }
 
