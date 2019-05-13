@@ -17,7 +17,7 @@ class WxConfigService extends Service {
     return Math.floor(Date.now() / 1e3)
   }
   getCachePath(key){
-    const root = this.config.wx.root
+    const root = this.config.root
     return path.join(root, '_cache', `${ key }.json`)
   }
   checkToken(o) {
