@@ -24,9 +24,10 @@ module.exports = appInfo => {
   config.auth = {
   };
 
+  const admin_root = path.join(appInfo.baseDir, '..', 'admin/dist');
   const webapps_root = path.join(appInfo.baseDir, '..', 'webapps/dist');
   config.static =  {
-    prefix: '/', dir: webapps_root
+    prefix: '/', dir: [ webapps_root, admin_root ]
   }
 
   // 跨域配置
