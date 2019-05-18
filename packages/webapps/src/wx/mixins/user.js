@@ -1,9 +1,12 @@
+import { catchHandler } from '@/wx/util/ui'
 import { UserType, getUser, setUserType } from '@/service/user'
 
 export default {
   mounted(){
-    const user = getUser()
-    this.userType = user.type || UserType.None
+    getUser().then(user => {
+      this.userType = user.type || UserType.None
+    })
+    .catch(catchHandler)
   },
   data(){
     return {

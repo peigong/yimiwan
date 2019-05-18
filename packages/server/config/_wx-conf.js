@@ -1,7 +1,7 @@
 module.exports = {
   cgi: 'https://api.weixin.qq.com/cgi-bin',
   authorize: 'https://open.weixin.qq.com/connect/oauth2/authorize',
-  appId: 'wx9c1d647c2717b64e',
-  appsecret:  '526abee06e5ab3654aa12bd389f45f85',
-  token: 'yimiwan'
+  appId: 'wx34fc357f797989fa',
+  appsecret:  '3148ecabb9ff505aae8a0d50a85ec0b3',
+  token: 'yimiwan2019'
 };

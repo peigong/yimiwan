@@ -1,3 +1,4 @@
+import { api } from '@/util/axios'
 import { create } from '@/util/storage'
 
 const user = create('wx-user')
@@ -29,13 +30,20 @@ const UserType = {
   Administrator: 8
 }
 
-const getUser = () => {
-  const u = user.get()
-  return { type: UserType.None, ... u }
+const getUser = async function(){
+  let u = user.get()
+  if(u){
+    return Promise.resolve({ type: UserType.None, ... u })
+  }else{
+    u = await api.get('userinfo')
+    u = { type: UserType.None, ... u }
+    user.set(u)
+    return u
+  }
 }
 
-const setUserType = (type) => {
-  const u = getUser()
+const setUserType = async function(){
+  const u = await getUser()
   u.type = type
   user.set(u)
 }

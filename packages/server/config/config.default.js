@@ -48,6 +48,11 @@ module.exports = appInfo => {
     },
   };
 
+  config.passportAsiczWeixin = {
+    clientID: wx.appId,
+    secret: wx.appsecret
+  };
+
   // add your user config here
   const userConfig = {
     wx

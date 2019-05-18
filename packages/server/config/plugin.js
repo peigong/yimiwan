@@ -16,3 +16,13 @@ exports.mongoose = {
   enable: true,
   package: 'egg-mongoose'
 };
+
+exports.passport = {
+  enable: true,
+  package: 'egg-passport',
+};
+
+exports.passportAsiczWeixin = {
+  enable: true,
+  package: 'egg-passport-asicz-weixin',
+};

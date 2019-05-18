@@ -19,8 +19,7 @@ apiHandler.interceptors.response.use(res => {
       return data.data
     case 101:
       // 用户未验证
-      let url = encodeURI(window.location.href);
-      window.location.href = `/wx/proxy/authorize?url=${ url }`
+      window.location.href = `/oauth2/authorize?url=${ encodeURI(window.location.href) }`
       break;
     default:
       throw new Error(status.message)

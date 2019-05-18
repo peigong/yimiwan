@@ -4,9 +4,11 @@ const Controller = require('egg').Controller;
 
 class APIController extends Controller {
   async index(){
-    const { api } = this.ctx.service
+    const { ctx } = this;
+    const { service, helper } = ctx;
+    const { api } = service
     const data = await api.mock.getData('job')
-    this.ctx.body = data;
+    ctx.body = helper.pack(data);
   }
   /*
   async new() => {},
