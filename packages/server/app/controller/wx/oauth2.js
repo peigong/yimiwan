@@ -22,7 +22,7 @@ class WxController extends Controller {
     cookies.set('cid', code);
     let user = await model.User.findOne({ openId: code });
     if(!user){
-      user = new model.User({ openId: code, cookieId: code });
+      user = new model.User({ openId: code });
       user.save();
     }
     logger.info(`wei xin authorize user openId: ${ code }`)

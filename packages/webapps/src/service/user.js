@@ -35,17 +35,17 @@ const getUser = async function(){
   if(u){
     return Promise.resolve({ type: UserType.None, ... u })
   }else{
-    u = await api.get('userinfo')
+    u = await api.get('user-info')
     u = { type: UserType.None, ... u }
     user.set(u)
     return u
   }
 }
 
-const setUserType = async function(){
+const setUserType = async function(type){
   const u = await getUser()
   u.type = type
-  user.set(u)
+  return api.put('user-type', { type }).then(() => user.set(u))
 }
 
 export {

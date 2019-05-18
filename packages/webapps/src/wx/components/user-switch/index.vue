@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { catchHandler, success } from '@/wx/util/ui'
 import { UserType, setUserType } from '@/service/user'
 
 export default {
@@ -37,7 +38,11 @@ export default {
     onChange(val){
       this.type = val
       setUserType(val)
-      this.$emit('input', val)
+      .then(() => {
+        success('切换成功')
+        this.$emit('input', val)
+      })
+      .catch(catchHandler)
     }
   }
 }

@@ -4,13 +4,10 @@ module.exports = options => {
   return async function auth(ctx, next) {
     let isAuth = false;
     const { cookies, model, helper } = ctx;
-    const cookieId = cookies.get('cid') || '';
-    if(cookieId){
-      const user = await model.User.findOne({ cookieId });
-      if(user && user.openId){
-        ctx.set('x-open-key', user.openId);
-        isAuth = true;
-      }
+    const cid = cookies.get('cid') || '';
+    if(cid){
+      const user = await model.User.findOne({ openId: cid });
+      isAuth = !!(user && user.openId);
     }
     if(isAuth){
       await next();

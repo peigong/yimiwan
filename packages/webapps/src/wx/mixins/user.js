@@ -1,4 +1,4 @@
-import { catchHandler } from '@/wx/util/ui'
+import { catchHandler, success } from '@/wx/util/ui'
 import { UserType, getUser, setUserType } from '@/service/user'
 
 export default {
@@ -24,6 +24,8 @@ export default {
     resetUserType(){
       this.userType = UserType.None
       setUserType(UserType.None)
+      .then(() => success('切换成功'))
+      .catch(catchHandler)
     }
   }
 }

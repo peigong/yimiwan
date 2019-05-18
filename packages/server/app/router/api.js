@@ -7,7 +7,8 @@ module.exports = app => {
   const router = app.router.namespace('/api', auth({}));
 
   // 业务接口
-  router.get('/userinfo', controller.api.user.getUserInfo)
+  router.get('/user-info', controller.api.user.getUserInfo)
+  router.put('/user-type', controller.api.user.setUserType)
 
   router.resources('company', '/company', controller.api.company)
   router.resources('job', '/job', controller.api.job)

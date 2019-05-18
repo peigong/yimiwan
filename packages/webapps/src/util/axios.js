@@ -29,7 +29,8 @@ const api = {
   get: (api, data = {}) => {
     return apiHandler.get(api, { params: data })
   },
-  post: apiHandler.post
+  post: apiHandler.post,
+  put: apiHandler.put
 }
 
 export {
