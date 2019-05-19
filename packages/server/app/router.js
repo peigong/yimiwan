@@ -4,7 +4,13 @@
  * @param {Egg.Application} app - egg application
  */
 module.exports = app => {
-  const { router, controller } = app;
+  const { passport, router, controller } = app;
+
+/*
+  passport.mount('loginByWeixinClient', {
+
+  });
+  */
 
   router.get('/', controller.home.index);
 

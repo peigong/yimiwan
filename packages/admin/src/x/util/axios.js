@@ -10,9 +10,11 @@ apiHandler.interceptors.response.use(res => {
     case 0:
       return data.data;
     case 101:
-      // window.location.href = `/oauth2/authorize?url=${ encodeURI(window.location.href) }`
+      // window.location.href = `/passport/loginByWeixinClient`; //?url=${ encodeURI(window.location.href) }`
+      window.location.href = '/';
       break;
     case 102:
+      window.location.href = '/';
       break;
     default:
       throw new Error(status.message);

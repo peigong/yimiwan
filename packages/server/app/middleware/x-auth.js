@@ -2,6 +2,8 @@
 
 module.exports = options => {
   return async function auth(ctx, next) {
+    await next();
+    /*
     const { app, cookies, helper, logger } = ctx;
     const { administrators } = app.config.wx;
     const cid = cookies.get('cid') || '';
@@ -14,5 +16,6 @@ module.exports = options => {
     }else{ // 没有cookie
       ctx.body = helper.packError(101, 'credential is not exists.');
     }
+    */
   };
 };

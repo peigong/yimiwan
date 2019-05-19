@@ -17,6 +17,9 @@ const devServer = {
   proxy: {
     '/x-api': {
       target: 'http://localhost:7001'
+    },
+    '/passport': {
+      target: 'http://localhost:7001'
     }
   }
 }
