@@ -10,8 +10,9 @@ apiHandler.interceptors.response.use(res => {
     case 0:
       return data.data;
     case 101:
-      // 用户未验证
       // window.location.href = `/oauth2/authorize?url=${ encodeURI(window.location.href) }`
+      break;
+    case 102:
       break;
     default:
       throw new Error(status.message);
