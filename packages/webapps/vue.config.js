@@ -15,10 +15,10 @@ glob.sync('src/wx/pages/**/main.js').forEach((entry) => {
 
 const devServer = {
   proxy: {
-    '/wx/proxy': {
+    '/wx-proxy': {
       target: 'http://localhost:7001'
     },
-    '/api': {
+    '/wx-api': {
       target: 'http://localhost:7001'
     }
   }
