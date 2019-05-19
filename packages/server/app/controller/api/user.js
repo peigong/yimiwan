@@ -7,7 +7,7 @@ class APIController extends Controller {
     const { ctx } = this;
     const { logger, cookies, model, helper } = ctx;
     const cid = cookies.get('cid') || '';
-    let user = await model.User.findOne({ openId: cid });
+    let user = await model.WxUser.findOne({ openid: cid });
     let data = {};
     if(user){
       data.type = user.type;
@@ -21,7 +21,7 @@ class APIController extends Controller {
     const cid = cookies.get('cid') || '';
     const type = request.body.type;
     logger.info(`user: ${ cid } set type: ${ type }`);
-    await model.User.findOneAndUpdate({ openId: cid }, { type }, { useFindAndModify: false });
+    await model.WxUser.findOneAndUpdate({ openid: cid }, { type }, { useFindAndModify: false });
     ctx.body = helper.pack({});
   }
 }
