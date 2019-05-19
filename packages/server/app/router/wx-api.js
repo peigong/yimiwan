@@ -1,6 +1,6 @@
 'use strict';
 
-const auth = require('../middleware/auth');
+const auth = require('../middleware/wx-auth');
 
 module.exports = app => {
   const { controller } = app;
