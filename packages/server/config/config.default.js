@@ -20,10 +20,11 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1555799729136_6764';
   config.middleware = [];
 
-  const admin_root = path.join(appInfo.baseDir, '..', 'admin/dist');
+  const public_root = path.join(appInfo.baseDir, 'app', 'public');
   const webapps_root = path.join(appInfo.baseDir, '..', 'webapps/dist');
+  const admin_root = path.join(appInfo.baseDir, '..', 'admin/dist');
   config.static =  {
-    prefix: '/', dir: [ webapps_root, admin_root ]
+    prefix: '/', dir: [ public_root, webapps_root, admin_root ]
   }
 
   // 跨域配置
