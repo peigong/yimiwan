@@ -20,10 +20,6 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1555799729136_6764';
   config.middleware = [];
 
-  // 配置安全验证中间件
-  config.auth = {
-  };
-
   const admin_root = path.join(appInfo.baseDir, '..', 'admin/dist');
   const webapps_root = path.join(appInfo.baseDir, '..', 'webapps/dist');
   config.static =  {
@@ -53,6 +49,8 @@ module.exports = appInfo => {
     clientID: wx.appId,
     secret: wx.appsecret
   };
+
+  config.logrotator = {};
 
   // add your user config here
   const userConfig = {

@@ -26,3 +26,8 @@ exports.passportAsiczWeixin = {
   enable: true,
   package: 'egg-passport-asicz-weixin',
 };
+
+exports.logrotator = {
+  enable: true,
+  package: 'egg-logrotator',
+};
