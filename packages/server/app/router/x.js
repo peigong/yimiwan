@@ -30,4 +30,5 @@ module.exports = app => {
   }));
   router.get('/login/success', controller.x.login.success);
   router.get('/login/failure', controller.x.login.failure);
+  router.get('/logout', controller.x.login.logout);
 };

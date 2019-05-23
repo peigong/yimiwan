@@ -14,17 +14,12 @@
         </el-table-column>
          <el-table-column label="操作">
            <template slot-scope="scope">
-             <el-button
-               size="mini"
-               @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-             <el-button
-               size="mini"
-               type="danger"
-               @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+             <el-button size="mini" @click="setAccount(scope.row)">设置管理账户</el-button>
            </template>
          </el-table-column>
        </el-table>
     </x-layout>
+    <account-editor :open-id="currentId" @changed="changedHandler" />
   </div>
 </template>
 
@@ -33,34 +28,33 @@ import { catchHandler } from '@/x/util/ui'
 import { getUserList } from '@/x/service/user'
 import xLayout from '@/x/components/x-layout'
 import wxUserInfo from '@/x/components/wx-user-info'
+import accountEditor from '@/x/components/account-editor'
 
 export default {
   name: 'app',
-  mixins: [],
   components: {
     xLayout,
-    wxUserInfo
+    wxUserInfo,
+    accountEditor
   },
   mounted(){
-    getUserList()
-    .then(data => {
+    getUserList().then(data => {
       this.items = data || []
-    })
-    .catch(catchHandler)
+    }).catch(catchHandler)
   },
   data(){
     return {
+      currentId: '',
       items: []
     }
   },
-  computed: {
-  },
   methods: {
-    handleEdit(index, row) {
-      console.log(index, row);
+    changedHandler(){
+      this.currentId = ''
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    setAccount(item) {
+      console.log(item);
+      this.currentId = item.openid || '';
     }
   }
 }

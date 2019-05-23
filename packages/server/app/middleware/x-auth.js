@@ -5,7 +5,7 @@ module.exports = options => {
     if(ctx.isAuthenticated()){
       await next();
     }else{
-      ctx.body = helper.packError(101, '^.^');
+      ctx.body = ctx.helper.packError(101, '^.^');
     }
   };
 };

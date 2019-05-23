@@ -4,13 +4,14 @@ const apiHandler = axios.create({
   baseURL: '/x-api/'
 });
 apiHandler.interceptors.response.use(res => {
+  let href;
   const data = res.data || {};
   const status = data.status || {};
   switch (+status.code) {
     case 0:
       return data.data;
     case 101:
-      const href = encodeURI(window.location.href);
+      href = encodeURI(window.location.href);
       window.location.href = `/x/pages/login.html?${ href }`
       break;
     default:
