@@ -22,9 +22,9 @@ exports.passport = {
   package: 'egg-passport',
 };
 
-exports.passportAsiczWeixin = {
+exports.passportLocal = {
   enable: true,
-  package: 'egg-passport-asicz-weixin',
+  package: 'egg-passport-local',
 };
 
 exports.logrotator = {

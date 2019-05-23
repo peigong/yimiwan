@@ -18,7 +18,7 @@ const devServer = {
     '/x-api': {
       target: 'http://localhost:7001'
     },
-    '/passport': {
+    '/x': {
       target: 'http://localhost:7001'
     }
   }

@@ -10,11 +10,8 @@ apiHandler.interceptors.response.use(res => {
     case 0:
       return data.data;
     case 101:
-      // window.location.href = `/passport/loginByWeixinClient`; //?url=${ encodeURI(window.location.href) }`
-      window.location.href = '/';
-      break;
-    case 102:
-      window.location.href = '/';
+      const href = encodeURI(window.location.href);
+      window.location.href = `/x/pages/login.html?${ href }`
       break;
     default:
       throw new Error(status.message);

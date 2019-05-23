@@ -46,10 +46,7 @@ module.exports = appInfo => {
     },
   };
 
-  config.passportAsiczWeixin = {
-    clientID: wx.appId,
-    secret: wx.appsecret
-  };
+  config.passportLocal = {};
 
   config.logrotator = {};
 
