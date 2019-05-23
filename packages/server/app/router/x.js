@@ -6,18 +6,18 @@ module.exports = app => {
 
   app.passport.verify(async (ctx, user) => {
     const { username, password } = user;
-    /*
+    const { model, helper } = ctx;
     const targetUser = await model.Account.findOne({
       username: username,
-      password: ctx.helper.encrypt(password)
+      password: helper.encrypt(password)
     });
     if (!targetUser) {
-      throw new Error('账号密码错误')
+      return false;
+      // throw new Error('账号密码错误')
     }
     return { username };
-    */
     // throw new Error('账号密码错误')
-    return { username };
+    // return { username };
     // return false;
   });
   app.passport.serializeUser(async (ctx, user) => { return user.username; });

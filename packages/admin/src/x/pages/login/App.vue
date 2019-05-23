@@ -2,15 +2,15 @@
   <div>
     <div class="login-container">
       <h1>系统登录</h1>
-      <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="100px" class="login-form" action="/x/login">
+      <el-form :model="params" :rules="rules" ref="loginForm" label-width="100px" class="login-form">
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="loginForm.username" clearable></el-input>
+          <el-input v-model="params.username" clearable></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="loginForm.password" show-password></el-input>
+          <el-input v-model="params.password" show-password></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="login('loginForm')">登录</el-button>
+          <el-button type="primary" @click="login">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -34,7 +34,7 @@ export default {
   data(){
     return {
       redirect: '',
-      loginForm: {
+      params: {
         username: '',
         password: ''
       },
@@ -52,7 +52,7 @@ export default {
     login(){
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          axios.post('/x/login', this.loginForm)
+          axios.post('/x/login', this.params)
           .then((res) => {
             const status = res.data.status || {};
             switch (+status.code) {

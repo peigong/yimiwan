@@ -53,7 +53,6 @@ export default {
       this.currentId = ''
     },
     setAccount(item) {
-      console.log(item);
       this.currentId = item.openid || '';
     }
   }
