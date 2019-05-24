@@ -3,6 +3,14 @@
 const Controller = require('egg').Controller;
 const fields = ['openid', 'unionid', 'username'];
 
+const idRule = {
+  id: 'string'
+};
+const updateRule = {
+  username: 'string',
+  password: 'string'
+};
+
 class APIController extends Controller {
   async index(){
     const { ctx } = this;
@@ -13,6 +21,9 @@ class APIController extends Controller {
   async show(){
     const { ctx } = this;
     const { params, helper, model } = ctx;
+
+    ctx.validate(idRule, params);
+
     const openid = params.id || '';
     let data = await model.Account.findOne({ openid }, fields.join(' '));
     ctx.body = data
@@ -20,9 +31,13 @@ class APIController extends Controller {
   async update(){
     const { ctx } = this;
     const { request, params, helper, model } = ctx;
+
+    ctx.validate(idRule, params);
+    ctx.validate(updateRule, request.body);
+
     const openid = params.id || '';
-    const username = request.body.username || '';
-    const password = request.body.password || '';
+    const { username, password } = request.body;
+
     await model.Account.findOneAndUpdate({ openid }, {
       username: username,
       password: helper.encrypt(password)

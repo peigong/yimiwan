@@ -27,6 +27,11 @@ exports.passportLocal = {
   package: 'egg-passport-local',
 };
 
+exports.validate = {
+  enable: true,
+  package: 'egg-validate',
+};
+
 exports.logrotator = {
   enable: true,
   package: 'egg-logrotator',
