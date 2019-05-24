@@ -8,7 +8,7 @@ module.exports = {
         // 信息，服务器收到请求，需要请求者继续执行操作
         Continue:	100,	// 继续。客户端应继续其请求
         SwitchingProtocols:	101,	// 切换协议。服务器根据客户端的请求切换协议。只能切换到更高级的协议，例如，切换到HTTP的新版本协议
-        Processing: 102,
+        Processing: 102, // 由WebDAV（RFC 2518）扩展的状态码，代表处理将被继续执行。
 
         // 成功，操作被成功接收并处理
         OK:	200,	// 请求成功。一般用于GET与POST请求
@@ -18,7 +18,7 @@ module.exports = {
         NoContent:	204,	// 无内容。服务器成功处理，但未返回内容。在未更新网页的情况下，可确保浏览器继续显示当前文档
         ResetContent:	205,	// 重置内容。服务器处理成功，用户终端（例如：浏览器）应重置文档视图。可通过此返回码清除浏览器的表单域
         PartialContent:	206,	// 部分内容。服务器成功处理了部分GET请求
-        MultiStatus: 207,
+        MultiStatus: 207, // 由WebDAV(RFC 2518)扩展的状态码，代表之后的消息体将是一个XML消息，并且可能依照之前子请求数量的不同，包含一系列独立的响应代码。
 
         // 重定向，需要进一步的操作以完成请求
         MultipleChoices:	300,	// 多种选择。请求的资源可包括多个位置，相应可返回一个资源特征与地址的列表用于用户终端（例如：浏览器）选择
@@ -49,15 +49,15 @@ module.exports = {
         UnsupportedMediaType:	415,	// 服务器无法处理请求附带的媒体格式
         RequestedRangeNotSatisfiable:	416,	// 客户端请求的范围无效
         ExpectationFailed:	417,	// 服务器无法满足Expect的请求头信息
-        Imateapot: 418,
-        TooManyConnections: 421,
-        UnprocessableEntity: 422,
-        Locked: 423,
-        FailedDependency: 424,
-        UnorderedCollection: 425,
-        UpgradeRequired: 426,
-        RetryWith: 449,
-        UnavailableForLegalReasons: 451,
+        Imateapot: 418, // I'm a teapot
+        TooManyConnections: 421, // 从当前客户端所在的IP地址到服务器的连接数超过了服务器许可的最大范围。通常，这里的IP地址指的是从服务器上看到的客户端地址（比如用户的网关或者代理服务器地址）。在这种情况下，连接数的计算可能涉及到不止一个终端用户。
+        UnprocessableEntity: 422, // 请求格式正确，但是由于含有语义错误，无法响应。（RFC 4918 WebDAV）
+        Locked: 423, // 当前资源被锁定。（RFC 4918 WebDAV）
+        FailedDependency: 424, // 由于之前的某个请求发生的错误，导致当前请求失败，例如 PROPPATCH。（RFC 4918 WebDAV）
+        UnorderedCollection: 425, // 在WebDav Advanced Collections 草案中定义，但是未出现在《WebDAV 顺序集协议》（RFC 3658）中。
+        UpgradeRequired: 426, // 客户端应当切换到TLS/1.0。（RFC 2817）
+        RetryWith: 449, // 由微软扩展，代表请求应当在执行完适当的操作后进行重试。
+        UnavailableForLegalReasons: 451, // 该请求因法律原因不可用。（RFC 7725）
 
         // 服务器错误，服务器在处理请求的过程中发生了错误
         InternalServerError:	500,	// 服务器内部错误，无法完成请求
@@ -66,12 +66,12 @@ module.exports = {
         ServiceUnavailable:	503,	// 由于超载或系统维护，服务器暂时的无法处理客户端的请求。延时的长度可包含在服务器的Retry-After头信息中
         GatewayTimeout:	504,	// 充当网关或代理的服务器，未及时从远端服务器获取请求
         HTTPVersionNotSupported:	505,	// 服务器不支持请求的HTTP协议的版本，无法完成处理
-        VariantAlsoNegotiates:	506,
-        InsufficientStorage:	507,
-        BandwidthLimitExceeded: 509,
-        NotExtended:	510,
-        
-        UnparseableResponseHeaders: 600
+        VariantAlsoNegotiates:	506, // 由《透明内容协商协议》（RFC 2295）扩展，代表服务器存在内部配置错误：被请求的协商变元资源被配置为在透明内容协商中使用自己，因此在一个协商处理中不是一个合适的重点。
+        InsufficientStorage:	507, // 服务器无法存储完成请求所必须的内容。这个状况被认为是临时的。WebDAV (RFC 4918)
+        BandwidthLimitExceeded: 509, // 服务器达到带宽限制。这不是一个官方的状态码，但是仍被广泛使用。
+        NotExtended:	510, // 获取资源所需要的策略并没有被满足。（RFC 2774）
+
+        UnparseableResponseHeaders: 600 // 源站没有返回响应头部，只返回实体内容
       };
     }
     return this[STATUS];

@@ -37,7 +37,7 @@ export default {
     this.logoutUrl = `${ logoutUrl }?url=${ href }`
   },
   methods: {
-    handleSelect(key, keyPath) {
+    handleSelect() {
     }
   }
 }
