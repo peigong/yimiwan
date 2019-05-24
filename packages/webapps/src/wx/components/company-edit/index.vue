@@ -26,7 +26,7 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getClassificationList } from '@/service/classification'
+import { getClassificationList } from '@/wx/service/classification'
 
 export default {
   name: 'company-edit',

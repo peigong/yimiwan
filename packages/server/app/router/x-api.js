@@ -1,11 +1,9 @@
 'use strict';
 
-const auth = require('../middleware/x-auth');
-
 module.exports = app => {
   const { controller } = app;
-  const router = app.router.namespace('/x-api', auth({}));
+  const router = app.router.namespace('/x-api');
 
-  router.resources('user', '/user', controller.xApi.user)
-  router.resources('account', '/account', controller.xApi.account)
+  router.resources('users', '/users', controller.xApi.users)
+  router.resources('accounts', '/accounts', controller.xApi.accounts)
 };

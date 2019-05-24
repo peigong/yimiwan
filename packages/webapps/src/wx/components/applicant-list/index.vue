@@ -6,7 +6,7 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getApplicantList } from '@/service/applicant'
+import { getApplicantList } from '@/wx/service/applicant'
 import applicantItem from '@/wx/components/applicant-item'
 
 export default {

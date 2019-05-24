@@ -16,8 +16,8 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getJobList } from '@/service/job'
-import { getCompanyList } from '@/service/company'
+import { getJobList } from '@/wx/service/job'
+import { getCompanyList } from '@/wx/service/company'
 
 export default {
   name: 'job-post',

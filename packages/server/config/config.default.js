@@ -4,6 +4,9 @@
 
 const path = require('path');
 const wx = require('./wx-conf');
+const errorHandler = require('../app/middleware/error-handler');
+const xAuth = require('../app/middleware/x-auth');
+const wxAuth = require('../app/middleware/wx-auth');
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -18,7 +21,16 @@ module.exports = appInfo => {
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1555799729136_6764';
-  config.middleware = [];
+  config.middleware = [ 'errorHandler', 'xAuth', 'wxAuth' ];
+  config.errorHandler = {
+    match: [ '/x', '/x-api', '/wx-api' ]
+  };
+  config.xAuth = {
+    match: [ '/x-api' ]
+  };
+  config.wxAuth = {
+    match: [ '/wx-api' ]
+  };
 
   const public_root = path.join(appInfo.baseDir, 'app', 'public');
   const webapps_root = path.join(appInfo.baseDir, '..', 'webapps/dist');

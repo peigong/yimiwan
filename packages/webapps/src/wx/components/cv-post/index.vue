@@ -16,7 +16,7 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getCVList } from '@/service/cv'
+import { getCVList } from '@/wx/service/cv'
 
 export default {
   name: 'cv-post',

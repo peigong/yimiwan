@@ -1,10 +1,8 @@
 'use strict';
 
-const auth = require('../middleware/wx-auth');
-
 module.exports = app => {
   const { controller } = app;
-  const router = app.router.namespace('/wx-api', auth({}));
+  const router = app.router.namespace('/wx-api');
 
   // 业务接口
   router.get('/user-info', controller.wxApi.user.getUserInfo)

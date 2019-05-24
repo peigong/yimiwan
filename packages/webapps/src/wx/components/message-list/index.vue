@@ -14,7 +14,7 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getMessageList } from '@/service/message'
+import { getMessageList } from '@/wx/service/message'
 
 export default {
   name: 'message-list',

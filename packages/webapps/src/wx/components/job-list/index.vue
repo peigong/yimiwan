@@ -15,7 +15,7 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getJobList } from '@/service/job'
+import { getJobList } from '@/wx/service/job'
 import jobDetails from '@/wx/components/job-details'
 import cvPost from '@/wx/components/cv-post'
 

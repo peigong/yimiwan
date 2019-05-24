@@ -38,7 +38,7 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getCVList } from '@/service/cv'
+import { getCVList } from '@/wx/service/cv'
 import cvEdit from '@/wx/components/cv-edit'
 import educationalEdit from '@/wx/components/educational-edit'
 import workEdit from '@/wx/components/work-edit'

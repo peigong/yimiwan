@@ -6,7 +6,7 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getMessageList } from '@/service/message'
+import { getMessageList } from '@/wx/service/message'
 import messageJobItem from '@/wx/components/message-job-item'
 
 export default {

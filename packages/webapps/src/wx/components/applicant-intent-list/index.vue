@@ -8,7 +8,7 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getIntentList } from '@/service/intent'
+import { getIntentList } from '@/wx/service/intent'
 
 export default {
   name: 'applicant-intent-list',

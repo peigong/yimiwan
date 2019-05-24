@@ -1,11 +1,12 @@
 'use strict';
 
-module.exports = options => {
+module.exports = (options, app) => {
+  const { Status } = app;
   return async function auth(ctx, next) {
     if(ctx.isAuthenticated()){
       await next();
     }else{
-      ctx.body = ctx.helper.packError(101, '^.^');
+      ctx.throw(Status.Unauthorized, '未登录');
     }
   };
 };

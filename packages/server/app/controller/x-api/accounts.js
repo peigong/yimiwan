@@ -8,14 +8,14 @@ class APIController extends Controller {
     const { ctx } = this;
     const { service, helper, model } = ctx;
     let data = await model.Account.find({}, fields.join(' '));
-    ctx.body = helper.pack(data);
+    ctx.body = data
   }
   async show(){
     const { ctx } = this;
     const { params, helper, model } = ctx;
     const openid = params.id || '';
     let data = await model.Account.findOne({ openid }, fields.join(' '));
-    ctx.body = helper.pack(data);
+    ctx.body = data
   }
   async update(){
     const { ctx } = this;
@@ -27,7 +27,7 @@ class APIController extends Controller {
       username: username,
       password: helper.encrypt(password)
     }, { upsert: true, useFindAndModify: false });
-    ctx.body = helper.pack({});
+    ctx.status  = 204
   }
   /*
   async new() => {},

@@ -5,7 +5,7 @@ const Controller = require('egg').Controller;
 class APIController extends Controller {
   async getUserInfo(){
     const { ctx } = this;
-    const { logger, cookies, model, helper } = ctx;
+    const { logger, cookies, model } = ctx;
     const cid = cookies.get('cid') || '';
     let user = await model.WxUser.findOne({ openid: cid });
     let data = {};
@@ -13,16 +13,16 @@ class APIController extends Controller {
       data.type = user.type;
     }
     logger.info(`get user info: ${ JSON.stringify(data) }`)
-    ctx.body = helper.pack(data);
+    ctx.body = data;
   }
   async setUserType(){
     const { ctx } = this;
-    const { logger, request, cookies, model, helper } = ctx;
+    const { logger, request, cookies, model } = ctx;
     const cid = cookies.get('cid') || '';
     const type = request.body.type;
     logger.info(`user: ${ cid } set type: ${ type }`);
     await model.WxUser.findOneAndUpdate({ openid: cid }, { type }, { useFindAndModify: false });
-    ctx.body = helper.pack({});
+    ctx.status  = 204
   }
 }
 

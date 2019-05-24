@@ -42,8 +42,8 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getJobList } from '@/service/job'
-import { getCompanyList } from '@/service/company'
+import { getJobList } from '@/wx/service/job'
+import { getCompanyList } from '@/wx/service/company'
 import companyEdit from '@/wx/components/company-edit'
 import jobEdit from '@/wx/components/job-edit'
 import messageCvList from '@/wx/components/message-cv-list'

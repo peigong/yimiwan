@@ -6,7 +6,7 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getCompanyList } from '@/service/company'
+import { getCompanyList } from '@/wx/service/company'
 import companyItem from '@/wx/components/company-item'
 
 export default {

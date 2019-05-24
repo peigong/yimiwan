@@ -1,6 +1,7 @@
 'use strict';
 
-module.exports = options => {
+module.exports = (options, app) => {
+  const { Status } = app;
   const threshold = 5; // 验证尝试失败次数阀值
   const errors = new Map();
 
@@ -18,14 +19,14 @@ module.exports = options => {
         counter = counter || 0;
         counter++;
         if(counter > threshold){
-          ctx.body = helper.packError(102, `try authorize greater than  ${ counter }.`);
+          ctx.throw(Status.Forbidden, `try authorize greater than  ${ counter }.`);
         }else{
           errors.set(cid, counter);
-          ctx.body = helper.packError(101, 'authorize is fail.');
+          ctx.throw(Status.Unauthorized, 'authorize is fail.');
         }
       }
     }else{ // 没有cookie，不记失败次数
-      ctx.body = helper.packError(101, 'credential is not exists.');
+      ctx.throw(Status.Unauthorized, 'credential is not exists.');
     }
   };
 };

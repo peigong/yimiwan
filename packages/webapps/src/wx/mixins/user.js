@@ -1,5 +1,5 @@
 import { catchHandler, success } from '@/wx/util/ui'
-import { UserType, getUser, setUserType } from '@/service/user'
+import { UserType, getUser, setUserType } from '@/wx/service/user'
 
 export default {
   mounted(){

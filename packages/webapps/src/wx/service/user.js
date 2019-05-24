@@ -1,4 +1,4 @@
-import { api } from '@/util/axios'
+import { api } from '@/wx/util/axios'
 import { create } from '@/util/storage'
 
 const user = create('wx-user')

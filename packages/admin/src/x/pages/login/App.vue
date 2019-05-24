@@ -53,19 +53,19 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           axios.post('/x/login', this.params)
-          .then((res) => {
-            const status = res.data.status || {};
-            switch (+status.code) {
-              case 0:
-                window.location = this.redirect
-                break;
-              case 102:
-                catchHandler(new Error(status.message))
+          .then(() => {
+            window.location = this.redirect
+          })
+          .catch(err => {
+            const res = err.response || {}
+            const data = res.data || {}
+            switch (+res.status) {
+              case 401:
+                catchHandler(new Error(data.error))
                 break;
               default:
             }
-          })
-          .catch(catchHandler);
+          });
         } else {
           return false;
         }

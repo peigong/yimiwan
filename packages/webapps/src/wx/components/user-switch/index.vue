@@ -6,7 +6,7 @@
 
 <script>
 import { catchHandler, success } from '@/wx/util/ui'
-import { UserType, setUserType } from '@/service/user'
+import { UserType, setUserType } from '@/wx/service/user'
 
 export default {
   name: 'user-switch',

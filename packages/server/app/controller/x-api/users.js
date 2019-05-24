@@ -4,11 +4,12 @@ const Controller = require('egg').Controller;
 
 class APIController extends Controller {
   async index(){
-    const { ctx } = this;
+    const { app, ctx } = this;
+    console.log(app.Status);
     const { service, helper, model } = ctx;
     const fields = ['type', 'openid', 'nickname', 'sex', 'province', 'city', 'headimgurl'];
     let data = await model.WxUser.find({}, fields.join(' '));
-    ctx.body = helper.pack(data);
+    ctx.body = data;
   }
   /*
   async new() => {},
