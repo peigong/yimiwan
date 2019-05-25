@@ -16,13 +16,14 @@ class APIController extends Controller {
     ctx.body = data;
   }
   async setUserType(){
-    const { ctx } = this;
+    const { app, ctx } = this;
+    const { Status } = app;
     const { logger, request, cookies, model } = ctx;
     const cid = cookies.get('cid') || '';
     const type = request.body.type;
     logger.info(`user: ${ cid } set type: ${ type }`);
     await model.WxUser.findOneAndUpdate({ openid: cid }, { type }, { useFindAndModify: false });
-    ctx.status  = 204
+    ctx.status  = Status.NoContent
   }
 }
 

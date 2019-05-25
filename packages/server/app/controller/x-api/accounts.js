@@ -29,7 +29,8 @@ class APIController extends Controller {
     ctx.body = data
   }
   async update(){
-    const { ctx } = this;
+    const { app, ctx } = this;
+    const { Status } = app;
     const { request, params, helper, model } = ctx;
 
     ctx.validate(idRule, params);
@@ -42,7 +43,7 @@ class APIController extends Controller {
       username: username,
       password: helper.encrypt(password)
     }, { upsert: true, useFindAndModify: false });
-    ctx.status  = 204
+    ctx.status  = Status.NoContent
   }
   /*
   async new() => {},

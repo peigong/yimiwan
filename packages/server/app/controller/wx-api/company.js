@@ -4,10 +4,13 @@ const Controller = require('egg').Controller;
 
 class APIController extends Controller {
   async index(){
+    let data = [];
     const { ctx } = this;
-    const { service } = ctx;
-    const { api } = service
-    const data = await api.mock.getData('company')
+    const { logger, cookies, model } = ctx;
+    const cid = cookies.get('cid') || '';
+    if(cid){
+      data = await model.Company.find({ openid: cid });
+    }
     ctx.body = data;
   }
   /*

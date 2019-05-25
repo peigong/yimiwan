@@ -2,8 +2,9 @@
   <div>
     <wv-tabs ref="tabs">
       <wv-tab title="我的公司">
-        <wv-group title="公司列表">
+        <wv-group title="在平台登记的公司：">
           <wv-cell :title="item.title" is-link @click="showCompanyEdit(item)" v-for="(item, key) in companyList" :key="key" />
+          <wv-cell title="暂无公司登记 ，请先添加公司信息" v-if="!companyList.length" />
         </wv-group>
         <wv-button type="default" class="btn-handler" :mini="true" @click="showCompanyEdit()">添加公司信息</wv-button>
       </wv-tab>

@@ -13,14 +13,13 @@ glob.sync('src/x/pages/**/main.js').forEach((entry) => {
   }
 })
 
+const proxy = {
+  target: 'http://localhost:7001'
+};
 const devServer = {
   proxy: {
-    '/x-api': {
-      target: 'http://localhost:7001'
-    },
-    '/x': {
-      target: 'http://localhost:7001'
-    }
+    '/x': proxy,
+    '/x-api': proxy
   }
 }
 

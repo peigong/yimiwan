@@ -11,18 +11,18 @@ glob.sync('src/wx/pages/**/main.js').forEach((entry) => {
     template: 'public/template-wx.html',
     filename: `${ filename }.html`
   }
-})
+});
 
+const proxy = {
+  target: 'http://localhost:7001'
+};
 const devServer = {
   proxy: {
-    '/wx-proxy': {
-      target: 'http://localhost:7001'
-    },
-    '/wx-api': {
-      target: 'http://localhost:7001'
-    }
+    '/oauth2': proxy,
+    '/wx-proxy': proxy,
+    '/wx-api': proxy
   }
-}
+};
 
 module.exports = {
   pages,

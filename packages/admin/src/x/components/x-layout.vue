@@ -1,19 +1,22 @@
 <template>
   <div>
     <el-menu
-      :default-active="activeIndex"
+      :default-active="defaultActive"
       class="el-menu-demo"
       mode="horizontal"
       @select="handleSelect"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b">
-      <el-menu-item index="1"><el-link :underline="false" href="/x/pages/wx-user.html" type="primary">微信用户</el-link></el-menu-item>
+      <el-menu-item index="wx-user"><el-link :underline="false" href="/x/pages/wx-user.html" type="primary">微信用户</el-link></el-menu-item>
       <el-menu-item index="2"><el-link :underline="false" href="/x/pages/wx-user.html" type="primary">微信用户</el-link></el-menu-item>
+      <el-submenu index="system">
+        <template slot="title">系统配置</template>
+        <el-menu-item index="system-classification"><el-link :underline="false" href="/x/pages/classification.html" type="primary" class="menu-link">行业分类</el-link></el-menu-item>
+      </el-submenu>
       <el-submenu index="3">
-        <template slot="title"><i class="el-icon-user"></i></template>
-        <el-menu-item index="3-1">菜单示例</el-menu-item>
-        <el-menu-item index="3-2"><el-link :underline="false" :href="logoutUrl" type="primary" class="menu-link">退出登录</el-link></el-menu-item>
+        <template slot="title">管理员</template>
+        <el-menu-item><el-link :underline="false" :href="logoutUrl" type="primary" class="menu-link">退出登录</el-link></el-menu-item>
       </el-submenu>
     </el-menu>
     <el-container>
@@ -26,10 +29,12 @@
 <script>
 const logoutUrl = '/x/logout'
 export default {
+  props: [ 'menuActive' ],
   data() {
+    const defaultActive = this.menuActive || 'wx-user'
     return {
-      logoutUrl: logoutUrl,
-      activeIndex: '1'
+      logoutUrl,
+      defaultActive
     };
   },
   mounted(){

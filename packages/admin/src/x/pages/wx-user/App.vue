@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <x-layout>
+  <div>
+    <x-layout menu-active="wx-user">
       <el-table :data="items" style="width: 100%">
         <el-table-column label="头像">
           <template slot-scope="scope">
@@ -19,7 +19,7 @@
          </el-table-column>
        </el-table>
     </x-layout>
-    <account-editor :open-id="currentId" @changed="changedHandler" />
+    <account-editor :open-id="currentId" :bell="bell" />
   </div>
 </template>
 
@@ -44,20 +44,19 @@ export default {
   },
   data(){
     return {
+      bell: 0,
       currentId: '',
       items: []
     }
   },
   methods: {
-    changedHandler(){
-      this.currentId = ''
-    },
     setAccount(item) {
-      this.currentId = item.openid || '';
+      this.currentId = item.openid || ''
+      this.bell++
     }
   }
 }
 </script>
 
-<style lang="less">
+<style>
 </style>
