@@ -2,7 +2,7 @@ module.exports = app => {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;
 
-  const WxUserSchema = new Schema({
+  const ModelSchema = new Schema({
     type: { type: Number, default: 0  },
 
     openid: { type: String, default: '' }, //	用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
@@ -22,5 +22,5 @@ module.exports = app => {
     scope: { type: String, default: '' }, //	用户授权的作用域，使用逗号（,）分隔
     timestamp: { type: Number, default: 0  }
   });
-  return mongoose.model('WxUser', WxUserSchema);
+  return mongoose.model('WxUser', ModelSchema);
 }

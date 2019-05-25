@@ -1,0 +1,12 @@
+module.exports = app => {
+  const mongoose = app.mongoose;
+  const Schema = mongoose.Schema;
+
+  const ModelSchema = new Schema({
+    active: { type: Boolean, default: true },  //  生效状态
+
+    sn: { type: String, default: '' },
+    name: { type: String, default: '' }
+  });
+  return mongoose.model('Classification', ModelSchema);
+}
