@@ -11,8 +11,8 @@ class WxService extends Service {
     const { ctx, config } = this;
     const { logger } = ctx;
     const { root, wx } = config;
-    const { cgi } = wx;
-    const url = `${ cgi }/media/get?access_token=${ token }&media_id=${ id }`;
+    const { file } = wx;
+    const url = `${ file }/media/get?access_token=${ token }&media_id=${ id }`;
     let pathname;
     try{
       logger.info(url);
