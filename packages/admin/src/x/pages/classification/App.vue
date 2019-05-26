@@ -69,8 +69,8 @@ export default {
       this.getClassificationList()
     },
     setActive(item){
-      const { _id, sn, name, active } = item
-      updateClassification(_id, sn, name, active)
+      const params = { id: item._id, ... item }
+      updateClassification(params)
       .then(() => {
         success('生效状态设置成功！')
       })

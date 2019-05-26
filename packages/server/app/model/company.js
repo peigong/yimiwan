@@ -10,7 +10,8 @@ module.exports = app => {
 
     title: { type: String, default: '' }, // 工商注册的全称
     licence: {// 营业执照
-      mediaid: { type: String, default: '' },
+      type: { type: Number, default: 0  }, // 类型，值为1时是图片，值为2时是视频，值为0时是未知
+      id: { type: String, default: '' },
       url: { type: String, default: '' }
     },
     summary: { type: String, default: '' }, // 公司业务简介

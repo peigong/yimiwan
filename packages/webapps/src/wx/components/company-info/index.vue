@@ -23,7 +23,7 @@
       <wv-switch title="关闭" v-model="ctrl.company" />
       <wv-group>
         <wv-cell title="查看岗位列表" is-link @click="showJob" />
-        <company-edit />
+        <company-edit :item="company" @changed="companyChangeHandler" />
       </wv-group>
     </wv-popup>
     <wv-popup :visible.sync="ctrl.job">
@@ -58,15 +58,10 @@ export default {
     messageCvList
   },
   mounted(){
+    this.getCompanyList()
     getJobList()
     .then((data) => {
       this.jobList = data
-    })
-    .catch(catchHandler)
-    getCompanyList()
-    .then((data) => {
-      this.companyList = data
-      this.companyListPicker[0].values = data
     })
     .catch(catchHandler)
   },
@@ -90,7 +85,7 @@ export default {
     showJob(){
       this.ctrl.company = false
       this.$refs.tabs.setCurActive(1)
-  },
+    },
     showCompanyEdit(item = {}){
       this.company = item
       this.ctrl.company = true
@@ -101,6 +96,19 @@ export default {
     },
     onCompanyChange(picker, values){
       this.company = values[0]
+    },
+    companyChangeHandler(){
+      this.ctrl.company = false
+      this.getCompanyList()
+    },
+
+    getCompanyList(){
+      getCompanyList()
+      .then((data) => {
+        this.companyList = data
+        this.companyListPicker[0].values = data
+      })
+      .catch(catchHandler)
     }
   }
 }

@@ -73,20 +73,22 @@ export default {
     submit(){
       this.$refs.editForm.validate((valid) => {
         if (valid) {
+          let exec = null
+          let message = ''
           const id = this.itemId || ''
-          const { sn, name, active } = this.params
+          const params = { ...this.params }
           if(id){
-            updateClassification(id, sn, name, active)
-            .then(() => {
-              success('行业分类修改成功！')
-              this.close()
-              this.$emit('changed')
-            })
-            .catch(catchHandler)
+            params.id = id
+            exec = updateClassification
+            message = '行业分类修改成功！'
           }else{
-            createClassification(sn, name, active)
+            exec = createClassification
+            message = '行业分类添加功！'
+          }
+          if(exec){
+            exec(params)
             .then(() => {
-              success('行业分类添加功！')
+              success(message)
               this.close()
               this.$emit('changed')
             })
