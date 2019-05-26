@@ -62,3 +62,4 @@ typings/
 
 _wx-conf.js
 wx-conf.js
+_cache/**
