@@ -3,7 +3,7 @@
     <wv-group title="基本信息">
       <wv-input label="公司全称" placeholder="工商注册的全称" v-model="params.title"></wv-input>
       <wv-cell title="公司行业" is-link :value="classification.name" @click.native="ctrl.classification = true" />
-      <wv-cell><img v-if="!!licenceUrl" :src="licenceUrl" width="100%" height="auto" /></wv-cell>
+      <wv-cell><img v-if="!!licenceUrl" :src="licenceUrl" max-width="100%" height="auto" /></wv-cell>
       <wv-cell title="上传营业执照" is-link @click="upload" />
     </wv-group>
     <wv-group title="公司业务简介">
@@ -43,24 +43,27 @@ export default {
   components: {
   },
   data(){
+    const it = this.item || {};
+    const { classification, _id, title, summary, adress, phone, email, linkman } = it;
+    const licence = it.licence || {}
     return {
       ctrl: {
         classification: false
       },
-      classification: {},
+      classification: classification || {},
       classificationList: [{ values: [] }],
 
-      itemId: '',
+      itemId: _id || '',
       params: {
-        title: '', // 工商注册的全称
-        summary: '', // 公司业务简介
-        adress: '', // 公司地址
-        phone: '', // 联系电话
-        email: '', // 电子邮箱
-        linkman: '' // 负责人
+        title: title || '', // 工商注册的全称
+        summary: summary || '', // 公司业务简介
+        adress: adress || '', // 公司地址
+        phone: phone || '', // 联系电话
+        email: email || '', // 电子邮箱
+        linkman: linkman || '' // 负责人
       },
-      licenceId: '',
-      licenceUrl: '' // 营业执照照片
+      licenceId: licence.id || '',
+      licenceUrl: this.getLicenceUrl(licence) // 营业执照照片
     }
   },
   mounted(){
@@ -76,7 +79,7 @@ export default {
       this.classification = it.classification || {}
       const licence = it.licence || {}
       this.licenceId = licence.id || ''
-      this.licenceUrl = licence.url || ''
+      this.licenceUrl = this.getLicenceUrl(licence)
       this.params.title = it.title || '' // 工商注册的全称
       this.params.summary = it.summary || '' // 公司业务简介
       this.params.adress = it.adress || '' // 公司地址
@@ -86,6 +89,14 @@ export default {
     }
   },
   methods: {
+    getLicenceUrl(licence = {}){
+      let licenceUrl = ''
+      const url = licence.url || ''
+      if(url){
+        licenceUrl = `/media/${ url }`
+      }
+      return licenceUrl
+    },
     upload(){
       chooseImage({
         count: 1 // 默认9
