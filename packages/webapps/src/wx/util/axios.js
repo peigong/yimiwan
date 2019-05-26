@@ -25,6 +25,7 @@ apiHandler.interceptors.response.use(res => res.data, err => {
 
 const api = {
   get: (api, data = {}) => {
+    data.rdm = (Math.random()).toString().substring(2)
     return apiHandler.get(api, { params: data });
   },
   post: apiHandler.post,
