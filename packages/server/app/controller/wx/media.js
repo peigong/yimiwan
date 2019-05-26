@@ -9,12 +9,8 @@ class WxController extends Controller {
     const { ctx, config } = this;
     const { logger, params } = ctx;
     const { root } = config;
-    const pathname = params.pathname || ''
-    if(pathname){
-      ctx.body = fs.createReadStream(path.join(root, '_media', pathname));
-    }else {
-      ctx.body = '^.^';
-    }
+    const { type, id } = params;
+    ctx.body = fs.createReadStream(path.join(root, '_media', type, id));
   }
 }
 

@@ -13,7 +13,7 @@ module.exports = app => {
   */
 
   router.get('/', controller.home.index);
-  router.get('/media/:pathname', controller.wx.media.index);
+  router.get('/media/:type/:id', controller.wx.media.index);
 
   // 代理来自客户端的请求
   router.post('/wx-proxy/config', controller.wx.proxy.getConfig);
