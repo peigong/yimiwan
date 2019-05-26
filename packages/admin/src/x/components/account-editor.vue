@@ -96,6 +96,9 @@ export default {
             updateAccountInfo(this.accountId, username, password)
             .then(() => {
               success('管理账户设置成功！')
+              this.isExists = true
+              this.params.password = ''
+              this.params.again = ''
               this.close()
             })
             .catch(catchHandler)

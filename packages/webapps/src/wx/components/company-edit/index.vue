@@ -3,7 +3,7 @@
     <wv-group title="基本信息">
       <wv-input label="公司全称" placeholder="工商注册的全称" v-model="params.title"></wv-input>
       <wv-cell title="公司行业" is-link :value="classification.name" @click.native="ctrl.classification = true" />
-      <img v-if="!!licenceUrl" :src="licenceUrl" width="100%" height="auto" />
+      <wv-cell><img v-if="!!licenceUrl" :src="licenceUrl" width="100%" height="auto" /></wv-cell>
       <wv-cell title="上传营业执照" is-link @click="upload" />
     </wv-group>
     <wv-group title="公司业务简介">

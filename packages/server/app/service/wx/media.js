@@ -6,28 +6,24 @@ const path = require('path');
 const Service = require('egg').Service;
 
 class WxService extends Service {
-  async getMedia(token, id){
-    const { ctx } = this;
+  async getMedia(token, id, type){
+    type = type +  '';
+    const { ctx, config } = this;
     const { logger } = ctx;
-    const { cgi } = this.config.wx;
+    const { root, wx } = config;
+    const { cgi } = wx;
     const url = `${ cgi }/media/get?access_token=${ token }&media_id=${ id }`;
-    let result;
+    let pathname;
     try{
-      const result = await ctx.curl(url)
-      const json = JSON.parse(result.data)
-      console.log(json);
-      if(json.video_url){
-        logger.info(url);
-        result = json.video_url;
-      }else{
-        result = '';
-        logger.error(json);
-      }
+      logger.info(url);
+      pathname = path.join(type, id);
+      const fws = fs.createWriteStream(path.join(root, '_media', pathname));
+      await ctx.curl(url, { writeStream: fws });
     }catch(ex){
-      result = '';
+      pathname = '';
       logger.error(ex);
     }
-    return result;
+    return pathname;
   }
   async save(type, media){
     type = type + ''

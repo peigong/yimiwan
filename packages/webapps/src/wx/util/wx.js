@@ -115,7 +115,6 @@ awaitReady()
 
 export const chooseImage = create('chooseImage')
 export const uploadImage = create('uploadImage')
-export const getLocalImgData = create('getLocalImgData')
 export const getNetworkType = create('getNetworkType')
 export const getLocation = create('getLocation')
 export const geoLocation = create('geoLocation')

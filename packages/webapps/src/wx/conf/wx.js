@@ -4,7 +4,6 @@ const jsApiList = [
   'getNetworkType',
   'chooseImage',
   'uploadImage',
-  'getLocalImgData',
   'getLocation',
   'geoLocation'
 ]

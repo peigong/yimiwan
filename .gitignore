@@ -62,4 +62,5 @@ typings/
 
 _wx-conf.js
 wx-conf.js
-_cache/**
+packages/server/_cache/ticket.json
+packages/server/_cache/access_token.json

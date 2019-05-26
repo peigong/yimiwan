@@ -47,8 +47,7 @@ class APIController extends Controller {
     if(licence && licence.id){
       licence.type = 1;
       const token = await wx.config.getAccessToken()
-      const url = await wx.media.getMedia(token, licence.id)
-      licence.url =  await wx.media.save(licence.type, url)
+      licence.url = await wx.media.getMedia(token, licence.id, licence.type)
     }
     await model.Company.create({
       openid,
@@ -68,7 +67,8 @@ class APIController extends Controller {
   async update(){
     const { app, ctx } = this;
     const { Status } = app;
-    const { request, params, model } = ctx;
+    const { request, params, service, model } = ctx;
+    const { wx } = service
 
     ctx.validate(idRule, params);
     ctx.validate(updateRule, request.body);
@@ -84,6 +84,11 @@ class APIController extends Controller {
       email, // 电子邮箱
       linkman // 负责人
     } = request.body;
+    if(licence && licence.id){
+      licence.type = 1;
+      const token = await wx.config.getAccessToken()
+      licence.url = await wx.media.getMedia(token, licence.id, licence.type)
+    }
 
     await model.Company.update({ _id: id }, {
       licence,
