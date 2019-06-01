@@ -2,9 +2,6 @@
 
 const Controller = require('egg').Controller;
 
-const idRule = {
-  id: 'string'
-};
 const updateRule = {
   title: 'string', // 工商注册的全称
   summary: 'string', // 公司业务简介
@@ -69,10 +66,7 @@ class APIController extends Controller {
     const { Status } = app;
     const { request, params, service, model } = ctx;
     const { wx } = service
-
-    ctx.validate(idRule, params);
     ctx.validate(updateRule, request.body);
-
     const { id } = params;
     const {
       licence,

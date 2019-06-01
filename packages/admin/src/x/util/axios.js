@@ -12,6 +12,7 @@ apiHandler.interceptors.response.use(res => res.data, err => {
       window.location.href = `/x/pages/login.html?${ href }`
       break;
     default:
+      throw new Error(res.data.error)
   }
 });
 

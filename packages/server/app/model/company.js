@@ -6,19 +6,9 @@ module.exports = app => {
     openid: { type: String, default: '' }, //	用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
     unionid: { type: String, default: '' }, //	只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
 
-    active: { type: Boolean, default: false },  //  生效状态
+    status: { type: Number, default: 1  }, // 类型，值为1时是待审核，值为2时是已审核，值为3时是已驳回
 
     title: { type: String, default: '' }, // 工商注册的全称
-    logo: {
-      type: { type: Number, default: 0  }, // 类型，值为1时是图片，值为2时是视频，值为0时是未知
-      id: { type: String, default: '' },
-      url: { type: String, default: '' }
-    },
-    licence: {// 营业执照
-      type: { type: Number, default: 0  }, // 类型，值为1时是图片，值为2时是视频，值为0时是未知
-      id: { type: String, default: '' },
-      url: { type: String, default: '' }
-    },
     summary: { type: String, default: '' }, // 公司业务简介
     adress: { type: String, default: '' }, // 公司地址
     phone: { type: String, default: '' }, // 联系电话

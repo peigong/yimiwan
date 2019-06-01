@@ -20,6 +20,7 @@ apiHandler.interceptors.response.use(res => res.data, err => {
       window.location.href = `/oauth2/authorize?url=${ href }`;
       break;
     default:
+      throw new Error(res.data.error)
   }
 });
 

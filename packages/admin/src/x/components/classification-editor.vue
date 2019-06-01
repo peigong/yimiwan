@@ -12,7 +12,7 @@
           <el-input v-model="params.remark" clearable></el-input>
         </el-form-item>
         <el-form-item label="排序权重" prop="position">
-          <el-input v-model="params.position" clearable></el-input>
+          <el-input v-model.number="params.position" clearable></el-input>
         </el-form-item>
         <el-form-item label="生效状态" prop="active">
           <el-switch
