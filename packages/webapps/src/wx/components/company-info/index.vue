@@ -19,7 +19,7 @@
         <message-cv-list />
       </wv-tab>
     </wv-tabs>
-    <wv-popup :visible.sync="ctrl.company">
+    <wv-popup :visible.sync="ctrl.company" style="overflow: auto;" height="100%">
       <wv-switch title="关闭" v-model="ctrl.company" />
       <wv-group>
         <wv-cell title="查看岗位列表" is-link @click="showJob" />

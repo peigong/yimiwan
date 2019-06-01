@@ -9,6 +9,11 @@ module.exports = app => {
     active: { type: Boolean, default: false },  //  生效状态
 
     title: { type: String, default: '' }, // 工商注册的全称
+    logo: {
+      type: { type: Number, default: 0  }, // 类型，值为1时是图片，值为2时是视频，值为0时是未知
+      id: { type: String, default: '' },
+      url: { type: String, default: '' }
+    },
     licence: {// 营业执照
       type: { type: Number, default: 0  }, // 类型，值为1时是图片，值为2时是视频，值为0时是未知
       id: { type: String, default: '' },
@@ -23,7 +28,7 @@ module.exports = app => {
     classification: {
       sn: { type: String, default: '' },
       name: { type: String, default: '' }
-    } // 行业分类
+    } // 类别
   });
   return mongoose.model('Company', ModelSchema);
 }

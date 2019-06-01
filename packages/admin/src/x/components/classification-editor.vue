@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="维护行业分类" :visible.sync="visible" width="30%" center>
+    <el-dialog title="维护类别" :visible.sync="visible" width="30%" center>
       <el-form :model="params" :rules="rules" ref="editForm" label-width="100px" class="edit-form">
         <el-form-item label="行业编码" prop="sn">
           <el-input v-model="params.sn" clearable></el-input>
@@ -80,10 +80,10 @@ export default {
           if(id){
             params.id = id
             exec = updateClassification
-            message = '行业分类修改成功！'
+            message = '类别修改成功！'
           }else{
             exec = createClassification
-            message = '行业分类添加功！'
+            message = '类别添加功！'
           }
           if(exec){
             exec(params)

@@ -10,5 +10,5 @@ module.exports = app => {
 
     title: { type: String, default: '' } // 简历主题
   });
-  return mongoose.model('CV', ModelSchema);
+  return mongoose.model('Order', ModelSchema);
 }

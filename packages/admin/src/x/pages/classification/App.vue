@@ -2,17 +2,17 @@
   <div>
     <x-layout menu-active="system-classification">
       <el-row>
-        <el-button type="primary" size="mini" @click="showEditor()">添加行业分类</el-button>
+        <el-button type="primary" size="mini" @click="showEditor()">添加类别</el-button>
       </el-row>
       <el-table :data="items" style="width: 100%">
         <el-table-column
           prop="sn"
-          label="行业分类编码"
+          label="类别编码"
           width="200">
         </el-table-column>
         <el-table-column
           prop="name"
-          label="行业分类名称"
+          label="类别名称"
           width="400">
         </el-table-column>
         <el-table-column label="生效状态">

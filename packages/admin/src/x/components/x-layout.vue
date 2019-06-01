@@ -12,7 +12,7 @@
       <el-menu-item index="2"><el-link :underline="false" href="/x/pages/wx-user.html" type="primary">微信用户</el-link></el-menu-item>
       <el-submenu index="system">
         <template slot="title">系统配置</template>
-        <el-menu-item index="system-classification"><el-link :underline="false" href="/x/pages/classification.html" type="primary" class="menu-link">行业分类</el-link></el-menu-item>
+        <el-menu-item index="system-classification"><el-link :underline="false" href="/x/pages/classification.html" type="primary" class="menu-link">类别</el-link></el-menu-item>
       </el-submenu>
       <el-submenu index="3">
         <template slot="title">管理员</template>

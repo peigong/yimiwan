@@ -8,22 +8,15 @@ module.exports = app => {
 
     active: { type: Boolean, default: false },  //  生效状态
 
-    title: { type: String, default: '' }, // 求职意向
-    name: { type: String, default: '' }, // 姓名
-    /*
-    sex: { type: Number, default: 0  }, // 性别，值为1时是男性，值为2时是女性，值为0时是未知
-    birthday: { type: String, default: '' }, // 出生日期
-    adress: { type: String, default: '' }, // 家庭住址
-    marital: { type: Number, default: 0  }, // 婚姻状况
+    type: { type: Number, default: 0  }, // 类型，值为1时是图片，值为2时是视频，值为0时是未知
+    id: { type: String, default: '' },
+    summary: { type: String, default: '' }, // 摘要
+    url: { type: String, default: '' }, //
 
-    character: { type: String, default: '' }, // 性格类型
-    honour: { type: String, default: '' }, // 所获荣誉
-    interest: { type: String, default: '' }, // 兴趣特长
-*/
     classification: {
       sn: { type: String, default: '' },
       name: { type: String, default: '' }
     } // 类别
   });
-  return mongoose.model('Applicant', ModelSchema);
+  return mongoose.model('Media', ModelSchema);
 }

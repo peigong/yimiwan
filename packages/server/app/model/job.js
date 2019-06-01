@@ -23,7 +23,7 @@ module.exports = app => {
     classification: {
       sn: { type: String, default: '' },
       name: { type: String, default: '' }
-    } // 行业分类
+    } // 类别
   });
   return mongoose.model('Job', ModelSchema);
 }
