@@ -63,7 +63,7 @@ export default {
       this.options.topical = topical || ''
       this.options.refer = refer || ''
       this.options.type = Type.TxVideo
-      this.options.status = Status.Unaudited
+      this.options.status = Status.Approved
     },
     submit(){
       this.$refs.editForm.validate((valid) => {

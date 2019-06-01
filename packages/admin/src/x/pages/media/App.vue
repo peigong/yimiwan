@@ -1,11 +1,11 @@
 <template>
   <div>
-    <x-layout menu-active="company">
+    <x-layout menu-active="media">
       <el-form :inline="true" :model="params" class="">
-        <el-form-item label="所属行业">
-          <el-select v-model="params.classification" placeholder="所属行业">
+        <el-form-item label="类别">
+          <el-select v-model="params.classification" placeholder="类别">
             <el-option label="全部" value=""></el-option>
-            <el-option v-for="item in classificationList" :label="item.name" :value="item.sn" :key="item.sn"></el-option>
+            <el-option label="公司视频" value="company-video"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="关键词">
@@ -24,10 +24,8 @@
         </el-form-item>
       </el-form>
       <el-table :data="items" style="width: 100%">
-        <el-table-column prop="classification.name" label="所属行业"></el-table-column>
-        <el-table-column prop="title" label="公司名称"></el-table-column>
-        <el-table-column prop="linkman" label="负责人"></el-table-column>
-        <el-table-column prop="phone" label="联系电话"></el-table-column>
+        <el-table-column prop="mediaid" label="ID"></el-table-column>
+        <el-table-column prop="summary" label="说明"></el-table-column>
          <el-table-column label="审核状态">
            <template slot-scope="scope">
              <el-button type="default" size="mini" v-if="1 == scope.row.status">待审核</el-button>
@@ -37,45 +35,34 @@
           </el-table-column>
          <el-table-column label="操作" width="300">
            <template slot-scope="scope">
-             <el-button type="primary" size="mini" @click="showDetails(scope.row)">查看</el-button>
-             <el-button type="primary" size="mini" @click="showMediaEditor(scope.row)">添加视频</el-button>
-             <el-button type="primary" size="mini" @click="showTxPlayer(scope.row)">查看视频</el-button>
+             <el-button type="primary" size="mini" @click="showTxPlayer(scope.row)" v-if="3 == scope.row.type">查看视频</el-button>
              <el-button type="success" size="mini" @click="approve(scope.row)" v-if="1 == scope.row.status">通过</el-button>
              <el-button type="warning" size="mini" @click="reject(scope.row)" v-if="1 == scope.row.status">驳回</el-button>
            </template>
          </el-table-column>
        </el-table>
     </x-layout>
-    <media-editor type="company-video" :item="item" :bell="bell" />
-    <tx-player :items="videos" :bell="txPlayerBell" />
+    <tx-player :items="videos" :bell="bell" />
   </div>
 </template>
 
 <script>
 import { catchHandler, success } from '@/x/util/ui'
-import { getClassificationList } from '@/x/service/classification'
-import { Status, getCompanyList, getCompanyDetails, approve, reject } from '@/x/service/company'
+import { Status, getMediaList, approve, reject } from '@/x/service/media'
 import xLayout from '@/x/components/x-layout'
-import mediaEditor from '@/x/components/media-editor'
 import txPlayer from '@/x/components/tx-player'
 
 export default {
   name: 'app',
   components: {
     xLayout,
-    mediaEditor,
     txPlayer
   },
   mounted(){
-    getClassificationList('industry-code').then(data => {
-      data = data || []
-      this.classificationList = data || []
-    }).catch(catchHandler)
     this.getList()
   },
   data(){
     return {
-      classificationList: [],
       params: {
         classification: '',
         keywords: '',
@@ -84,16 +71,13 @@ export default {
       items: [],
 
       bell: 0,
-      item: {},
-
-      txPlayerBell: 0,
       videos: []
     }
   },
   methods: {
     getList(){
       this.items = []
-      getCompanyList(this.params).then(data => {
+      getMediaList(this.params).then(data => {
         const items = data || []
         this.items = items.map(item => {
           item.satus = items.status || Status.Unaudited
@@ -104,26 +88,9 @@ export default {
     doSearch(){
       this.getList()
     },
-    showDetails(item){
-      getCompanyDetails(item._id)
-    },
-    showMediaEditor(item){
-      const { openid, unionid, _id } = item;
-      this.item =  { openid: openid, unionid: unionid, topical: _id, refer: 'company' }
-      this.bell++
-    },
     showTxPlayer(item){
-      getCompanyDetails(item._id)
-      .then(data => {
-        const videos = data.videos || []
-        if(videos.length){
-          this.videos = videos
-          this.txPlayerBell++
-        }else{
-          throw new Error('此公司没有视频')
-        }
-      })
-      .catch(catchHandler)
+      this.videos = [item]
+      this.bell++
     },
     approve(item){
       approve(item._id)

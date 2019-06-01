@@ -16,7 +16,7 @@ class APIController extends Controller {
       conditions.status = status;
     }
     if(keywords){
-      const reg = { $regex: keywords, $Option: '$i' }
+      const reg = { $regex: keywords }
       conditions.summary = reg;
     }
 
