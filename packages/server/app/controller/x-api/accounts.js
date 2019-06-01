@@ -3,9 +3,6 @@
 const Controller = require('egg').Controller;
 const fields = ['openid', 'unionid', 'username'];
 
-const idRule = {
-  id: 'string'
-};
 const updateRule = {
   username: 'string',
   password: 'string'
@@ -21,9 +18,6 @@ class APIController extends Controller {
   async show(){
     const { ctx } = this;
     const { params, helper, model } = ctx;
-
-    ctx.validate(idRule, params);
-
     const openid = params.id || '';
     let data = await model.Account.findOne({ openid }, fields.join(' '));
     ctx.body = data
@@ -32,10 +26,7 @@ class APIController extends Controller {
     const { app, ctx } = this;
     const { Status } = app;
     const { request, params, helper, model } = ctx;
-
-    ctx.validate(idRule, params);
     ctx.validate(updateRule, request.body);
-
     const openid = params.id || '';
     const { username, password } = request.body;
 

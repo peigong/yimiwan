@@ -1,7 +1,7 @@
 import { api } from '@/x/util/axios'
 
-export const getClassificationList = async function(){
-  return await api.get('classifications')
+export const getClassificationList = async function(parent){
+  return await api.get(`classifications/list/${ parent }`)
 }
 
 export const createClassification = async function(params){

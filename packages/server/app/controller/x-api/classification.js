@@ -2,12 +2,12 @@
 
 const Controller = require('egg').Controller;
 
-const idRule = {
-  id: 'string'
-};
 const updateRule = {
   sn: 'string',
   name: 'string',
+  parent: 'object',
+
+  position: 'number',
   active: 'boolean'
 };
 
@@ -23,23 +23,27 @@ class APIController extends Controller {
     const { Status } = app;
     const { request, model } = ctx;
     ctx.validate(updateRule, request.body);
-    const { sn, name, active } = request.body;
-    await model.Classification.create({ sn, name, active });
+    const { sn, name, remark, parent, position, active } = request.body;
+    await model.Classification.create({ sn, name, remark, parent, position, active });
     ctx.status  = Status.Created
   }
   async update(){
     const { app, ctx } = this;
     const { Status } = app;
     const { request, params, model } = ctx;
-
-    ctx.validate(idRule, params);
     ctx.validate(updateRule, request.body);
-
     const { id } = params;
-    const { sn, name, active } = request.body;
+    const { sn, name, remark, parent, position, active } = request.body;
 
-    await model.Classification.update({ _id: id }, { sn, name, active });
+    await model.Classification.update({ _id: id }, { sn, name, remark, parent, position, active });
     ctx.status  = Status.NoContent
+  }
+  async getList(){
+    const { app, ctx } = this;
+    const { logger, params, model } = ctx;
+    const { parent } = params;
+    const data = await model.Classification.find({ 'parent.sn': parent }).sort('position');
+    ctx.body = data;
   }
 }
 

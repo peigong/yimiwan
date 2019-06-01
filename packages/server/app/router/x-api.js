@@ -7,4 +7,5 @@ module.exports = app => {
   router.resources('users', '/users', controller.xApi.users)
   router.resources('accounts', '/accounts', controller.xApi.accounts)
   router.resources('classifications', '/classifications', controller.xApi.classification)
+  router.get('/classifications/list/:parent', controller.xApi.classification.getList)
 };

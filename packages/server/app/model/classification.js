@@ -4,6 +4,7 @@ module.exports = app => {
 
   const ModelSchema = new Schema({
     active: { type: Boolean, default: true },  //  生效状态
+    position: { type: Number, default: 1e6  }, 
 
     sn: { type: String, default: '' },
     name: { type: String, default: '' },
