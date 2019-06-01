@@ -17,21 +17,36 @@ class APIController extends Controller {
     }
     if(keywords){
       const reg = { $regex: keywords, $Option: '$i' }
-      conditions.title = conditions.summary = conditions.adress = conditions.phone = conditions.email = conditions.linkman = reg;
+      conditions.summary = reg;
     }
 
-    let data = await model.Company.find(conditions);
+    let data = await model.Media.find(conditions);
     ctx.body = data;
   }
   async show(){
     const { ctx } = this;
     const { params, model } = ctx;
     const { id } = params;
-    const data = await model.Company.findOne({ _id: id });
-    const logo = await model.Media.findOne({ 'classification.sn': 'company-logo', topical: id });
-    const licence = await model.Media.findOne({ 'classification.sn': 'company-licence', topical: id });
-    const videos = await model.Media.find({ 'classification.sn': 'company-video', topical: id });
-    ctx.body = { ...data._doc, logo, licence, videos };
+    const data = await model.Media.findOne({ _id: id });
+    ctx.body = data
+  }
+  async create(){
+    const { app, ctx } = this;
+    const { Status } = app;
+    const { request, model } = ctx;
+    const updateRule = {
+      openid: 'string',
+      status: 'number',
+      topical: 'string', // 主题ID
+      refer: 'string', // 参考辅助ID
+      type: 'number',
+      mediaid: 'string',
+      classification: 'object'
+    };
+    ctx.validate(updateRule, request.body);
+    const { openid, unionid, status, topical, refer, type, id, summary, mediaid, classification } = request.body;
+    await model.Media.create({ openid, unionid, status, topical, refer, type, id, summary, mediaid, classification });
+    ctx.status  = Status.Created
   }
   async update(){
     const { app, ctx } = this;
@@ -44,7 +59,7 @@ class APIController extends Controller {
     ctx.validate(updateRule, request.body);
     const { status } = request.body;
 
-    await model.Company.update({ _id: id }, { status });
+    await model.Media.update({ _id: id }, { status });
     ctx.status  = Status.NoContent
   }
 }

@@ -98,7 +98,7 @@ export default {
             message = '类别修改成功！'
           }else{
             exec = createClassification
-            message = '类别添加功！'
+            message = '类别添加成功！'
           }
           if(exec){
             exec(params)

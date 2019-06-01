@@ -38,12 +38,14 @@
          <el-table-column label="操作">
            <template slot-scope="scope">
              <el-button type="primary" size="mini" @click="showDetails(scope.row)">查看</el-button>
+             <el-button type="primary" size="mini" @click="showMediaEditor(scope.row)">添加视频</el-button>
              <el-button type="success" size="mini" @click="approve(scope.row)" v-if="1 == scope.row.status">通过</el-button>
              <el-button type="warning" size="mini" @click="reject(scope.row)" v-if="1 == scope.row.status">驳回</el-button>
            </template>
          </el-table-column>
        </el-table>
     </x-layout>
+    <media-editor type="company-video" :item="item" :bell="bell" />
   </div>
 </template>
 
@@ -52,11 +54,13 @@ import { catchHandler, success } from '@/x/util/ui'
 import { getClassificationList } from '@/x/service/classification'
 import { Status, getCompanyList, getCompanyDetails, approve, reject } from '@/x/service/company'
 import xLayout from '@/x/components/x-layout'
+import mediaEditor from '@/x/components/media-editor'
 
 export default {
   name: 'app',
   components: {
     xLayout,
+    mediaEditor
   },
   mounted(){
     getClassificationList('industry-code').then(data => {
@@ -73,6 +77,8 @@ export default {
         keywords: '',
         status: 0
       },
+      bell: 0,
+      item: {},
       items: []
     }
   },
@@ -92,6 +98,11 @@ export default {
     },
     showDetails(item){
       getCompanyDetails(item._id)
+    },
+    showMediaEditor(item){
+      const { openid, unionid, _id } = item;
+      this.item =  { openid: openid, unionid: unionid, topical: _id, refer: 'company' }
+      this.bell++
     },
     approve(item){
       approve(item._id)
