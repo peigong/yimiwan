@@ -18,6 +18,7 @@ const proxy = {
 };
 const devServer = {
   proxy: {
+    '/media': proxy,
     '/x': proxy,
     '/x-api': proxy
   }

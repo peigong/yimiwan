@@ -23,7 +23,7 @@
       <wv-switch title="关闭" v-model="ctrl.company" />
       <wv-group>
         <wv-cell title="查看岗位列表" is-link @click="showJob" />
-        <company-edit :item="company" @changed="companyChangeHandler" />
+        <company-edit :item-id="companyId" @changed="companyChangeHandler" />
       </wv-group>
     </wv-popup>
     <wv-popup :visible.sync="ctrl.job">
@@ -73,6 +73,7 @@ export default {
         job: false
       },
       company: {},
+      companyId: '',
       companyList: [],
       companyListPicker: [{ values: [] }],
       job: {},
@@ -87,7 +88,7 @@ export default {
       this.$refs.tabs.setCurActive(1)
     },
     showCompanyEdit(item = {}){
-      this.company = item
+      this.companyId = item._id || ''
       this.ctrl.company = true
     },
     showJobEdit(item = {}){

@@ -27,23 +27,39 @@ class WxService extends Service {
     }
     return pathname;
   }
-  async save(type, media){
-    type = type + ''
+  async save(media, settings, multiple = false){
     const { ctx, config } = this;
-    const { logger } = ctx;
-    const { root } = config;
-    try{
-      const o = url.parse(media)
-      const pathname = o.pathname
-      if(pathname){
-        const fws = fs.createWriteStream(path.join(root, type, pathname));
-        await ctx.curl(media, { writeStream: fws })
-      }
-      return pathname;
-    }catch(ex){
-      logger.error(ex);
-      throw ex;
+    const { logger, model, service } = ctx;
+    const { wx } = service;
+    const { mediaid, originalId } = media;
+    const o = { ...media, ...settings };
+    const token = await wx.config.getAccessToken()
+    o.url = await this.getMedia(token, mediaid, settings.type)
+    if(!o.url){
+      o.url = `${ type }/${ mediaid}`
     }
+    if(mediaid !== originalId){
+      const updateRule = {
+        openid: 'string',
+        active: 'boolean',
+        topical: 'string', // 主题ID
+        refer: 'string', // 参考辅助ID
+        type: 'number',
+        mediaid: 'string',
+        classification: 'object'
+      };
+      ctx.validate(updateRule, o);
+      const status = 1;
+      o.summary = o.summary || o.classification.name || '';
+      const { openid, unionid, active, topical, refer, type, id, url, summary, mediaid, classification } = o;
+      const data = { openid, unionid, active, status, topical, refer, type, id, url, summary, mediaid, classification };
+      if(multiple){
+        await model.Media.create(data);
+      }else{
+        await model.Media.findOneAndUpdate({ openid, topical, refer, 'classification.sn': classification.sn }, data, { upsert: true, useFindAndModify: false });
+      }
+    }
+    return o;
   }
 }
 

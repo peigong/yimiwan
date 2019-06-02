@@ -3,6 +3,9 @@
 const Controller = require('egg').Controller;
 
 const updateRule = {
+  logo: 'object',
+  licence: 'object',
+  classification: 'object',
   title: 'string', // 工商注册的全称
   summary: 'string', // 公司业务简介
   adress: 'string', // 公司地址
@@ -22,6 +25,17 @@ class APIController extends Controller {
     }
     ctx.body = data;
   }
+  async show(){
+    const { ctx } = this;
+    const { params, cookies, model } = ctx;
+    const { id } = params;
+    const cid = cookies.get('cid') || '';
+    const data = await model.Company.findOne({ _id: id, openid: cid });
+    const logo = await model.Media.findOne({ 'classification.sn': 'company-logo', topical: id });
+    const licence = await model.Media.findOne({ 'classification.sn': 'company-licence', topical: id });
+    const videos = await model.Media.find({ 'classification.sn': 'company-video', topical: id });
+    ctx.body = { ...data._doc, logo, licence, videos };
+  }
   async create(){
     const { app, ctx } = this;
     const { Status } = app;
@@ -30,8 +44,9 @@ class APIController extends Controller {
     ctx.validate(updateRule, request.body);
     const openid = cookies.get('cid') || '';
     const unionid = '';
-    const active = false;
+    let active = false;
     const {
+      logo,
       licence,
       classification,
       title, // 工商注册的全称
@@ -41,16 +56,12 @@ class APIController extends Controller {
       email, // 电子邮箱
       linkman // 负责人
     } = request.body;
-    if(licence && licence.id){
-      licence.type = 1;
-      const token = await wx.config.getAccessToken()
-      licence.url = await wx.media.getMedia(token, licence.id, licence.type)
-    }
-    await model.Company.create({
+    const status = 1;
+    const company = await model.Company.create({
       openid,
       unionid,
       active,
-      licence,
+      status,
       classification,
       title, // 工商注册的全称
       summary, // 公司业务简介
@@ -59,16 +70,37 @@ class APIController extends Controller {
       email, // 电子邮箱
       linkman // 负责人
     });
+    active = true;
+    const type = 1;
+    const topical = company._id + '';
+    const refer = 'company';
+    const settings = {
+      type,
+      active,
+      openid,
+      unionid,
+      topical,
+      refer
+    };
+    if(logo && logo.mediaid){
+      await wx.media.save(logo, { ...settings, classification: { sn: 'company-logo', name: '公司LOGO' }})
+    }
+    if(licence && licence.mediaid){
+      await wx.media.save(licence, { ...settings, classification: { sn: 'company-licence', name: '公司营业执照' }})
+    }
     ctx.status  = Status.Created
   }
   async update(){
     const { app, ctx } = this;
     const { Status } = app;
-    const { request, params, service, model } = ctx;
+    const { request, params, cookies, service, model } = ctx;
     const { wx } = service
+    const openid = cookies.get('cid') || '';
+    const unionid = '';
     ctx.validate(updateRule, request.body);
     const { id } = params;
     const {
+      logo,
       licence,
       classification,
       title, // 工商注册的全称
@@ -78,11 +110,6 @@ class APIController extends Controller {
       email, // 电子邮箱
       linkman // 负责人
     } = request.body;
-    if(licence && licence.id){
-      licence.type = 1;
-      const token = await wx.config.getAccessToken()
-      licence.url = await wx.media.getMedia(token, licence.id, licence.type)
-    }
 
     await model.Company.update({ _id: id }, {
       licence,
@@ -94,6 +121,24 @@ class APIController extends Controller {
       email, // 电子邮箱
       linkman // 负责人
     });
+    const type = 1;
+    const active = true;
+    const topical = id;
+    const refer = 'company';
+    const settings = {
+      type,
+      active,
+      openid,
+      unionid,
+      topical,
+      refer
+    };
+    if(logo && logo.mediaid){
+      await wx.media.save(logo, { ...settings, classification: { sn: 'company-logo', name: '公司LOGO' }})
+    }
+    if(licence && licence.mediaid){
+      await wx.media.save(licence, { ...settings, classification: { sn: 'company-licence', name: '公司营业执照' }})
+    }
     ctx.status  = Status.NoContent
   }
 }

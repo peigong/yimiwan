@@ -2,9 +2,8 @@
   <div>
     <el-row :gutter="20" type="flex" justify="center">
       <el-col :span="11" v-for="item in items" :key="item.mediaid">
-        <div>
-          <tx-video-player :item-id="item.mediaid" />
-        </div>
+        <div v-if="!item.url">没有相应的图片地址</div>
+        <div v-if="!!item.url"><img :src="'/media/' + item.url" max-width="100%" height="auto" /></div>
         <div class="ctrl">
           <el-button type="default" size="mini" v-if="1 == item.status">待审核</el-button>
           <el-button type="success" size="mini" v-if="2 == item.status">已通过</el-button>
@@ -23,12 +22,10 @@
 <script>
 import { catchHandler, success } from '@/x/util/ui'
 import { Status, approve, reject } from '@/x/service/media'
-import txVideoPlayer from '@/x/components/tx-video-player'
 
 export default {
   props: ['items'],
   components: {
-    txVideoPlayer
   },
   data() {
     return {

@@ -3,8 +3,10 @@
     <wv-group title="基本信息">
       <wv-input label="公司全称" placeholder="工商注册的全称" v-model="params.title"></wv-input>
       <wv-cell title="公司行业" is-link :value="classification.name" @click.native="ctrl.classification = true" />
-      <img v-if="!!licenceUrl" :src="licenceUrl" max-width="100%" height="auto" />
-      <wv-cell title="上传营业执照" is-link @click="upload" />
+      <img v-if="!!logo.url" :src="logo.url" max-width="100%" height="auto" />
+      <wx-upload label="公司LOGO" @changed="logoChangeHandler" />
+      <img v-if="!!licence.url" :src="licence.url" max-width="100%" height="auto" />
+      <wx-upload label="营业执照" @changed="licenceChangeHandler" />
     </wv-group>
     <wv-group title="公司业务简介">
       <wv-textarea placeholder="请输入公司业务简介" :rows="3" :show-counter="false" v-model="params.summary"></wv-textarea>
@@ -34,90 +36,102 @@
 <script>
 import { catchHandler, success } from '@/wx/util/ui'
 import { getClassificationList } from '@/wx/service/classification'
-import { createCompany, updateCompany } from '@/wx/service/company'
-import { chooseImage, uploadImage } from '@/wx/util/wx'
+import { createCompany, updateCompany, getCompanyDetails } from '@/wx/service/company'
+import wxUpload from '@/wx/components/wx-upload'
 
 export default {
   name: 'company-edit',
-  props: [ 'item' ],
+  props: [ 'itemId' ],
   components: {
+    wxUpload
   },
   data(){
-    const it = this.item || {};
-    const { classification, _id, title, summary, adress, phone, email, linkman } = it;
-    const licence = it.licence || {}
     return {
       ctrl: {
         classification: false
       },
-      classification: classification || {},
+      classification: {},
       classificationList: [{ values: [] }],
 
-      itemId: _id || '',
       params: {
-        title: title || '', // 工商注册的全称
-        summary: summary || '', // 公司业务简介
-        adress: adress || '', // 公司地址
-        phone: phone || '', // 联系电话
-        email: email || '', // 电子邮箱
-        linkman: linkman || '' // 负责人
+        title: '', // 工商注册的全称
+        summary: '', // 公司业务简介
+        adress: '', // 公司地址
+        phone: '', // 联系电话
+        email: '', // 电子邮箱
+        linkman: '' // 负责人
       },
-      licenceId: licence.id || '',
-      licenceUrl: this.getLicenceUrl(licence) // 营业执照照片
+      logo: {
+        originalId: '',
+        mediaid: '',
+        url: ''
+      },
+      licence: {
+        originalId: '',
+        mediaid: '',
+        url: ''
+      }
     }
   },
   mounted(){
-    getClassificationList()
+    this.setItemId(this.itemId)
+    getClassificationList('industry-code')
     .then(data => {
       this.classificationList[0].values = data || []
     })
     .catch(catchHandler)
   },
   watch: {
-    item(it = {}){
-      this.itemId = it._id || ''
+    itemId(val = ''){
+      this.setItemId(val)
+    }
+  },
+  methods: {
+    getMediaUrl(media = {}){
+      let url = media.url || ''
+      if(url){
+        url = `/media/${ url }`
+      }
+      return url
+    },
+    setItemId(id = ''){
+      if(id){
+        getCompanyDetails(id)
+        .then(this.setItem)
+        .catch(catchHandler)
+      }else{
+        this.setItem()
+      }
+    },
+    setItem(it = {}){
       this.classification = it.classification || {}
+
+      const logo = it.logo || {}
+      this.logo.originalId = logo.mediaid || ''
+      this.logo.mediaid = logo.mediaid || ''
+      this.logo.url = this.getMediaUrl(logo)
       const licence = it.licence || {}
-      this.licenceId = licence.id || ''
-      this.licenceUrl = this.getLicenceUrl(licence)
+      this.licence.originalId = licence.mediaid || ''
+      this.licence.mediaid = licence.mediaid || ''
+      this.licence.url = this.getMediaUrl(licence)
+
       this.params.title = it.title || '' // 工商注册的全称
       this.params.summary = it.summary || '' // 公司业务简介
       this.params.adress = it.adress || '' // 公司地址
       this.params.phone = it.phone || '' // 联系电话
       this.params.email = it.email || '' // 电子邮箱
       this.params.linkman = it.linkman || '' // 负责人
-    }
-  },
-  methods: {
-    getLicenceUrl(licence = {}){
-      let licenceUrl = ''
-      const url = licence.url || ''
-      if(url){
-        licenceUrl = `/media/${ url }`
-      }
-      return licenceUrl
     },
-    upload(){
-      chooseImage({
-        count: 1 // 默认9
-      })
-      .then(res => {
-        let localId = ''
-        const localIds =  res.localIds || []
-        if(localIds.length){
-          localId = res.localIds[0]
-          this.licenceUrl = localId
-          return localId
-        }
-      })
-      .then(localId => uploadImage({ localId }))
-      .then(res => {
-        this.licenceId = res.serverId || ''; // 返回图片的服务器端ID
-      })
-      .catch(catchHandler)
+    logoChangeHandler(media = {}){
+      this.logo.mediaid = media.mediaid || ''
+      this.logo.url = media.url || ''
+    },
+    licenceChangeHandler(media = {}){
+      this.licence.mediaid = media.mediaid || ''
+      this.licence.url = media.url || ''
     },
     submit(){
-      const params = { licence: { id: this.licenceId }, classification: this.classification, ...this.params }
+      const params = { logo: this.logo, licence: this.licence, classification: this.classification, ...this.params }
       const id = this.itemId || ''
       let exec = null
       let message = ''

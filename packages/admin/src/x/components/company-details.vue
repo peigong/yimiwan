@@ -31,6 +31,14 @@
         <label>业务简介：</label>
         <span>{{ item.summary }}</span>
       </el-row>
+      <h3>公司LOGO</h3>
+      <el-row v-if="!!logo.url">
+        <img :src="'/media/' + logo.url" max-width="100%" height="auto" />
+      </el-row>
+      <h3>营业执照</h3>
+      <el-row v-if="!!licence.url">
+        <img :src="'/media/' + licence.url" max-width="100%" height="auto" />
+      </el-row>
       <el-row v-if="videos.length">
         <h3>视频信息</h3>
         <tx-video-list :items="videos" />
@@ -54,6 +62,8 @@ export default {
       visible: false,
       item: {},
       classification: {},
+      logo: {},
+      licence: {},
       videos: []
     };
   },
@@ -70,15 +80,22 @@ export default {
   },
   methods: {
     setItemId(itemId = ''){
-      this.item = {}
-      this.videos = []
-      getCompanyDetails(itemId)
-      .then((data) => {
-        this.item = data
-        this.classification = data.classification || {}
-        this.videos = data.videos || []
-      })
-      .catch(catchHandler)
+      if(itemId){
+        getCompanyDetails(itemId)
+        .then(this.setItem)
+        .catch(catchHandler)
+      }else{
+        this.setItem()
+      }
+    },
+    setItem(data = {}){
+      this.item = data
+      this.classification = data.classification || {}
+      const logo = data.logo || {}
+      this.logo.url = logo.url || ''
+      const licence = data.licence || {}
+      this.licence.url = licence.url || ''
+      this.videos = data.videos || []
     },
     approve(item){
       approve(item._id)

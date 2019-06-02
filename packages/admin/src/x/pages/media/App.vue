@@ -24,7 +24,10 @@
         </el-form-item>
       </el-form>
       <el-table :data="items" style="width: 100%">
+        <el-table-column prop="classification.sn" label="类别编号"></el-table-column>
+        <el-table-column prop="classification.name" label="类别名称"></el-table-column>
         <el-table-column prop="mediaid" label="ID"></el-table-column>
+        <el-table-column prop="url" label="URL"></el-table-column>
         <el-table-column prop="summary" label="说明"></el-table-column>
          <el-table-column label="审核状态">
            <template slot-scope="scope">
@@ -33,8 +36,9 @@
              <el-button type="warning" size="mini"  v-if="3 == scope.row.status">已驳回</el-button>
            </template>
           </el-table-column>
-         <el-table-column label="操作" width="300">
+         <el-table-column label="操作" width="400">
            <template slot-scope="scope">
+             <el-button type="primary" size="mini" @click="showImageViewer(scope.row)" v-if="1 == scope.row.type">查看图片</el-button>
              <el-button type="primary" size="mini" @click="showTxVideoViewer(scope.row)" v-if="3 == scope.row.type">查看视频</el-button>
              <el-button type="success" size="mini" @click="approve(scope.row)" v-if="1 == scope.row.status">通过</el-button>
              <el-button type="warning" size="mini" @click="reject(scope.row)" v-if="1 == scope.row.status">驳回</el-button>
@@ -43,6 +47,7 @@
          </el-table-column>
        </el-table>
     </x-layout>
+    <image-viewer :items="images" :bell="bell.image" />
     <tx-video-viewer :items="videos" :bell="bell.viewer" />
     <company-details :item-id="companyId" :bell="bell.details" />
   </div>
@@ -52,6 +57,7 @@
 import { catchHandler, success } from '@/x/util/ui'
 import { Status, getMediaList, approve, reject } from '@/x/service/media'
 import xLayout from '@/x/components/x-layout'
+import imageViewer from '@/x/components/image-viewer'
 import txVideoViewer from '@/x/components/tx-video-viewer'
 import companyDetails from '@/x/components/company-details'
 
@@ -59,6 +65,7 @@ export default {
   name: 'app',
   components: {
     xLayout,
+    imageViewer,
     txVideoViewer,
     companyDetails
   },
@@ -76,9 +83,11 @@ export default {
 
       bell: {
         viewer: 0,
+        image: 0,
         details: 0
       },
       companyId: '',
+      images: [],
       videos: []
     }
   },
@@ -89,12 +98,18 @@ export default {
         const items = data || []
         this.items = items.map(item => {
           item.satus = items.status || Status.Unaudited
+          item.url = item.url || ''
           return item
         })
-      }).catch(catchHandler)
+      })
+      .catch(catchHandler)
     },
     doSearch(){
       this.getList()
+    },
+    showImageViewer(item){
+      this.images = [ item ]
+      this.bell.image++
     },
     showTxVideoViewer(item){
       this.videos = [ item ]
