@@ -39,32 +39,31 @@
            <template slot-scope="scope">
              <el-button type="primary" size="mini" @click="showDetails(scope.row)">查看</el-button>
              <el-button type="primary" size="mini" @click="showMediaEditor(scope.row)">添加视频</el-button>
-             <el-button type="primary" size="mini" @click="showTxPlayer(scope.row)">查看视频</el-button>
              <el-button type="success" size="mini" @click="approve(scope.row)" v-if="1 == scope.row.status">通过</el-button>
              <el-button type="warning" size="mini" @click="reject(scope.row)" v-if="1 == scope.row.status">驳回</el-button>
            </template>
          </el-table-column>
        </el-table>
     </x-layout>
-    <media-editor type="company-video" :item="item" :bell="bell" />
-    <tx-player :items="videos" :bell="txPlayerBell" />
+    <tx-video-editor type="company-video" :item="item" :bell="bell.editor" />
+    <company-details :item-id="companyId" :bell="bell.details" />
   </div>
 </template>
 
 <script>
 import { catchHandler, success } from '@/x/util/ui'
 import { getClassificationList } from '@/x/service/classification'
-import { Status, getCompanyList, getCompanyDetails, approve, reject } from '@/x/service/company'
+import { Status, getCompanyList, approve, reject } from '@/x/service/company'
 import xLayout from '@/x/components/x-layout'
-import mediaEditor from '@/x/components/media-editor'
-import txPlayer from '@/x/components/tx-player'
+import txVideoEditor from '@/x/components/tx-video-editor'
+import companyDetails from '@/x/components/company-details'
 
 export default {
   name: 'app',
   components: {
     xLayout,
-    mediaEditor,
-    txPlayer
+    txVideoEditor,
+    companyDetails
   },
   mounted(){
     getClassificationList('industry-code').then(data => {
@@ -83,10 +82,13 @@ export default {
       },
       items: [],
 
-      bell: 0,
+      bell: {
+        editor: 0,
+        viewer: 0,
+        details: 0
+      },
+      companyId: '',
       item: {},
-
-      txPlayerBell: 0,
       videos: []
     }
   },
@@ -105,31 +107,19 @@ export default {
       this.getList()
     },
     showDetails(item){
-      getCompanyDetails(item._id)
+      this.companyId = item._id
+      this.bell.details++
     },
     showMediaEditor(item){
       const { openid, unionid, _id } = item;
       this.item =  { openid: openid, unionid: unionid, topical: _id, refer: 'company' }
-      this.bell++
-    },
-    showTxPlayer(item){
-      getCompanyDetails(item._id)
-      .then(data => {
-        const videos = data.videos || []
-        if(videos.length){
-          this.videos = videos
-          this.txPlayerBell++
-        }else{
-          throw new Error('此公司没有视频')
-        }
-      })
-      .catch(catchHandler)
+      this.bell.editor++
     },
     approve(item){
       approve(item._id)
       .then(() => {
         success('审核成功')
-        this.getList()
+        item.status = Status.Approved
       })
       .catch(catchHandler)
     },
@@ -137,7 +127,7 @@ export default {
       reject(item._id)
       .then(() => {
         success('驳回成功')
-        this.getList()
+        item.status = Status.Rejective
       })
       .catch(catchHandler)
     }

@@ -35,14 +35,16 @@
           </el-table-column>
          <el-table-column label="操作" width="300">
            <template slot-scope="scope">
-             <el-button type="primary" size="mini" @click="showTxPlayer(scope.row)" v-if="3 == scope.row.type">查看视频</el-button>
+             <el-button type="primary" size="mini" @click="showTxVideoViewer(scope.row)" v-if="3 == scope.row.type">查看视频</el-button>
              <el-button type="success" size="mini" @click="approve(scope.row)" v-if="1 == scope.row.status">通过</el-button>
              <el-button type="warning" size="mini" @click="reject(scope.row)" v-if="1 == scope.row.status">驳回</el-button>
-           </template>
+             <el-button type="primary" size="mini" @click="showCompanyDetails(scope.row)" v-if="'company' == scope.row.refer">公司信息</el-button>
+         </template>
          </el-table-column>
        </el-table>
     </x-layout>
-    <tx-player :items="videos" :bell="bell" />
+    <tx-video-viewer :items="videos" :bell="bell.viewer" />
+    <company-details :item-id="companyId" :bell="bell.details" />
   </div>
 </template>
 
@@ -50,13 +52,15 @@
 import { catchHandler, success } from '@/x/util/ui'
 import { Status, getMediaList, approve, reject } from '@/x/service/media'
 import xLayout from '@/x/components/x-layout'
-import txPlayer from '@/x/components/tx-player'
+import txVideoViewer from '@/x/components/tx-video-viewer'
+import companyDetails from '@/x/components/company-details'
 
 export default {
   name: 'app',
   components: {
     xLayout,
-    txPlayer
+    txVideoViewer,
+    companyDetails
   },
   mounted(){
     this.getList()
@@ -70,7 +74,11 @@ export default {
       },
       items: [],
 
-      bell: 0,
+      bell: {
+        viewer: 0,
+        details: 0
+      },
+      companyId: '',
       videos: []
     }
   },
@@ -88,15 +96,19 @@ export default {
     doSearch(){
       this.getList()
     },
-    showTxPlayer(item){
-      this.videos = [item]
-      this.bell++
+    showTxVideoViewer(item){
+      this.videos = [ item ]
+      this.bell.viewer++
+    },
+    showCompanyDetails(item){
+      this.companyId = item.topical
+      this.bell.details++
     },
     approve(item){
       approve(item._id)
       .then(() => {
         success('审核成功')
-        this.getList()
+        item.status = Status.Approved
       })
       .catch(catchHandler)
     },
@@ -104,7 +116,7 @@ export default {
       reject(item._id)
       .then(() => {
         success('驳回成功')
-        this.getList()
+        item.status = Status.Rejective
       })
       .catch(catchHandler)
     }
