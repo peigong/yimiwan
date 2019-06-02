@@ -15,20 +15,12 @@
 </template>
 
 <script>
-import { catchHandler } from '@/wx/util/ui'
-import { getCVList } from '@/wx/service/cv'
-
 export default {
   name: 'cv-post',
   props: [ 'itemId' ],
   components: {
   },
   mounted(){
-    getCVList()
-    .then((data) => {
-      this.cvList[0].values = data
-    })
-    .catch(catchHandler)
   },
   data(){
     return {

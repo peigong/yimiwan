@@ -8,12 +8,19 @@
         </wv-group>
         <wv-button type="default" class="btn-handler" :mini="true" @click="showCompanyEdit()">添加公司信息</wv-button>
       </wv-tab>
+      <wv-tab title="公司照片">
+        <wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />
+        <image-list type="company-image" :item-id="companyId" :items='images' />
+      </wv-tab>
       <wv-tab title="我的岗位">
         <wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />
         <wv-group title="岗位列表">
           <wv-cell :title="item.title" is-link @click="showJobEdit(item)" v-for="(item, key) in jobList" :key="key" />
         </wv-group>
         <wv-button type="default" class="btn-handler" :mini="true" @click="showJobEdit()">添加岗位信息</wv-button>
+      </wv-tab>
+      <wv-tab title="岗位照片">
+        公司图片
       </wv-tab>
       <wv-tab title="我的信息">
         <message-cv-list />
@@ -22,8 +29,9 @@
     <wv-popup :visible.sync="ctrl.company" style="overflow: auto;" height="100%">
       <wv-switch title="关闭" v-model="ctrl.company" />
       <wv-group>
+        <wv-cell title="查看公司照片" is-link @click="showCompanyImage" />
         <wv-cell title="查看岗位列表" is-link @click="showJob" />
-        <company-edit :item-id="companyId" @changed="companyChangeHandler" />
+        <company-edit :item="companyDetails" @changed="companyEditChangeHandler" />
       </wv-group>
     </wv-popup>
     <wv-popup :visible.sync="ctrl.job">
@@ -36,7 +44,7 @@
       :visible.sync="ctrl.companyPicker"
       :columns="companyListPicker"
       value-key="title"
-      @change="onCompanyChange"
+      @change="companyPickerChangeHandler"
     />
   </div>
 </template>
@@ -44,8 +52,9 @@
 <script>
 import { catchHandler } from '@/wx/util/ui'
 import { getJobList } from '@/wx/service/job'
-import { getCompanyList } from '@/wx/service/company'
+import { getCompanyList, getCompanyDetails } from '@/wx/service/company'
 import companyEdit from '@/wx/components/company-edit'
+import imageList from '@/wx/components/image-list'
 import jobEdit from '@/wx/components/job-edit'
 import messageCvList from '@/wx/components/message-cv-list'
 
@@ -54,6 +63,7 @@ export default {
   props: [],
   components: {
     companyEdit,
+    imageList,
     jobEdit,
     messageCvList
   },
@@ -74,8 +84,10 @@ export default {
       },
       company: {},
       companyId: '',
+      companyDetails: {},
       companyList: [],
       companyListPicker: [{ values: [] }],
+      images: [],
       job: {},
       jobList: []
   }
@@ -83,22 +95,33 @@ export default {
   computed: {
   },
   methods: {
-    showJob(){
+    showCompanyImage(){
       this.ctrl.company = false
       this.$refs.tabs.setCurActive(1)
     },
+    showJob(){
+      this.ctrl.company = false
+      this.$refs.tabs.setCurActive(2)
+    },
     showCompanyEdit(item = {}){
-      this.companyId = item._id || ''
+      const id = item._id || ''
+      this.company = item
+      this.companyId = id
+      this.getCompanyDetails(id)
       this.ctrl.company = true
     },
     showJobEdit(item = {}){
       this.job = item
       this.ctrl.job = true
     },
-    onCompanyChange(picker, values){
-      this.company = values[0]
+    companyPickerChangeHandler(picker, values){
+      const item = values[0] || {}
+      const id = item._id || ''
+      this.company = item
+      this.companyId = id
+      this.getCompanyDetails(id)
     },
-    companyChangeHandler(){
+    companyEditChangeHandler(){
       this.ctrl.company = false
       this.getCompanyList()
     },
@@ -108,6 +131,15 @@ export default {
       .then((data) => {
         this.companyList = data
         this.companyListPicker[0].values = data
+      })
+      .catch(catchHandler)
+    },
+    getCompanyDetails(id){
+      getCompanyDetails(id)
+      .then(data => {
+        data = data || {}
+        this.companyDetails = data
+        this.images = data.images || []
       })
       .catch(catchHandler)
     }

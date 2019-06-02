@@ -77,7 +77,7 @@ export default {
       params: {
         classification: '',
         keywords: '',
-        status: 0
+        status: Status.Unaudited
       },
       items: [],
 

@@ -34,7 +34,7 @@ class WxService extends Service {
     const { mediaid, originalId } = media;
     const o = { ...media, ...settings };
     const token = await wx.config.getAccessToken()
-    o.url = await this.getMedia(token, mediaid, settings.type)
+    o.url = await this.getMedia(token, mediaid, o.type)
     if(!o.url){
       o.url = `${ type }/${ mediaid}`
     }
@@ -51,8 +51,8 @@ class WxService extends Service {
       ctx.validate(updateRule, o);
       const status = 1;
       o.summary = o.summary || o.classification.name || '';
-      const { openid, unionid, active, topical, refer, type, id, url, summary, mediaid, classification } = o;
-      const data = { openid, unionid, active, status, topical, refer, type, id, url, summary, mediaid, classification };
+      const { openid, unionid, active, topical, refer, type, url, summary, mediaid, classification } = o;
+      const data = { openid, unionid, active, status, topical, refer, type, url, summary, mediaid, classification };
       if(multiple){
         await model.Media.create(data);
       }else{

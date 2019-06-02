@@ -37,8 +37,6 @@
 </template>
 
 <script>
-import { catchHandler } from '@/wx/util/ui'
-import { getCVList } from '@/wx/service/cv'
 import cvEdit from '@/wx/components/cv-edit'
 import educationalEdit from '@/wx/components/educational-edit'
 import workEdit from '@/wx/components/work-edit'
@@ -52,11 +50,6 @@ export default {
     workEdit
   },
   mounted(){
-    getCVList()
-    .then((data) => {
-      this.cvList[0].values = data
-    })
-    .catch(catchHandler)
   },
   data(){
     return {

@@ -10,6 +10,8 @@ module.exports = app => {
 
   router.resources('classifications', '/classifications', controller.wxApi.classification)
   router.resources('companies', '/companies', controller.wxApi.company)
+  router.resources('media', '/media', controller.wxApi.media)
+
   router.resources('job', '/job', controller.wxApi.job)
   router.resources('applicant', '/applicant', controller.wxApi.applicant)
   router.resources('message', '/message', controller.wxApi.message)

@@ -44,8 +44,8 @@ class APIController extends Controller {
       classification: 'object'
     };
     ctx.validate(updateRule, request.body);
-    const { openid, unionid, status, topical, refer, type, id, summary, mediaid, classification } = request.body;
-    await model.Media.create({ openid, unionid, status, topical, refer, type, id, summary, mediaid, classification });
+    const { openid, unionid, status, topical, refer, type, summary, mediaid, url, classification } = request.body;
+    await model.Media.create({ openid, unionid, status, topical, refer, type, summary, mediaid, url, classification });
     ctx.status  = Status.Created
   }
   async update(){

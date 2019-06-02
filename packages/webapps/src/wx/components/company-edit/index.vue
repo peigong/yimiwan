@@ -28,7 +28,7 @@
       :visible.sync="ctrl.classification"
       :columns="classificationList"
       value-key="name"
-      @change="onChange"
+      @change="classificationChangeHandler"
     />
   </div>
 </template>
@@ -36,12 +36,12 @@
 <script>
 import { catchHandler, success } from '@/wx/util/ui'
 import { getClassificationList } from '@/wx/service/classification'
-import { createCompany, updateCompany, getCompanyDetails } from '@/wx/service/company'
+import { createCompany, updateCompany } from '@/wx/service/company'
 import wxUpload from '@/wx/components/wx-upload'
 
 export default {
   name: 'company-edit',
-  props: [ 'itemId' ],
+  props: [ 'item' ],
   components: {
     wxUpload
   },
@@ -53,6 +53,7 @@ export default {
       classification: {},
       classificationList: [{ values: [] }],
 
+      itemId: '',
       params: {
         title: '', // 工商注册的全称
         summary: '', // 公司业务简介
@@ -74,7 +75,7 @@ export default {
     }
   },
   mounted(){
-    this.setItemId(this.itemId)
+    this.setItem(this.item)
     getClassificationList('industry-code')
     .then(data => {
       this.classificationList[0].values = data || []
@@ -82,8 +83,8 @@ export default {
     .catch(catchHandler)
   },
   watch: {
-    itemId(val = ''){
-      this.setItemId(val)
+    item(val = ''){
+      this.setItem(val)
     }
   },
   methods: {
@@ -94,33 +95,25 @@ export default {
       }
       return url
     },
-    setItemId(id = ''){
-      if(id){
-        getCompanyDetails(id)
-        .then(this.setItem)
-        .catch(catchHandler)
-      }else{
-        this.setItem()
-      }
-    },
-    setItem(it = {}){
-      this.classification = it.classification || {}
+    setItem(item = {}){
+      this.itemId = item._id || ''
+      this.classification = item.classification || {}
 
-      const logo = it.logo || {}
+      const logo = item.logo || {}
       this.logo.originalId = logo.mediaid || ''
       this.logo.mediaid = logo.mediaid || ''
       this.logo.url = this.getMediaUrl(logo)
-      const licence = it.licence || {}
+      const licence = item.licence || {}
       this.licence.originalId = licence.mediaid || ''
       this.licence.mediaid = licence.mediaid || ''
       this.licence.url = this.getMediaUrl(licence)
 
-      this.params.title = it.title || '' // 工商注册的全称
-      this.params.summary = it.summary || '' // 公司业务简介
-      this.params.adress = it.adress || '' // 公司地址
-      this.params.phone = it.phone || '' // 联系电话
-      this.params.email = it.email || '' // 电子邮箱
-      this.params.linkman = it.linkman || '' // 负责人
+      this.params.title = item.title || '' // 工商注册的全称
+      this.params.summary = item.summary || '' // 公司业务简介
+      this.params.adress = item.adress || '' // 公司地址
+      this.params.phone = item.phone || '' // 联系电话
+      this.params.email = item.email || '' // 电子邮箱
+      this.params.linkman = item.linkman || '' // 负责人
     },
     logoChangeHandler(media = {}){
       this.logo.mediaid = media.mediaid || ''
@@ -150,7 +143,7 @@ export default {
       })
       .catch(catchHandler)
     },
-    onChange(picker, values){
+    classificationChangeHandler(picker, values){
       const { sn, name } = values[0]
       this.classification = { sn, name }
     }
