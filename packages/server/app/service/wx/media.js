@@ -18,9 +18,11 @@ class WxService extends Service {
     try{
       logger.info(url);
       pathname = path.join(type, id);
-      await makeDir(path.join(root, '_media', type));
-      const fws = fs.createWriteStream(path.join(root, '_media', pathname));
-      await ctx.curl(url, { writeStream: fws });
+      if(id !== '1237378768e7q8e7r8qwesafdasdfasdfaxss111'){ // 测试状态不创建写文件
+        await makeDir(path.join(root, '_media', type));
+        const fws = fs.createWriteStream(path.join(root, '_media', pathname));
+        await ctx.curl(url, { writeStream: fws });
+      }
     }catch(ex){
       pathname = '';
       logger.error(ex);

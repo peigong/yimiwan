@@ -35,6 +35,7 @@
 
 <script>
 import { catchHandler, success } from '@/wx/util/ui'
+import { getMediaUrl } from '@/wx/service/media'
 import { getClassificationList } from '@/wx/service/classification'
 import { createCompany, updateCompany } from '@/wx/service/company'
 import wxUpload from '@/wx/components/wx-upload'
@@ -88,13 +89,6 @@ export default {
     }
   },
   methods: {
-    getMediaUrl(media = {}){
-      let url = media.url || ''
-      if(url){
-        url = `/media/${ url }`
-      }
-      return url
-    },
     setItem(item = {}){
       this.itemId = item._id || ''
       this.classification = item.classification || {}
@@ -102,11 +96,11 @@ export default {
       const logo = item.logo || {}
       this.logo.originalId = logo.mediaid || ''
       this.logo.mediaid = logo.mediaid || ''
-      this.logo.url = this.getMediaUrl(logo)
+      this.logo.url = getMediaUrl(logo)
       const licence = item.licence || {}
       this.licence.originalId = licence.mediaid || ''
       this.licence.mediaid = licence.mediaid || ''
-      this.licence.url = this.getMediaUrl(licence)
+      this.licence.url = getMediaUrl(licence)
 
       this.params.title = item.title || '' // 工商注册的全称
       this.params.summary = item.summary || '' // 公司业务简介

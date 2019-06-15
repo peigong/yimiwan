@@ -27,7 +27,7 @@
 <script>
 import { catchHandler, success } from '@/wx/util/ui'
 import { getClassificationList } from '@/wx/service/classification'
-import { Type, createMedia } from '@/wx/service/media'
+import { Type, getMediaUrl, createMedia } from '@/wx/service/media'
 import wxUpload from '@/wx/components/wx-upload'
 
 export default {
@@ -77,20 +77,13 @@ export default {
       images.forEach(it => {
         const sn = it.classification.sn || ''
         if(this.dict.hasOwnProperty(sn)){
-          it.url = this.getMediaUrl(it)
+          it.url = getMediaUrl(it)
           this.dict[sn].images.push(it)
         }
       })
     }
   },
   methods: {
-    getMediaUrl(media = {}){
-      let url = media.url || ''
-      if(url){
-        url = `/media/${ url }`
-      }
-      return url
-    },
     uploadHandler(media = {}){
       this.media.mediaid = media.mediaid || ''
       this.media.url = media.url || ''
