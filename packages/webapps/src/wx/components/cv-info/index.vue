@@ -27,27 +27,21 @@
     </wv-popup>
     <wv-popup :visible.sync="ctrl.educationalEdit">
       <wv-switch title="关闭" v-model="ctrl.educationalEdit" />
-      <educational-edit />
     </wv-popup>
     <wv-popup :visible.sync="ctrl.workEdit">
       <wv-switch title="关闭" v-model="ctrl.workEdit" />
-      <work-edit />
     </wv-popup>
   </div>
 </template>
 
 <script>
 import cvEdit from '@/wx/components/cv-edit'
-import educationalEdit from '@/wx/components/educational-edit'
-import workEdit from '@/wx/components/work-edit'
 
 export default {
   name: 'cv-info',
   props: [ 'itemId' ],
   components: {
-    cvEdit,
-    educationalEdit,
-    workEdit
+    cvEdit
   },
   mounted(){
   },

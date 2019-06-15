@@ -12,6 +12,10 @@
         <wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />
         <image-list type="company-image" :item-id="companyId" :items='images' />
       </wv-tab>
+      <wv-tab title="公司视频">
+        <wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />
+        <tx-video-player v-for="item in videos" :item-id="item.mediaid" :key='mediaid' />
+      </wv-tab>
       <wv-tab title="我的岗位">
         <wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />
         <wv-group title="岗位列表">
@@ -30,6 +34,7 @@
       <wv-switch title="关闭" v-model="ctrl.company" />
       <wv-group>
         <wv-cell title="查看公司照片" is-link @click="showCompanyImage" />
+        <wv-cell title="查看公司视频" is-link @click="showCompanyMedia" />
         <wv-cell title="查看岗位列表" is-link @click="showJob" />
         <company-edit :item="companyDetails" @changed="companyEditChangeHandler" />
       </wv-group>
@@ -55,6 +60,7 @@ import { getJobList } from '@/wx/service/job'
 import { getCompanyList, getCompanyDetails } from '@/wx/service/company'
 import companyEdit from '@/wx/components/company-edit'
 import imageList from '@/wx/components/image-list'
+import txVideoPlayer from '@/wx/components/tx-video-player'
 import jobEdit from '@/wx/components/job-edit'
 import messageCvList from '@/wx/components/message-cv-list'
 
@@ -64,6 +70,7 @@ export default {
   components: {
     companyEdit,
     imageList,
+    txVideoPlayer,
     jobEdit,
     messageCvList
   },
@@ -88,6 +95,7 @@ export default {
       companyList: [],
       companyListPicker: [{ values: [] }],
       images: [],
+      videos: [],
       job: {},
       jobList: []
   }
@@ -99,9 +107,13 @@ export default {
       this.ctrl.company = false
       this.$refs.tabs.setCurActive(1)
     },
-    showJob(){
+    showCompanyMedia(){
       this.ctrl.company = false
       this.$refs.tabs.setCurActive(2)
+    },
+    showJob(){
+      this.ctrl.company = false
+      this.$refs.tabs.setCurActive(3)
     },
     showCompanyEdit(item = {}){
       const id = item._id || ''
@@ -140,6 +152,7 @@ export default {
         data = data || {}
         this.companyDetails = data
         this.images = data.images || []
+        this.videos = data.videos || []
       })
       .catch(catchHandler)
     }
