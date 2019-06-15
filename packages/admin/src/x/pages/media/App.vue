@@ -55,7 +55,7 @@
 
 <script>
 import { catchHandler, success } from '@/x/util/ui'
-import { Status, getMediaList, approve, reject } from '@/x/service/media'
+import { Status, getMediaUrl, getMediaList, approve, reject } from '@/x/service/media'
 import xLayout from '@/x/components/x-layout'
 import imageViewer from '@/x/components/image-viewer'
 import txVideoViewer from '@/x/components/tx-video-viewer'
@@ -107,8 +107,9 @@ export default {
     doSearch(){
       this.getList()
     },
-    showImageViewer(item){
-      this.images = [ item ]
+    showImageViewer(it){
+      it.url = getMediaUrl(it)
+      this.images = [ it ]
       this.bell.image++
     },
     showTxVideoViewer(item){

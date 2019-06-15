@@ -13,6 +13,14 @@ export const Status = {
   'Rejective': 3
 }
 
+export const getMediaUrl = function(media = {}){
+  let url = media.url || ''
+  if(url){
+    url = `/media/${ url }`
+  }
+  return url
+}
+
 export const getMediaList = async function(params = {}){
   return await api.get('media', params)
 }

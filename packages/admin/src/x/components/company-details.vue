@@ -31,6 +31,7 @@
         <label>业务简介：</label>
         <span>{{ item.summary }}</span>
       </el-row>
+      <!--
       <h3>公司LOGO</h3>
       <el-row v-if="!!logo.url">
         <img :src="'/media/' + logo.url" max-width="100%" height="auto" />
@@ -38,6 +39,11 @@
       <h3>营业执照</h3>
       <el-row v-if="!!licence.url">
         <img :src="'/media/' + licence.url" max-width="100%" height="auto" />
+      </el-row>
+      -->
+      <el-row v-if="images.length">
+        <h3>相关图片</h3>
+        <image-list :items="images" />
       </el-row>
       <el-row v-if="videos.length">
         <h3>视频信息</h3>
@@ -49,21 +55,25 @@
 
 <script>
 import { catchHandler, success } from '@/x/util/ui'
+import { getMediaUrl } from '@/x/service/media'
 import { Status, getCompanyDetails, approve, reject } from '@/x/service/company'
 import txVideoList from '@/x/components/tx-video-list'
+import imageList from '@/x/components/image-list'
 
 export default {
   props: ['itemId', 'bell'],
   components: {
-    txVideoList
+    txVideoList,
+    imageList
   },
   data() {
     return {
       visible: false,
       item: {},
       classification: {},
-      logo: {},
-      licence: {},
+      images: [],
+      // logo: {},
+      // licence: {},
       videos: []
     };
   },
@@ -91,10 +101,15 @@ export default {
     setItem(data = {}){
       this.item = data
       this.classification = data.classification || {}
-      const logo = data.logo || {}
-      this.logo.url = logo.url || ''
-      const licence = data.licence || {}
-      this.licence.url = licence.url || ''
+      // const logo = data.logo || {}
+      // this.logo.url = logo.url || ''
+      // const licence = data.licence || {}
+      // this.licence.url = licence.url || ''
+      const images = data.images || []
+      this.images = images.map(it => {
+        it.url = getMediaUrl(it)
+        return it
+      })
       this.videos = data.videos || []
     },
     approve(item){
