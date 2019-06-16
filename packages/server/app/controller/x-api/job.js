@@ -7,7 +7,7 @@ const updateRule = {
   refer: 'string', // 参考辅助ID
   type: 'number',
   title: 'string', // 岗位名称
-  // payment: 'string', // 福利待遇
+  payment: 'string', // 福利待遇
   // workhours: 'string', // 工作时间
   // workaddress: 'string', // 工作地址
   // remark: 'string', // 备注说明
@@ -19,10 +19,18 @@ class APIController extends Controller {
   async index(){
     const { app, ctx } = this;
     const { logger, cookies, request, model } = ctx;
-    const openid = cookies.get('cid') || '';
-    const { type, topical, refer } = request.query;
-    const conditions = { openid, type, topical, refer };
-    logger.info(conditions);
+    const { type, keywords, status } = request.query;
+    const conditions = {};
+    if(+type){
+      conditions.type = type;
+    }
+    if(+status){
+      conditions.status = status;
+    }
+    if(keywords){
+      const reg = { $regex: keywords }
+      conditions.title = conditions.payment = conditions.workhours = conditions.workaddress = conditions.remark = conditions.jobcontent = conditions.requirement = reg;
+    }
     let data = await model.Job.find(conditions);
     ctx.body = data;
   }
@@ -30,8 +38,7 @@ class APIController extends Controller {
     const { ctx } = this;
     const { params, cookies, model } = ctx;
     const { id } = params;
-    const cid = cookies.get('cid') || '';
-    const data = await model.Job.findOne({ _id: id, openid: cid });
+    const data = await model.Job.findOne({ _id: id });
     ctx.body = data;
   }
   async create(){
@@ -63,9 +70,6 @@ class APIController extends Controller {
       active,
       del,
       status,
-      type,
-      topical,
-      refer,
       title, // 岗位名称
       payment, // 福利待遇
       workhours, // 工作时间
@@ -76,7 +80,7 @@ class APIController extends Controller {
     });
     ctx.status  = Status.Created
   }
-  async update(){
+  async edit(){
     const { app, ctx } = this;
     const { Status } = app;
     const { request, params, model } = ctx;
@@ -100,6 +104,20 @@ class APIController extends Controller {
       jobcontent, // 工作内容
       requirement  // 工作要求
     }});
+    ctx.status  = Status.NoContent
+  }
+  async update(){
+    const { app, ctx } = this;
+    const { Status } = app;
+    const { request, params, model } = ctx;
+    const rule = {
+      status: 'number'
+    };
+    const { id } = params;
+    ctx.validate(rule, request.body);
+    const { status } = request.body;
+
+    await model.Job.update({ _id: id }, { status });
     ctx.status  = Status.NoContent
   }
 }

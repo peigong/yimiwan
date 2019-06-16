@@ -11,6 +11,7 @@
       <el-menu-item index="wx-user"><el-link :underline="false" href="/x/pages/wx-user.html" type="primary">微信用户</el-link></el-menu-item>
       <el-menu-item index="company"><el-link :underline="false" href="/x/pages/company.html" type="primary">公司管理</el-link></el-menu-item>
       <el-menu-item index="media"><el-link :underline="false" href="/x/pages/media.html" type="primary">图片视频</el-link></el-menu-item>
+      <el-menu-item index="job"><el-link :underline="false" href="/x/pages/job.html" type="primary">职位</el-link></el-menu-item>
       <el-submenu index="system">
         <template slot="title">系统配置</template>
         <el-menu-item index="system-classification"><el-link :underline="false" href="/x/pages/classification.html" type="primary" class="menu-link">内置类别管理</el-link></el-menu-item>

@@ -10,4 +10,5 @@ module.exports = app => {
   router.get('/classifications/list/:parent', controller.xApi.classification.getList)
   router.resources('companies', '/companies', controller.xApi.company)
   router.resources('media', '/media', controller.xApi.media)
+  router.resources('job', '/job', controller.xApi.job)
 };

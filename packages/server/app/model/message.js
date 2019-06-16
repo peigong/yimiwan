@@ -7,7 +7,9 @@ module.exports = app => {
     openid: { type: String, default: '' }, //	用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
     unionid: { type: String, default: '' }, //	只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
 
-    active: { type: Boolean, default: false },  //  生效状态
+    active: { type: Boolean, default: true },
+    del: { type: Boolean, default: false },  //  删除标记
+    status: { type: Number, default: 1  }, // 类型，值为1时是待审核，值为2时是已审核，值为3时是已驳回
 
     to: { type: String, default: '' }, //	收信人ID
     type: { type: Number, default: 0  }, // 信息的类型，对人，对简历，对公司，信息回复

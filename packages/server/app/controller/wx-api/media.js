@@ -37,14 +37,6 @@ class APIController extends Controller {
     await wx.media.save({ topical, refer, type, summary, mediaid, url, classification }, settings, true)
     ctx.status  = Status.Created
   }
-  /*
-  async new() => {},
-  async create() => {},
-  async show() => {},
-  async edit() => {},
-  async update() => {},
-  async destroy() => {}
-    */
 }
 
 module.exports = APIController;

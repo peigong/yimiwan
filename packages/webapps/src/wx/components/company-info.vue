@@ -42,7 +42,7 @@
     <wv-popup :visible.sync="ctrl.job">
       <wv-switch title="关闭" v-model="ctrl.job" />
       <wv-group>
-        <job-edit />
+        <job-edit :type="1" :topical="companyId" :item="job" @changed="jobEditChangeHandler" />
       </wv-group>
     </wv-popup>
     <wv-picker
@@ -56,7 +56,7 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getJobList } from '@/wx/service/job'
+import { Type, Refer, getJobList, getJobDetails } from '@/wx/service/job'
 import { getCompanyList, getCompanyDetails } from '@/wx/service/company'
 import companyEdit from '@/wx/components/company-edit'
 import imageList from '@/wx/components/image-list'
@@ -76,11 +76,6 @@ export default {
   },
   mounted(){
     this.getCompanyList()
-    getJobList()
-    .then((data) => {
-      this.jobList = data
-    })
-    .catch(catchHandler)
   },
   data(){
     return {
@@ -123,7 +118,8 @@ export default {
       this.ctrl.company = true
     },
     showJobEdit(item = {}){
-      this.job = item
+      const id = item._id || ''
+      this.getJobDetails(id)
       this.ctrl.job = true
     },
     companyPickerChangeHandler(picker, values){
@@ -132,12 +128,38 @@ export default {
       this.company = item
       this.companyId = id
       this.getCompanyDetails(id)
+      this.getJobList()
     },
     companyEditChangeHandler(){
       this.ctrl.company = false
       this.getCompanyList()
     },
-
+    jobEditChangeHandler(){
+      this.ctrl.job = false
+      this.getJobList()
+    },
+    getJobList(){
+      const params = {}
+      this.jobList = []
+      if(this.companyId){
+        params.type = Type.Company
+        params.topical = this.companyId
+        params.refer = Refer.Company
+        getJobList(params)
+        .then((data) => {
+          this.jobList = data
+        })
+        .catch(catchHandler)
+      }
+    },
+    getJobDetails(id){
+      getJobDetails(id)
+      .then(data => {
+        data = data || {}
+        this.job = data
+      })
+      .catch(catchHandler)
+    },
     getCompanyList(){
       getCompanyList()
       .then((data) => {

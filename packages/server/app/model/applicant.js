@@ -7,6 +7,8 @@ module.exports = app => {
     unionid: { type: String, default: '' }, //	只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
 
     active: { type: Boolean, default: false },  //  生效状态
+    del: { type: Boolean, default: false },  //  删除标记
+    status: { type: Number, default: 1  }, // 类型，值为1时是待审核，值为2时是已审核，值为3时是已驳回
 
     title: { type: String, default: '' }, // 求职意向
     name: { type: String, default: '' }, // 姓名
