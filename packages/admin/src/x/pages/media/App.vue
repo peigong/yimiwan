@@ -6,6 +6,12 @@
           <el-select v-model="params.classification" placeholder="类别">
             <el-option label="全部" value=""></el-option>
             <el-option label="公司视频" value="company-video"></el-option>
+            <el-option label="公司LOGO" value="company-logo"></el-option>
+            <el-option label="公司营业执照" value="company-licence"></el-option>
+            <el-option label="公司环境照片" value="company-environment"></el-option>
+            <el-option label="公司荣誉照片" value="company-honor"></el-option>
+            <el-option label="工作环境照片" value="job-environment"></el-option>
+            <el-option label="工作趣事照片" value="job-fun"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="关键词">
@@ -42,14 +48,16 @@
              <el-button type="primary" size="mini" @click="showTxVideoViewer(scope.row)" v-if="3 == scope.row.type">查看视频</el-button>
              <el-button type="success" size="mini" @click="approve(scope.row)" v-if="1 == scope.row.status">通过</el-button>
              <el-button type="warning" size="mini" @click="reject(scope.row)" v-if="1 == scope.row.status">驳回</el-button>
+             <el-button type="primary" size="mini" @click="showJobDetails(scope.row)" v-if="'job' == scope.row.refer">职位信息</el-button>
              <el-button type="primary" size="mini" @click="showCompanyDetails(scope.row)" v-if="'company' == scope.row.refer">公司信息</el-button>
          </template>
          </el-table-column>
        </el-table>
     </x-layout>
+    <job-details :item-id="jobId" :bell="bell.job" />
     <image-viewer :items="images" :bell="bell.image" />
     <tx-video-viewer :items="videos" :bell="bell.viewer" />
-    <company-details :item-id="companyId" :bell="bell.details" />
+    <company-details :item-id="companyId" :bell="bell.company" />
   </div>
 </template>
 
@@ -59,6 +67,7 @@ import { Status, getMediaUrl, getMediaList, approve, reject } from '@/x/service/
 import xLayout from '@/x/components/x-layout'
 import imageViewer from '@/x/components/image-viewer'
 import txVideoViewer from '@/x/components/tx-video-viewer'
+import jobDetails from '@/x/components/job-details'
 import companyDetails from '@/x/components/company-details'
 
 export default {
@@ -67,6 +76,7 @@ export default {
     xLayout,
     imageViewer,
     txVideoViewer,
+    jobDetails,
     companyDetails
   },
   mounted(){
@@ -82,10 +92,12 @@ export default {
       items: [],
 
       bell: {
+        job: 0,
         viewer: 0,
         image: 0,
-        details: 0
+        company: 0
       },
+      jobId: '',
       companyId: '',
       images: [],
       videos: []
@@ -116,9 +128,13 @@ export default {
       this.videos = [ item ]
       this.bell.viewer++
     },
+    showJobDetails(item){
+      this.jobId = item.topical
+      this.bell.job++
+    },
     showCompanyDetails(item){
       this.companyId = item.topical
-      this.bell.details++
+      this.bell.company++
     },
     approve(item){
       approve(item._id)

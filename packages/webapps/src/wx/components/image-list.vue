@@ -32,7 +32,7 @@ import wxUpload from '@/wx/components/wx-upload'
 
 export default {
   name: 'image-list',
-  props: [ 'type', 'itemId', 'items' ],
+  props: [ 'type', 'itemType', 'itemId', 'items' ],
   components: {
     wxUpload
   },
@@ -43,6 +43,7 @@ export default {
         classification: false
       },
       dict: {},
+      topical: '',
       media: {
         mediaid: '',
         url: '',
@@ -66,11 +67,21 @@ export default {
         })
       })
       .catch(catchHandler)
+      this.setItems(this.items)
+      this.setItemId(this.itemId)
     }
   },
   watch: {
     items(val = []){
       const images = val || []
+      this.setItems(images)
+    },
+    itemId(val){
+      this.setItemId(val)
+    }
+  },
+  methods: {
+    setItems(images = []){
       this.classifications.forEach(it => {
         it.images = []
       })
@@ -81,16 +92,17 @@ export default {
           this.dict[sn].images.push(it)
         }
       })
-    }
-  },
-  methods: {
+    },
+    setItemId(itemId = ''){
+      this.topical = itemId
+    },
     uploadHandler(media = {}){
       this.media.mediaid = media.mediaid || ''
       this.media.url = media.url || ''
     },
     upload(){
-      const topical = this.itemId
-      const refer = 'company'
+      const topical = this.topical
+      const refer = this.itemType
       const type = Type.Image
       const classification = this.classification
       const media = { ...this.media, topical, refer, type, classification }

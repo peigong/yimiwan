@@ -32,7 +32,13 @@ class APIController extends Controller {
     const { id } = params;
     const cid = cookies.get('cid') || '';
     const data = await model.Job.findOne({ _id: id, openid: cid });
-    ctx.body = data;
+    const conditions = { topical: id, refer: 'job', openid: cid };
+    const images = await model.Media.find({ type: 1, ...conditions });
+    if(data){
+      ctx.body = { ...data._doc, images };
+    }else{
+      ctx.body = {};
+    }
   }
   async create(){
     const { app, ctx } = this;

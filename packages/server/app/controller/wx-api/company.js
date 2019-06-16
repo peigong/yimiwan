@@ -36,7 +36,11 @@ class APIController extends Controller {
     const licence = await model.Media.findOne({ 'classification.sn': 'company-licence', ...conditions });
     const videos = await model.Media.find({ 'classification.sn': 'company-video', ...conditions });
     const images = await model.Media.find({ type: 1, ...conditions });
-    ctx.body = { ...data._doc, logo, licence, videos, images };
+    if(data){
+      ctx.body = { ...data._doc, logo, licence, videos, images };
+    }else{
+      ctx.body = {};
+    }
   }
   async create(){
     const { app, ctx } = this;

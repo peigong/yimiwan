@@ -10,7 +10,7 @@
       </wv-tab>
       <wv-tab title="公司照片">
         <wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />
-        <image-list type="company-image" :item-id="companyId" :items='images' />
+        <image-list type="company-image" item-type="company" :item-id="companyId" :items='companyImages' />
       </wv-tab>
       <wv-tab title="公司视频">
         <wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />
@@ -24,7 +24,9 @@
         <wv-button type="default" class="btn-handler" :mini="true" @click="showJobEdit()">添加岗位信息</wv-button>
       </wv-tab>
       <wv-tab title="岗位照片">
-        公司图片
+        <wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />
+        <wv-cell title="选择岗位" is-link :value="job.title" @click.native="ctrl.jobPicker = true" />
+        <image-list type="job-image" item-type="job" :item-id="jobId" :items='jobImages' />
       </wv-tab>
       <wv-tab title="我的信息">
         <message-cv-list />
@@ -42,6 +44,7 @@
     <wv-popup :visible.sync="ctrl.job">
       <wv-switch title="关闭" v-model="ctrl.job" />
       <wv-group>
+        <wv-cell title="查看岗位照片" is-link @click="showJobImage" />
         <job-edit :type="1" :topical="companyId" :item="job" @changed="jobEditChangeHandler" />
       </wv-group>
     </wv-popup>
@@ -50,6 +53,12 @@
       :columns="companyListPicker"
       value-key="title"
       @change="companyPickerChangeHandler"
+    />
+    <wv-picker
+      :visible.sync="ctrl.jobPicker"
+      :columns="jobListPicker"
+      value-key="title"
+      @change="jobPickerChangeHandler"
     />
   </div>
 </template>
@@ -82,16 +91,20 @@ export default {
       ctrl: {
         company: false,
         companyPicker: false,
-        job: false
+        job: false,
+        jobPicker: false
       },
       company: {},
       companyId: '',
       companyDetails: {},
       companyList: [],
       companyListPicker: [{ values: [] }],
-      images: [],
+      companyImages: [],
       videos: [],
       job: {},
+      jobId: '',
+      jobListPicker: [{ values: [] }],
+      jobImages: [],
       jobList: []
   }
   },
@@ -109,6 +122,10 @@ export default {
     showJob(){
       this.ctrl.company = false
       this.$refs.tabs.setCurActive(3)
+    },
+    showJobImage(){
+      this.ctrl.job = false
+      this.$refs.tabs.setCurActive(4)
     },
     showCompanyEdit(item = {}){
       const id = item._id || ''
@@ -130,6 +147,11 @@ export default {
       this.getCompanyDetails(id)
       this.getJobList()
     },
+    jobPickerChangeHandler(picker, values){
+      const item = values[0] || {}
+      const id = item._id || ''
+      this.getJobDetails(id)
+    },
     companyEditChangeHandler(){
       this.ctrl.company = false
       this.getCompanyList()
@@ -141,6 +163,7 @@ export default {
     getJobList(){
       const params = {}
       this.jobList = []
+      this.jobListPicker[0].values = []
       if(this.companyId){
         params.type = Type.Company
         params.topical = this.companyId
@@ -148,7 +171,8 @@ export default {
         getJobList(params)
         .then((data) => {
           this.jobList = data
-        })
+          this.jobListPicker[0].values = data
+      })
         .catch(catchHandler)
       }
     },
@@ -157,6 +181,8 @@ export default {
       .then(data => {
         data = data || {}
         this.job = data
+        this.jobId = id
+        this.jobImages = data.images || []
       })
       .catch(catchHandler)
     },
@@ -173,7 +199,7 @@ export default {
       .then(data => {
         data = data || {}
         this.companyDetails = data
-        this.images = data.images || []
+        this.companyImages = data.images || []
         this.videos = data.videos || []
       })
       .catch(catchHandler)

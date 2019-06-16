@@ -33,7 +33,11 @@ class APIController extends Controller {
     const videos = await model.Media.find({ 'classification.sn': 'company-video', topical: id });
     const conditions = { topical: id, refer: 'company' };
     const images = await model.Media.find({ type: 1, ...conditions });
-    ctx.body = { ...data._doc, logo, licence, videos, images };
+    if(data){
+      ctx.body = { ...data._doc, logo, licence, videos, images };
+    }else{
+      ctx.body = {};
+    }
   }
   async update(){
     const { app, ctx } = this;

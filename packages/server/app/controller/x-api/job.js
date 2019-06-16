@@ -39,7 +39,13 @@ class APIController extends Controller {
     const { params, cookies, model } = ctx;
     const { id } = params;
     const data = await model.Job.findOne({ _id: id });
-    ctx.body = data;
+    const conditions = { topical: id, refer: 'job' };
+    const images = await model.Media.find({ type: 1, ...conditions });
+    if(data){
+      ctx.body = { ...data._doc, images };
+    }else{
+      ctx.body = {};
+    }
   }
   async create(){
     const { app, ctx } = this;
