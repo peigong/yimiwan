@@ -65,10 +65,10 @@ export default {
           this.dict[item.sn] = item
           return item
         })
+        this.setItems(this.items)
+        this.setItemId(this.itemId)
       })
       .catch(catchHandler)
-      this.setItems(this.items)
-      this.setItemId(this.itemId)
     }
   },
   watch: {
@@ -91,7 +91,7 @@ export default {
           it.url = getMediaUrl(it)
           this.dict[sn].images.push(it)
         }
-      })
+    })
     },
     setItemId(itemId = ''){
       this.topical = itemId

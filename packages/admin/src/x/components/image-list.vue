@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row justify="center">
-      <el-col :span="8" v-for="item in items" :key="item.mediaid">
+      <el-col :span="8" v-for="item in items" :key="item._id">
         <div v-if="!item.url">没有相应的图片地址</div>
         <div v-if="!!item.url"><img :src="item.url" max-width="100%" height="auto" /></div>
         <div class="ctrl">

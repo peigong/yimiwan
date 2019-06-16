@@ -12,6 +12,8 @@
             <el-option label="公司荣誉照片" value="company-honor"></el-option>
             <el-option label="工作环境照片" value="job-environment"></el-option>
             <el-option label="工作趣事照片" value="job-fun"></el-option>
+            <el-option label="学习历程照片" value="applicant-study"></el-option>
+            <el-option label="生活风采照片" value="applicant-life"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="关键词">
@@ -50,6 +52,7 @@
              <el-button type="warning" size="mini" @click="reject(scope.row)" v-if="1 == scope.row.status">驳回</el-button>
              <el-button type="primary" size="mini" @click="showJobDetails(scope.row)" v-if="'job' == scope.row.refer">职位信息</el-button>
              <el-button type="primary" size="mini" @click="showCompanyDetails(scope.row)" v-if="'company' == scope.row.refer">公司信息</el-button>
+             <el-button type="primary" size="mini" @click="showApplicantDetails(scope.row)" v-if="'applicant' == scope.row.refer">求职者信息</el-button>
          </template>
          </el-table-column>
        </el-table>
@@ -58,6 +61,7 @@
     <image-viewer :items="images" :bell="bell.image" />
     <tx-video-viewer :items="videos" :bell="bell.viewer" />
     <company-details :item-id="companyId" :bell="bell.company" />
+    <applicant-details :item-id="applicantId" :bell="bell.applicant" />
   </div>
 </template>
 
@@ -69,6 +73,7 @@ import imageViewer from '@/x/components/image-viewer'
 import txVideoViewer from '@/x/components/tx-video-viewer'
 import jobDetails from '@/x/components/job-details'
 import companyDetails from '@/x/components/company-details'
+import applicantDetails from '@/x/components/applicant-details'
 
 export default {
   name: 'app',
@@ -77,7 +82,8 @@ export default {
     imageViewer,
     txVideoViewer,
     jobDetails,
-    companyDetails
+    companyDetails,
+    applicantDetails
   },
   mounted(){
     this.getList()
@@ -95,10 +101,12 @@ export default {
         job: 0,
         viewer: 0,
         image: 0,
-        company: 0
+        company: 0,
+        applicant: 0
       },
       jobId: '',
       companyId: '',
+      applicantId: '',
       images: [],
       videos: []
     }
@@ -135,6 +143,10 @@ export default {
     showCompanyDetails(item){
       this.companyId = item.topical
       this.bell.company++
+    },
+    showApplicantDetails(item){
+      this.applicantId = item.topical
+      this.bell.applicant++
     },
     approve(item){
       approve(item._id)
