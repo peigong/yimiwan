@@ -28,7 +28,14 @@ class APIController extends Controller {
       status: enums.Status.Approved
     });
     if(data){
-      const conditions = { type: enums.MediaType.Image, topical: data._id, refer: enums.Refer.Applicant };
+      const conditions = {
+        type: enums.MediaType.Image,
+        topical: data._id,
+        refer: enums.Refer.Applicant,
+        active: true,
+        del: false,
+        status: enums.Status.Approved
+      };
       const images = await model.Media.find(conditions);
       ctx.body = { ...data._doc, images };
     }else{
