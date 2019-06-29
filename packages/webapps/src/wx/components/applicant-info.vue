@@ -16,7 +16,7 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getApplicantDetails } from '@/wx/service/applicant'
+import { getMyInfo } from '@/wx/service/applicant'
 import applicantEdit from '@/wx/components/applicant-edit'
 import imageList from '@/wx/components/image-list'
 import messageJobList from '@/wx/components/message-job-list'
@@ -30,7 +30,7 @@ export default {
     messageJobList
   },
   mounted(){
-    this.getApplicantDetails()
+    this.getMyInfo()
   },
   data(){
     return {
@@ -40,17 +40,17 @@ export default {
     }
   },
   methods: {
-    getApplicantDetails(){
-      getApplicantDetails()
+    getMyInfo(){
+      getMyInfo()
       .then(data => {
         this.applicant = data
-        this.applicantId = data.openid || ''
+        this.applicantId = data._id || ''
         this.applicantImages = data.images || []
       })
       .catch(catchHandler)
     },
     applicantEditChangeHandler(){
-      this.getApplicantDetails()
+      this.getMyInfo()
     }
   }
 }

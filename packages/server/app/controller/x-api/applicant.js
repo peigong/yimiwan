@@ -1,6 +1,7 @@
 'use strict';
 
 const Controller = require('egg').Controller;
+const enums = require('../../enums')
 
 const updateRule = {
   title: 'string', // 求职意向
@@ -19,7 +20,7 @@ class APIController extends Controller {
     }
     if(keywords){
       const reg = { $regex: keywords }
-      conditions.title = conditions.name = reg;
+      conditions.title = conditions.name = conditions.address = conditions.contact = reg;
     }
 
     let data = await model.Applicant.find(conditions);
@@ -30,10 +31,10 @@ class APIController extends Controller {
     const { ctx } = this;
     const { logger, params, model } = ctx;
     const { id } = params;
-    data = await model.Applicant.findOne({ openid: id });
-    const conditions = { topical: id, refer: 'applicant', openid: id };
-    const images = await model.Media.find({ type: 1, ...conditions });
+    data = await model.Applicant.findOne({ _id: id });
     if(data){
+      const conditions = { topical: id, refer: enums.Refer.Applicant, openid: data.openid };
+      const images = await model.Media.find({ type: enums.MediaType.Image, ...conditions });
       ctx.body = { ...data._doc, images };
     }else{
       ctx.body = {};
@@ -66,7 +67,7 @@ class APIController extends Controller {
     ctx.validate(rule, request.body);
     const { status } = request.body;
 
-    await model.Job.update({ openid: id }, { status });
+    await model.Applicant.update({ _id: id }, { status });
     ctx.status  = Status.NoContent
   }
 }

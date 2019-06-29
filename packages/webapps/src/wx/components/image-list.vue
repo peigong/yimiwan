@@ -25,10 +25,12 @@
 </template>
 
 <script>
-import { catchHandler, success } from '@/wx/util/ui'
+import { catchHandler, success, fail } from '@/wx/util/ui'
 import { getClassificationList } from '@/wx/service/classification'
 import { Type, getMediaUrl, createMedia } from '@/wx/service/media'
 import wxUpload from '@/wx/components/wx-upload'
+
+const def = { sn: '', name: '请选择' }
 
 export default {
   name: 'image-list',
@@ -49,7 +51,7 @@ export default {
         url: '',
         summary: ''
       },
-      classification: {},
+      classification: { ...def },
       classifications: [],
       classificationList: [{ values: [] }]
     }
@@ -67,6 +69,7 @@ export default {
         })
         this.setItems(this.items)
         this.setItemId(this.itemId)
+        this.classificationList[0].values.unshift({ ...def })
       })
       .catch(catchHandler)
     }
@@ -96,23 +99,43 @@ export default {
     setItemId(itemId = ''){
       this.topical = itemId
     },
+    reset(){
+      this.ctrl.upload = false
+      this.classification.sn = ''
+      this.classification.name = '请选择'
+      this.media.id = this.media.url = this.media.summary = ''
+    },
     uploadHandler(media = {}){
       this.media.mediaid = media.mediaid || ''
       this.media.url = media.url || ''
     },
-    upload(){
+    getParams(){
       const topical = this.topical
       const refer = this.itemType
       const type = Type.Image
       const classification = this.classification
       const media = { ...this.media, topical, refer, type, classification }
+      if(!classification.sn){
+        fail('请选择照片分类')
+        return false
+      }
+      if(!media.mediaid){
+        fail('请上传照片')
+        return false
+      }
       this.dict[classification.sn].images.push(media)
-      createMedia(media)
-      .then(() => {
-        success('上传成功')
-        this.ctrl.upload = false
-      })
-      .catch(catchHandler)
+      return media
+    },
+    upload(){
+      const media = this.getParams()
+      if(media){
+        createMedia(media)
+        .then(() => {
+          this.reset()
+          success('上传成功')
+        })
+        .catch(catchHandler)
+      }
     },
     classificationChangeHandler(picker, values){
       const { sn, name } = values[0]

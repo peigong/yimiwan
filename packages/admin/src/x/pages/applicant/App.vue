@@ -19,7 +19,9 @@
       </el-form>
       <el-table :data="items" style="width: 100%">
         <el-table-column prop="name" label="姓名"></el-table-column>
-         <el-table-column prop="title" label="求职意向"></el-table-column>
+        <el-table-column prop="title" label="求职意向"></el-table-column>
+        <el-table-column prop="age" label="年龄"></el-table-column>
+         <el-table-column prop="contact" label="联系方式"></el-table-column>
          <el-table-column label="审核状态">
            <template slot-scope="scope">
              <el-button type="default" size="mini" v-if="1 == scope.row.status">待审核</el-button>
@@ -42,7 +44,8 @@
 
 <script>
 import { catchHandler, success } from '@/x/util/ui'
-import { Status, getApplicantList, approve, reject } from '@/x/service/applicant'
+import { Status } from '@/x/enums'
+import { getApplicantList, approve, reject } from '@/x/service/applicant'
 import xLayout from '@/x/components/x-layout'
 import applicantDetails from '@/x/components/applicant-details'
 
@@ -59,7 +62,7 @@ export default {
     return {
       params: {
         keywords: '',
-        status: Status.Unaudited
+        status: Status.None
       },
       items: [],
 
@@ -85,7 +88,7 @@ export default {
       this.getList()
     },
     showApplicantDetails(item){
-      this.applicantId = item.openid
+      this.applicantId = item._id
       this.bell.applicant++
     },
     approve(item){

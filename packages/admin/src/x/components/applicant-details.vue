@@ -9,6 +9,24 @@
         <el-button type="success" size="mini" @click="approve(item)" v-if="1 == item.status">通过</el-button>
         <el-button type="warning" size="mini" @click="reject(item)" v-if="1 == item.status">驳回</el-button>
       </div>
+      <el-row :gutter="20" type="flex">
+        <el-col :span="7">
+          <label>性别：</label>
+          <span>{{ sex.name }}</span>
+        </el-col>
+        <el-col :span="7">
+          <label>年龄：</label>
+          <span>{{ item.age }}</span>
+        </el-col>
+        <el-col :span="7">
+          <label>联系方式：</label>
+          <span>{{ item.contact }}</span>
+        </el-col>
+      </el-row>
+      <el-row>
+        <label>地址：</label>
+        <span>{{ item.address }}</span>
+      </el-row>
       <el-row v-if="images.length">
         <h3>相关图片</h3>
         <image-list :items="images" />
@@ -18,9 +36,10 @@
 </template>
 
 <script>
+import { Status } from '@/x/enums'
 import { catchHandler, success } from '@/x/util/ui'
 import { getMediaUrl } from '@/x/service/media'
-import { Status, getApplicantDetails, approve, reject } from '@/x/service/applicant'
+import { getApplicantDetails, approve, reject } from '@/x/service/applicant'
 import imageList from '@/x/components/image-list'
 
 export default {
@@ -31,6 +50,7 @@ export default {
   data() {
     return {
       visible: false,
+      sex: {},
       item: {},
       images: []
     };
@@ -58,6 +78,7 @@ export default {
     },
     setItem(data = {}){
       this.item = data
+      this.sex = data.sex || {}
       const images = data.images || []
       this.images = images.map(it => {
         it.url = getMediaUrl(it)
@@ -65,7 +86,7 @@ export default {
       })
     },
     approve(item){
-      approve(item.openid)
+      approve(item._id)
       .then(() => {
         success('审核成功')
         item.status = Status.Approved
@@ -73,7 +94,7 @@ export default {
       .catch(catchHandler)
     },
     reject(item){
-      reject(item.openid)
+      reject(item._id)
       .then(() => {
         success('驳回成功')
         item.status = Status.Rejective

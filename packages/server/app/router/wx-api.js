@@ -13,6 +13,11 @@ module.exports = app => {
   router.resources('media', '/media', controller.wxApi.media)
 
   router.resources('job', '/job', controller.wxApi.job)
+
+  // 求职者
   router.resources('applicant', '/applicant', controller.wxApi.applicant)
+  router.get('/applicant/my-info', controller.wxApi.applicant.getMyInfo)
+  router.put('/applicant/my-info', controller.wxApi.applicant.updateMyInfo)
+
   router.resources('message', '/message', controller.wxApi.message)
 };
