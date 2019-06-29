@@ -20,6 +20,7 @@
 <script>
 import { catchHandler } from '@/wx/util/ui'
 import { ClassificationType } from '@/wx/enums'
+import { getMediaUrl } from '@/wx/service/media'
 import { getDetails } from '@/wx/service/applicant'
 import { getClassificationList } from '@/wx/service/classification'
 import imageList from '@/wx/components/image-list'
@@ -58,7 +59,11 @@ export default {
         .then(data => {
           this.item = data
           this.sex = data.sex || {}
-          this.applicantImages = data.images || []
+          const images = data.images || []
+          this.applicantImages = images.map(item => {
+            item.url = getMediaUrl(item)
+            return item
+          })
         })
         .catch(catchHandler)
       }
