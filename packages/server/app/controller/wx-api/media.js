@@ -24,14 +24,8 @@ class APIController extends Controller {
     };
     ctx.validate(updateRule, request.body);
     const openid = cookies.get('cid') || '';
-    const unionid = '';
-    const active = false;
-    const status = 1; // 待审核
     const settings = {
-      active,
-      status,
-      openid,
-      unionid
+      openid
     };
     const { topical, refer, type, summary, mediaid, url, classification } = request.body;
     await wx.media.save({ topical, refer, type, summary, mediaid, url, classification }, settings, true)

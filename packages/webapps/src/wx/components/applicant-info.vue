@@ -5,7 +5,16 @@
         <applicant-edit :item="applicant" @changed="applicantEditChangeHandler" />
       </wv-tab>
       <wv-tab title="我的照片">
-        <image-list v-if="!!applicantId" type="applicant-image" item-type="applicant" :item-id="applicantId" :items='applicantImages' />
+        <div v-if="!!applicantId">
+          <image-list :classifications="classifications" :items="applicantImages" />
+          <image-upload
+            type="applicant-image"
+            refer="applicant"
+            :image-topical="applicantId"
+            :classifications="classifications"
+            @uploaded="uploadedHandler"
+          />
+        </div>
       </wv-tab>
       <wv-tab title="我的信息">
         <message-job-list />
@@ -16,24 +25,36 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
+import { ClassificationType } from '@/wx/enums'
+import { getMediaUrl } from '@/wx/service/media'
 import { getMyInfo } from '@/wx/service/applicant'
-import applicantEdit from '@/wx/components/applicant-edit'
+import { getClassificationList } from '@/wx/service/classification'
+
 import imageList from '@/wx/components/image-list'
+import imageUpload from '@/wx/components/image-upload'
+import applicantEdit from '@/wx/components/applicant-edit'
 import messageJobList from '@/wx/components/message-job-list'
 
 export default {
   name: 'applicant-info',
   props: [],
   components: {
-    applicantEdit,
     imageList,
+    imageUpload,
+    applicantEdit,
     messageJobList
   },
   mounted(){
     this.getMyInfo()
+    getClassificationList(ClassificationType.ApplicantImage)
+    .then(data => {
+      this.classifications = data || []
+    })
+    .catch(catchHandler)
   },
   data(){
     return {
+      classifications: [],
       applicant: {},
       applicantId: '',
       applicantImages: []
@@ -45,12 +66,19 @@ export default {
       .then(data => {
         this.applicant = data
         this.applicantId = data._id || ''
-        this.applicantImages = data.images || []
+        const images = data.images || []
+        this.applicantImages = images.map(item => {
+          item.url = getMediaUrl(item)
+          return item
+        })
       })
       .catch(catchHandler)
     },
     applicantEditChangeHandler(){
       this.getMyInfo()
+    },
+    uploadedHandler(media){
+      this.applicantImages.push(media)
     }
   }
 }

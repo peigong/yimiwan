@@ -1,3 +1,7 @@
+export const ClassificationType = {
+  'ApplicantImage': 'applicant-image'
+}
+
 export const MediaType = {
   'None': 0,
   'Image': 1,

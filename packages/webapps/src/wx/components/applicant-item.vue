@@ -1,12 +1,12 @@
 <template>
   <dl class="flow-list__item">
-    <dt>[{{ item.classification.name }}]{{ item.title }}</dt>
+    <dt>[{{ item.name }}]{{ item.title }}</dt>
     <dd>
-      <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleCV">看简历</wv-button>
-      <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleInterview">约面试</wv-button>
+      <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleDetails">看一看</wv-button>
+      <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleInterview">约一约</wv-button>
     </dd>
-    <dd v-if="ctrl.cv">
-      <cv-details />
+    <dd v-if="ctrl.details">
+      <applicant-details :item-id="item._id" />
     </dd>
     <dd v-if="ctrl.interview">
       <job-post />
@@ -15,19 +15,19 @@
 </template>
 
 <script>
-import cvDetails from '@/wx/components/cv-details'
+import applicantDetails from '@/wx/components/applicant-details'
 import jobPost from '@/wx/components/job-post'
 export default {
   name: 'applicant-item',
   props: [ 'item' ],
   components: {
-    cvDetails,
+    applicantDetails,
     jobPost
   },
   data(){
     return {
       ctrl: {
-        cv: false,
+        details: false,
         interview: false
       }
     }
@@ -42,8 +42,8 @@ export default {
         ctrl[type] = true
       }
     },
-    toggleCV(){
-      const type = 'cv'
+    toggleDetails(){
+      const type = 'details'
       if(this.ctrl[type]){
         this.toggle()
       }else{

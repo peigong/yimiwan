@@ -4,6 +4,7 @@ const Controller = require('egg').Controller;
 const enums = require('../../enums')
 
 class APIController extends Controller {
+  /*-> 招聘者在公众号上查看 <-*/
   async index(){
     const { app, ctx } = this;
     const { logger, model } = ctx;
@@ -16,7 +17,26 @@ class APIController extends Controller {
     let data = await model.Applicant.find(conditions);
     ctx.body = data;
   }
+  async show(){
+    const { ctx } = this;
+    const { params, model } = ctx;
+    const { id } = params;
+    const data = await model.Applicant.findOne({
+      _id: id,
+      active: true,
+      del: false,
+      status: enums.Status.Approved
+    });
+    if(data){
+      const conditions = { type: enums.MediaType.Image, topical: data._id, refer: enums.Refer.Applicant };
+      const images = await model.Media.find(conditions);
+      ctx.body = { ...data._doc, images };
+    }else{
+      ctx.body = {};
+    }
+  }
 
+  /*-> 求职者在公众号上查看管理自己的信息 <-*/
   async getMyInfo(){
     let data = [];
     const { ctx } = this;
@@ -24,6 +44,7 @@ class APIController extends Controller {
     const openid = cookies.get('cid') || '';
     data = await model.Applicant.findOne({ openid });
     if(data){
+      const topical = data._doc._id || ''
       const conditions = { type: enums.MediaType.Image, topical: data._id, refer: enums.Refer.Applicant, openid: openid };
       const images = await model.Media.find(conditions);
       ctx.body = { ...data._doc, images };

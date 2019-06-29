@@ -36,7 +36,6 @@ export default {
       .then(localId => uploadImage({ localId }))
       .then(res => {
         media.mediaid = res.serverId || ''; // 返回图片的服务器端ID
-        console.log(media);
         this.$emit('changed', media)
       })
       .catch(catchHandler)

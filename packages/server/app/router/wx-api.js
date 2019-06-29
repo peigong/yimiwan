@@ -16,8 +16,8 @@ module.exports = app => {
 
   // 求职者
   router.resources('applicant', '/applicant', controller.wxApi.applicant)
-  router.get('/applicant/my-info', controller.wxApi.applicant.getMyInfo)
-  router.put('/applicant/my-info', controller.wxApi.applicant.updateMyInfo)
+  router.get('/my-applicant-info', controller.wxApi.applicant.getMyInfo)
+  router.put('/my-applicant-info', controller.wxApi.applicant.updateMyInfo)
 
   router.resources('message', '/message', controller.wxApi.message)
 };

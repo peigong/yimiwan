@@ -43,7 +43,6 @@ class WxService extends Service {
     if(mediaid !== originalId){
       const updateRule = {
         openid: 'string',
-        active: 'boolean',
         topical: 'string', // 主题ID
         refer: 'string', // 参考辅助ID
         type: 'number',
@@ -51,10 +50,9 @@ class WxService extends Service {
         classification: 'object'
       };
       ctx.validate(updateRule, o);
-      const status = 1;
       o.summary = o.summary || o.classification.name || '';
-      const { openid, unionid, active, topical, refer, type, url, summary, mediaid, classification } = o;
-      const data = { openid, unionid, active, status, topical, refer, type, url, summary, mediaid, classification };
+      const { openid, topical, refer, type, url, summary, mediaid, classification } = o;
+      const data = { openid, topical, refer, type, url, summary, mediaid, classification };
       if(multiple){
         await model.Media.create(data);
       }else{
