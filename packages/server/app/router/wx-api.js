@@ -9,8 +9,11 @@ module.exports = app => {
   router.put('/user-type', controller.wxApi.user.setUserType)
 
   router.resources('classifications', '/classifications', controller.wxApi.classification)
-  router.resources('companies', '/companies', controller.wxApi.company)
   router.resources('media', '/media', controller.wxApi.media)
+
+  router.resources('companies', '/companies', controller.wxApi.company)
+  router.get('/my-company', controller.wxApi.company.getMyCompany)
+  router.put('/my-company', controller.wxApi.company.updateMyCompany)
 
   router.resources('job', '/job', controller.wxApi.job)
 

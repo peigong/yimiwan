@@ -43,7 +43,7 @@ class WxService extends Service {
     if(mediaid !== originalId){
       const updateRule = {
         openid: 'string',
-        topical: 'string', // 主题ID
+        // topical: 'string', // 主题ID
         refer: 'string', // 参考辅助ID
         type: 'number',
         mediaid: 'string',

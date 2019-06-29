@@ -35,10 +35,14 @@
 
 <script>
 import { catchHandler, success } from '@/wx/util/ui'
+import { ClassificationType } from '@/wx/enums'
 import { getMediaUrl } from '@/wx/service/media'
 import { getClassificationList } from '@/wx/service/classification'
-import { createCompany, updateCompany } from '@/wx/service/company'
+// import { createCompany, updateCompany } from '@/wx/service/company'
+import { updateMyCompany } from '@/wx/service/company'
 import wxUpload from '@/wx/components/wx-upload'
+
+const def = { sn: '', name: '请选择' }
 
 export default {
   name: 'company-edit',
@@ -51,7 +55,7 @@ export default {
       ctrl: {
         classification: false
       },
-      classification: {},
+      classification: { ...def },
       classificationList: [{ values: [] }],
 
       itemId: '',
@@ -77,9 +81,10 @@ export default {
   },
   mounted(){
     this.setItem(this.item)
-    getClassificationList('industry-code')
+    getClassificationList(ClassificationType.IndustryCode)
     .then(data => {
-      this.classificationList[0].values = data || []
+      const items = data || []
+      this.classificationList[0].values = [ { ...def }, ...items ]
     })
     .catch(catchHandler)
   },
@@ -119,6 +124,7 @@ export default {
     },
     submit(){
       const params = { logo: this.logo, licence: this.licence, classification: this.classification, ...this.params }
+      /*
       const id = this.itemId || ''
       let exec = null
       let message = ''
@@ -130,9 +136,10 @@ export default {
         exec = createCompany
         message = '添加成功'
       }
-      exec(params)
+      */
+      updateMyCompany(params)
       .then(() => {
-        success(message)
+        success('编辑成功')
         this.$emit('changed')
       })
       .catch(catchHandler)

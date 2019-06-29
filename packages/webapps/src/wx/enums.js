@@ -1,5 +1,8 @@
 export const ClassificationType = {
-  'ApplicantImage': 'applicant-image'
+  'ApplicantImage': 'applicant-image',
+  'CompanyImage': 'company-image',
+  'JobImage': 'job-image',
+  'IndustryCode': 'industry-code'
 }
 
 export const MediaType = {

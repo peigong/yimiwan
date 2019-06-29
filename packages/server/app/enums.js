@@ -1,3 +1,9 @@
+const ClassificationType = {
+  'CompanyLogo': 'company-logo',
+  'CompanyLicence': 'company-licence',
+  'CompanyVideo': 'company-video'
+}
+
 const MediaType = {
   'None': 0,
   'Image': 1,
@@ -27,6 +33,7 @@ const Status = {
 };
 
 module.exports = {
+  ClassificationType,
   MediaType,
   JobType,
   Refer,
