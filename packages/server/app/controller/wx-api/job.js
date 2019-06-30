@@ -63,8 +63,7 @@ class APIController extends Controller {
   async create(){
     const { app, ctx } = this;
     const { Status } = app;
-    const { request, logger, cookies, service, model } = ctx;
-    const { wx } = service
+    const { request, logger, cookies, model } = ctx;
     ctx.validate(updateRule, request.body);
     const openid = cookies.get('cid') || '';
     const {

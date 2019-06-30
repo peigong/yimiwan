@@ -18,6 +18,17 @@ const JobType = {
   'Applicant': 3 // 求职意向
 };
 
+const MessageType = {
+  'None': 0,
+  'ToMessage': 1, // 回复消息
+  'ToJob': 2, // 对岗位，公司收看
+  'ToJobIntent': 3, // 对岗位意向，系统管理员收看
+  'ToCompany': 4, // 对公司，公司收看
+  'ToCompanyIntent': 5, // 对公司意向，系统管理员收看
+  'ToApplicant': 6, // 对求职者
+  'ToApplicantIntent': 7 // 对求职者意向
+}
+
 const Refer = {
   'None': '',
   'Job': 'job',
@@ -37,6 +48,7 @@ module.exports = {
   ClassificationType,
   MediaType,
   JobType,
+  MessageType,
   Refer,
   Status
 };

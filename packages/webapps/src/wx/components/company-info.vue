@@ -57,7 +57,7 @@
       </div>
       </wv-tab>
       <wv-tab title="我的信息">
-        <message-cv-list />
+        <message-list />
       </wv-tab>
     </wv-tabs>
     <!--
@@ -109,7 +109,7 @@ import imageList from '@/wx/components/image-list'
 import imageUpload from '@/wx/components/image-upload'
 import companyEdit from '@/wx/components/company-edit'
 import txVideoPlayer from '@/wx/components/tx-video-player'
-import messageCvList from '@/wx/components/message-cv-list'
+import messageList from '@/wx/components/message-list'
 
 const defaultJob = { _id: '', title: '请选择' }
 
@@ -122,7 +122,7 @@ export default {
     imageUpload,
     companyEdit,
     txVideoPlayer,
-    messageCvList
+    messageList
   },
   mounted(){
     // this.getCompanyList()
@@ -246,7 +246,7 @@ export default {
           const items = data || []
           this.jobList = items
           this.jobListPicker[0].values = [ { ...defaultJob }, ...items ]
-      })
+        })
         .catch(catchHandler)
       }
     },

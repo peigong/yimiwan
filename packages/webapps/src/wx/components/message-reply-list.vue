@@ -1,11 +1,12 @@
 <template>
   <div>
-    <wv-panel title="往来信息列表">
+    <div v-if="!items.length">暂无往复消息</div>
+    <wv-panel title="往来信息列表" v-if="!!items.length">
       <wv-media-box type="text"
         :title="item.title" :description="item.content"
          v-for="(item, key) in items" :item="item" :key="key">
         <ul class="weui-media-box__info" slot="box_ft">
-          <li class="weui-media-box__info__meta">{{ item.postDateTime }}</li>
+          <li class="weui-media-box__info__meta">{{ item.createTime }}</li>
         </ul>
       </wv-media-box>
     </wv-panel>
@@ -14,15 +15,15 @@
 
 <script>
 import { catchHandler } from '@/wx/util/ui'
-import { getMessageList } from '@/wx/service/message'
+import { getRepliedMessages } from '@/wx/service/message'
 
 export default {
-  name: 'message-list',
+  name: 'message-reply-list',
   props: [ 'itemId' ],
   components: {
   },
   mounted(){
-    getMessageList()
+    getRepliedMessages(this.itemId)
     .then((data) => {
       this.items = data
     })

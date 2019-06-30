@@ -4,6 +4,8 @@
   <dd>
     <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleJob">岗位信息</wv-button>
     <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleCompany">公司信息</wv-button>
+    <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toJob">应聘</wv-button>
+    <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toJobIntent">联系小依</wv-button>
   </dd>
   <dd v-if="ctrl.job">
     <job-details :item-id="item._id" />
@@ -15,6 +17,7 @@
 </template>
 
 <script>
+import { MessageType } from '@/wx/enums'
 import jobDetails from '@/wx/components/job-details'
 import companyDetails from '@/wx/components/company-details'
 
@@ -58,6 +61,12 @@ export default {
       }else{
         this.toggle(type)
       }
+    },
+    toJob(){
+      this.$emit('message', MessageType.ToJob, { ...this.item })
+    },
+    toJobIntent(){
+      this.$emit('message', MessageType.ToJobIntent, { ...this.item })
     }
   }
 }

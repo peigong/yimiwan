@@ -17,7 +17,7 @@
         </div>
       </wv-tab>
       <wv-tab title="我的信息">
-        <message-job-list />
+        <message-list />
       </wv-tab>
     </wv-tabs>
   </div>
@@ -33,7 +33,7 @@ import { getClassificationList } from '@/wx/service/classification'
 import imageList from '@/wx/components/image-list'
 import imageUpload from '@/wx/components/image-upload'
 import applicantEdit from '@/wx/components/applicant-edit'
-import messageJobList from '@/wx/components/message-job-list'
+import messageList from '@/wx/components/message-list'
 
 export default {
   name: 'applicant-info',
@@ -42,7 +42,7 @@ export default {
     imageList,
     imageUpload,
     applicantEdit,
-    messageJobList
+    messageList
   },
   mounted(){
     this.getMyInfo()

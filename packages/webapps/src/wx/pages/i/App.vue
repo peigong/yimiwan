@@ -20,17 +20,13 @@
 import user from '@/wx/mixins/user'
 import userSwitch from '@/wx/components/user-switch'
 import bottomMenu from '@/wx/components/bottom-menu'
-import applicantIntent from '@/wx/components/applicant-intent'
-import companyIntent from '@/wx/components/company-intent'
 
 export default {
   name: 'app',
   mixins: [ user ],
   components: {
     userSwitch,
-    bottomMenu,
-    applicantIntent,
-    companyIntent
+    bottomMenu
   },
   mounted(){
   },

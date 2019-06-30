@@ -2,33 +2,31 @@
   <dl class="flow-list__item">
     <dt>[{{ item.name }}]{{ item.title }}</dt>
     <dd>
-      <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleDetails">看一看</wv-button>
-      <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleInterview">约一约</wv-button>
+      <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleDetails">看信息</wv-button>
+      <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toApplicant">约面试</wv-button>
+      <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toApplicantIntent">联系小依</wv-button>
     </dd>
     <dd v-if="ctrl.details">
       <applicant-details :item-id="item._id" />
-    </dd>
-    <dd v-if="ctrl.interview">
-      <job-post />
     </dd>
   </dl>
 </template>
 
 <script>
+import { MessageType } from '@/wx/enums'
 import applicantDetails from '@/wx/components/applicant-details'
-import jobPost from '@/wx/components/job-post'
+import companyPost from '@/wx/components/company-post'
 export default {
   name: 'applicant-item',
   props: [ 'item' ],
   components: {
     applicantDetails,
-    jobPost
+    companyPost
   },
   data(){
     return {
       ctrl: {
-        details: false,
-        interview: false
+        details: false
       }
     }
   },
@@ -50,13 +48,11 @@ export default {
         this.toggle(type)
       }
     },
-    toggleInterview(){
-      const type = 'interview'
-      if(this.ctrl[type]){
-        this.toggle()
-      }else{
-        this.toggle(type)
-      }
+    toApplicant(){
+      this.$emit('message', MessageType.ToApplicant, { ...this.item })
+    },
+    toApplicantIntent(){
+      this.$emit('message', MessageType.ToApplicantIntent, { ...this.item })
     }
   }
 }
