@@ -39,7 +39,6 @@ export default {
         this.$set(item, 'images', [])
         this.dict[item.sn] = item
       })
-      console.log(images);
       images.forEach(item => {
         const sn = item.classification.sn || ''
         if(this.dict.hasOwnProperty(sn)){

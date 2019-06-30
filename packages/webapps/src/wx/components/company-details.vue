@@ -1,19 +1,12 @@
 <template>
   <div>
     <wv-group title="基本信息">
-      <!--
-      <wv-cell title="求职意向" :value="item.title" />
-      <wv-cell title="姓名" :value="item.name" />
-      <wv-cell title="联系方式" :value="item.contact" />
-    -->
-      <wv-cell title="性别" :value="sex.name" />
-      <wv-cell title="住址" :value="item.address" />
-      <wv-cell title="年龄" :value="item.age" />
-      <!--
-      <wv-input label="" placeholder="请输入联系方式" v-model.trim="params.contact"></wv-input>
-    -->
+      <wv-cell title="公司全称" :value="item.title" />
+      <img v-if="!!logo.url" :src="logo.url" max-width="100%" height="auto" />
+      <img v-if="!!licence.url" :src="licence.url" max-width="100%" height="auto" />
+      <wv-cell title="地址" :value="item.address" />
     </wv-group>
-    <image-list :classifications="classificationList" :items='applicantImages' />
+    <image-list :classifications="classificationList" :items='companyImages' />
   </div>
 </template>
 
@@ -21,25 +14,26 @@
 import { catchHandler } from '@/wx/util/ui'
 import { ClassificationType } from '@/wx/enums'
 import { getMediaUrl } from '@/wx/service/media'
-import { getApplicantDetails } from '@/wx/service/applicant'
+import { getCompanyDetails } from '@/wx/service/company'
 import { getClassificationList } from '@/wx/service/classification'
 import imageList from '@/wx/components/image-list'
 
 let classifications = null
 
 export default {
-  name: 'applicant-details',
+  name: 'company-details',
   props: [ 'itemId' ],
   components: {
     imageList,
   },
   data(){
     return {
-      sex: {},
       item: {},
-      applicantId: '',
+      companyId: '',
+      logo: {},
+      licence: {},
       classificationList: [],
-      applicantImages: []
+      companyImages: []
     }
   },
   mounted(){
@@ -53,14 +47,16 @@ export default {
   },
   methods: {
     getDetails(){
-      if(this.itemId !== this.applicantId){
-        this.applicantId = this.itemId
-        getApplicantDetails(this.itemId)
+      if(this.itemId !== this.companyId){
+        this.companyId = this.itemId
+        getCompanyDetails(this.itemId)
         .then(data => {
           this.item = data
-          this.sex = data.sex || {}
+          this.companyId  = data._id || ''
+          this.logo = data.logo  || {}
+          this.licence = data.licence  || {}
           const images = data.images || []
-          this.applicantImages = images.map(item => {
+          this.companyImages = images.map(item => {
             item.url = getMediaUrl(item)
             return item
           })
@@ -77,7 +73,7 @@ export default {
       if(classifications){
         this.localizeClassificationList(classifications)
       }else{
-        getClassificationList(ClassificationType.ApplicantImage)
+        getClassificationList(ClassificationType.CompanyImage)
         .then(data => {
           classifications = data || []
           this.localizeClassificationList(classifications)

@@ -100,7 +100,7 @@ import { catchHandler } from '@/wx/util/ui'
 import { ClassificationType, JobType, Refer } from '@/wx/enums'
 import { getMediaUrl } from '@/wx/service/media'
 import { getClassificationList } from '@/wx/service/classification'
-import { getJobList, getJobDetails } from '@/wx/service/job'
+import { getMyCompanyJob, getJobDetails } from '@/wx/service/job'
 // import { getCompanyList, getCompanyDetails } from '@/wx/service/company'
 import { getMyCompany } from '@/wx/service/company'
 
@@ -241,7 +241,7 @@ export default {
         params.type = JobType.Company
         params.topical = this.companyId
         params.refer = Refer.Company
-        getJobList(params)
+        getMyCompanyJob(params)
         .then((data) => {
           const items = data || []
           this.jobList = items

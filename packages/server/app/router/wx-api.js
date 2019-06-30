@@ -16,6 +16,7 @@ module.exports = app => {
   router.put('/my-company', controller.wxApi.company.updateMyCompany)
 
   router.resources('job', '/job', controller.wxApi.job)
+  router.get('/my-company-job', controller.wxApi.job.getMyCompanyJob)
 
   // 求职者
   router.resources('applicant', '/applicant', controller.wxApi.applicant)

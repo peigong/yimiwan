@@ -4,7 +4,7 @@ export const getApplicantList = async function(){
   return await api.get('applicant')
 }
 
-export const getDetails = async function(id){
+export const getApplicantDetails = async function(id){
   return await api.get(`applicant/${ id }`)
 }
 

@@ -1,19 +1,12 @@
 <template>
   <div>
     <wv-group title="基本信息">
-      <!--
-      <wv-cell title="求职意向" :value="item.title" />
-      <wv-cell title="姓名" :value="item.name" />
-      <wv-cell title="联系方式" :value="item.contact" />
-    -->
-      <wv-cell title="性别" :value="sex.name" />
-      <wv-cell title="住址" :value="item.address" />
-      <wv-cell title="年龄" :value="item.age" />
-      <!--
-      <wv-input label="" placeholder="请输入联系方式" v-model.trim="params.contact"></wv-input>
-    -->
+      <wv-cell title="岗位名称" :value="item.title" />
+      <wv-cell title="福利待遇" :value="item.payment" />
+      <wv-cell title="工作时间" :value="item.workhours" />
+      <wv-cell title="工作地址" :value="item.workaddress" />
     </wv-group>
-    <image-list :classifications="classificationList" :items='applicantImages' />
+    <image-list :classifications="classificationList" :items='jobImages' />
   </div>
 </template>
 
@@ -21,25 +14,24 @@
 import { catchHandler } from '@/wx/util/ui'
 import { ClassificationType } from '@/wx/enums'
 import { getMediaUrl } from '@/wx/service/media'
-import { getApplicantDetails } from '@/wx/service/applicant'
+import { getJobDetails } from '@/wx/service/job'
 import { getClassificationList } from '@/wx/service/classification'
 import imageList from '@/wx/components/image-list'
 
 let classifications = null
 
 export default {
-  name: 'applicant-details',
+  name: 'job-details',
   props: [ 'itemId' ],
   components: {
     imageList,
   },
   data(){
     return {
-      sex: {},
       item: {},
-      applicantId: '',
+      jobId: '',
       classificationList: [],
-      applicantImages: []
+      jobImages: []
     }
   },
   mounted(){
@@ -53,14 +45,14 @@ export default {
   },
   methods: {
     getDetails(){
-      if(this.itemId !== this.applicantId){
-        this.applicantId = this.itemId
-        getApplicantDetails(this.itemId)
+      if(this.itemId !== this.jobId){
+        this.jobId = this.itemId
+        getJobDetails(this.itemId)
         .then(data => {
           this.item = data
-          this.sex = data.sex || {}
+          this.jobId = data._id || ''
           const images = data.images || []
-          this.applicantImages = images.map(item => {
+          this.jobImages = images.map(item => {
             item.url = getMediaUrl(item)
             return item
           })
@@ -77,7 +69,7 @@ export default {
       if(classifications){
         this.localizeClassificationList(classifications)
       }else{
-        getClassificationList(ClassificationType.ApplicantImage)
+        getClassificationList(ClassificationType.JobImage)
         .then(data => {
           classifications = data || []
           this.localizeClassificationList(classifications)

@@ -5,7 +5,7 @@
       <user-switch v-model="userType" />
     </div>
     <div v-if="showApplicant">
-      <company-list />
+      <job-list />
     </div>
     <div v-if="showRecruiter">
       <company-info />
@@ -20,8 +20,8 @@
 import user from '@/wx/mixins/user'
 import userSwitch from '@/wx/components/user-switch'
 import bottomMenu from '@/wx/components/bottom-menu'
+import jobList from '@/wx/components/job-list'
 import companyInfo from '@/wx/components/company-info'
-import companyList from '@/wx/components/company-list'
 
 export default {
   name: 'app',
@@ -29,16 +29,14 @@ export default {
   components: {
     userSwitch,
     bottomMenu,
-    companyInfo,
-    companyList
+    jobList,
+    companyInfo
   },
   mounted(){
   },
   data(){
     return {
     }
-  },
-  computed: {
   },
   methods: {
   }

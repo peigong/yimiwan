@@ -18,7 +18,8 @@ Job<template>
 
 <script>
 import { catchHandler, success } from '@/wx/util/ui'
-import { Type, Refer, createJob, updateJob } from '@/wx/service/job'
+import { JobType, Refer } from '@/wx/enums'
+import { createJob, updateJob } from '@/wx/service/job'
 
 export default {
   name: 'job-edit',
@@ -67,13 +68,13 @@ export default {
       let topical = this.topicalId
       let refer = Refer.None
       switch (type) {
-        case Type.Company:
+        case JobType.Company:
           refer = Refer.Company
           break;
-        case Type.Intent:
+        case JobType.Intent:
           refer = Refer.Intent
           break;
-        case Type.Applicant:
+        case JobType.Applicant:
           refer = Refer.Applicant
           break;
         default:

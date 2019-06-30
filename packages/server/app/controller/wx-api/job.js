@@ -1,6 +1,7 @@
 'use strict';
 
 const Controller = require('egg').Controller;
+const enums = require('../../enums');
 
 const updateRule = {
   topical: 'string', // 主题ID
@@ -19,22 +20,24 @@ class APIController extends Controller {
   async index(){
     const { app, ctx } = this;
     const { logger, cookies, request, model } = ctx;
+    /*
     const openid = cookies.get('cid') || '';
     const { type, topical, refer } = request.query;
     const conditions = { openid, type, topical, refer };
     logger.info(conditions);
-    let data = await model.Job.find(conditions);
+    */
+    let data = await model.Job.find({}).populate('topical.company', '_id title classification');
     ctx.body = data;
   }
   async show(){
     const { ctx } = this;
     const { params, cookies, model } = ctx;
     const { id } = params;
-    const cid = cookies.get('cid') || '';
-    const data = await model.Job.findOne({ _id: id, openid: cid });
-    const conditions = { topical: id, refer: 'job', openid: cid };
-    const images = await model.Media.find({ type: 1, ...conditions });
+    const openid = cookies.get('cid') || '';
+    const data = await model.Job.findOne({ _id: id });
     if(data){
+      const conditions = { topical: id, refer: enums.Refer.Job, openid: data.openid };
+      const images = await model.Media.find({ type: enums.MediaType.Image, ...conditions });
       ctx.body = { ...data._doc, images };
     }else{
       ctx.body = {};
@@ -47,10 +50,6 @@ class APIController extends Controller {
     const { wx } = service
     ctx.validate(updateRule, request.body);
     const openid = cookies.get('cid') || '';
-    const unionid = '';
-    const active = false;
-    const del = false;
-    const status = 1; // 待审核
     const {
       type,
       topical,
@@ -63,14 +62,12 @@ class APIController extends Controller {
       jobcontent, // 工作内容
       requirement  // 工作要求
     } = request.body;
+    const ref = { topical: {} }
+    ref.topical[refer] = topical
     await model.Job.create({
+      ...ref,
       openid,
-      unionid,
-      active,
-      del,
-      status,
       type,
-      topical,
       refer,
       title, // 岗位名称
       payment, // 福利待遇
@@ -107,6 +104,18 @@ class APIController extends Controller {
       requirement  // 工作要求
     }});
     ctx.status  = Status.NoContent
+  }
+  async getMyCompanyJob(){
+    const { app, ctx } = this;
+    const { logger, cookies, request, model } = ctx;
+    const openid = cookies.get('cid') || '';
+    const { type, topical, refer } = request.query;
+    const ref = {}
+    ref[`topical.${ refer }`] = topical
+    const conditions = { ...ref, openid, type, refer };
+    logger.info(conditions);
+    let data = await model.Job.find(conditions);
+    ctx.body = data;
   }
 }
 

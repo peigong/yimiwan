@@ -4,6 +4,22 @@ const Controller = require('egg').Controller;
 const enums = require('../../enums');
 
 class APIController extends Controller {
+  async show(){
+    const { ctx } = this;
+    const { params, cookies, model } = ctx;
+    const { id } = params;
+    const data = await model.Company.findOne({ _id: id });
+    if(data){
+      const conditions = { topical: id, refer: enums.Refer.company, openid: data.openid };
+      const logo = await model.Media.findOne({ 'classification.sn': enums.ClassificationType.CompanyLogo, ...conditions });
+      const licence = await model.Media.findOne({ 'classification.sn': enums.ClassificationType.CompanyLicence, ...conditions });
+      const videos = await model.Media.find({ 'classification.sn': enums.ClassificationType.CompanyVideo, ...conditions });
+      const images = await model.Media.find({ type: enums.MediaType.Image, ...conditions });
+      ctx.body = { ...data._doc, logo, licence, videos, images };
+    }else{
+      ctx.body = {};
+    }
+  }
   /*
   async index(){
     let data = [];
@@ -14,23 +30,6 @@ class APIController extends Controller {
       data = await model.Company.find({ openid: cid });
     }
     ctx.body = data;
-  }
-  async show(){
-    const { ctx } = this;
-    const { params, cookies, model } = ctx;
-    const { id } = params;
-    const cid = cookies.get('cid') || '';
-    const data = await model.Company.findOne({ _id: id, openid: cid });
-    const conditions = { topical: id, refer: 'company', openid: cid };
-    const logo = await model.Media.findOne({ 'classification.sn': 'company-logo', ...conditions });
-    const licence = await model.Media.findOne({ 'classification.sn': 'company-licence', ...conditions });
-    const videos = await model.Media.find({ 'classification.sn': 'company-video', ...conditions });
-    const images = await model.Media.find({ type: 1, ...conditions });
-    if(data){
-      ctx.body = { ...data._doc, logo, licence, videos, images };
-    }else{
-      ctx.body = {};
-    }
   }
   async create(){
     const { app, ctx } = this;

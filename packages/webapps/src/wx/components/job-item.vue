@@ -1,35 +1,35 @@
 <template>
 <dl class="flow-list__item">
-  <dt>[{{ item.classification.name }}]{{ item.title }}</dt>
+  <dt>[{{ item.topical.company.classification.name }}]{{ item.title }}</dt>
   <dd>
-    <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleCompany">公司介绍</wv-button>
-    <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleJD">职位信息</wv-button>
+    <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleJob">岗位信息</wv-button>
+    <wv-button type="default" :mini="true" class="flow-list__item__btn" @click="toggleCompany">公司信息</wv-button>
+  </dd>
+  <dd v-if="ctrl.job">
+    <job-details :item-id="item._id" />
   </dd>
   <dd v-if="ctrl.company">
-    <company-details />
-  </dd>
-  <dd v-if="ctrl.jd">
-    <job-list />
+    <company-details :item-id="item.topical.company._id" />
   </dd>
 </dl>
 </template>
 
 <script>
+import jobDetails from '@/wx/components/job-details'
 import companyDetails from '@/wx/components/company-details'
-import jobList from '@/wx/components/job-list'
 
 export default {
-  name: 'company-item',
+  name: 'job-item',
   props: [ 'item' ],
   components: {
-    companyDetails,
-    jobList
+    jobDetails,
+    companyDetails
   },
   data(){
     return {
       ctrl: {
-        company: false,
-        jd: false
+        job: false,
+        company: false
       }
     }
   },
@@ -43,16 +43,16 @@ export default {
         ctrl[type] = true
       }
     },
-    toggleCompany(){
-      const type = 'company'
+    toggleJob(){
+      const type = 'job'
       if(this.ctrl[type]){
         this.toggle()
       }else{
         this.toggle(type)
       }
     },
-    toggleJD(){
-      const type = 'jd'
+    toggleCompany(){
+      const type = 'company'
       if(this.ctrl[type]){
         this.toggle()
       }else{
