@@ -17,6 +17,9 @@ module.exports = app => {
     mediaid: { type: String, default: '' },
     summary: { type: String, default: '' }, // 摘要
     url: { type: String, default: '' }, //
+    
+    createTime: { type: Date, default: Date.now() },
+    updateTime: { type: Date, default: Date.now() },
 
     classification: {
       sn: { type: String, default: '' },

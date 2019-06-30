@@ -20,6 +20,7 @@ const JobType = {
 
 const Refer = {
   'None': '',
+  'Job': 'job',
   'Company': 'company',
   'Intent': 'company',
   'Applicant': 'applicant'

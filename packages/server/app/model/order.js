@@ -8,6 +8,8 @@ module.exports = app => {
 
     active: { type: Boolean, default: true },
     del: { type: Boolean, default: false },  //  删除标记
+    createTime: { type: Date, default: Date.now() },
+    updateTime: { type: Date, default: Date.now() },
 
     title: { type: String, default: '' }
   });

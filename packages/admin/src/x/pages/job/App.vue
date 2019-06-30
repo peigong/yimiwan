@@ -103,7 +103,7 @@ export default {
       this.bell.job++
     },
     showCompanyDetails(item){
-      this.companyId = item.topical
+      this.companyId = item.topical.company
       this.bell.company++
     },
     approve(item){

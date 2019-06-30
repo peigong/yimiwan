@@ -7,6 +7,8 @@ module.exports = app => {
     unionid: { type: String, default: '' }, //	只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
 
     active: { type: Boolean, default: false },  //  生效状态
+    createTime: { type: Date, default: Date.now() },
+    updateTime: { type: Date, default: Date.now() },
 
     title: { type: String, default: '' } // 简历主题
   });

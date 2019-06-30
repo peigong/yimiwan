@@ -24,7 +24,9 @@ module.exports = app => {
     marital: { type: Number, default: 0  }, // 婚姻状况
 
     character: { type: String, default: '' }, // 性格类型
-*/
+    */
+    createTime: { type: Date, default: Date.now() },
+    updateTime: { type: Date, default: Date.now() },
     classification: {
       sn: { type: String, default: '' },
       name: { type: String, default: '' }

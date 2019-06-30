@@ -15,6 +15,9 @@ module.exports = app => {
     type: { type: Number, default: 0  }, // 信息的类型，对人，对简历，对公司，信息回复
     topical: { type: String, default: '' }, // 讨论的主题ID
     refer: { type: String, default: '' }, // 参考辅助ID
+    
+    createTime: { type: Date, default: Date.now() },
+    updateTime: { type: Date, default: Date.now() },
 
     title: { type: String, default: '' }, // 信息主题
     content: { type: String, default: '' }, // 信息内容

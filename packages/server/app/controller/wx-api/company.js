@@ -8,9 +8,21 @@ class APIController extends Controller {
     const { ctx } = this;
     const { params, cookies, model } = ctx;
     const { id } = params;
-    const data = await model.Company.findOne({ _id: id });
+    const data = await model.Company.findOne({
+      active: true,
+      del: false,
+      status: enums.Status.Approved,
+      _id: id
+     });
     if(data){
-      const conditions = { topical: id, refer: enums.Refer.company, openid: data.openid };
+      const conditions = {
+        active: true,
+        del: false,
+        status: enums.Status.Approved,
+        topical: id,
+        refer: enums.Refer.Company,
+        openid: data.openid
+      };
       const logo = await model.Media.findOne({ 'classification.sn': enums.ClassificationType.CompanyLogo, ...conditions });
       const licence = await model.Media.findOne({ 'classification.sn': enums.ClassificationType.CompanyLicence, ...conditions });
       const videos = await model.Media.find({ 'classification.sn': enums.ClassificationType.CompanyVideo, ...conditions });
@@ -46,7 +58,7 @@ class APIController extends Controller {
       classification,
       title, // 工商注册的全称
       summary, // 公司业务简介
-      adress, // 公司地址
+      address, // 公司地址
       phone, // 联系电话
       email, // 电子邮箱
       linkman // 负责人
@@ -60,7 +72,7 @@ class APIController extends Controller {
       classification,
       title, // 工商注册的全称
       summary, // 公司业务简介
-      adress, // 公司地址
+      address, // 公司地址
       phone, // 联系电话
       email, // 电子邮箱
       linkman // 负责人
@@ -100,7 +112,7 @@ class APIController extends Controller {
       classification,
       title, // 工商注册的全称
       summary, // 公司业务简介
-      adress, // 公司地址
+      address, // 公司地址
       phone, // 联系电话
       email, // 电子邮箱
       linkman // 负责人
@@ -111,7 +123,7 @@ class APIController extends Controller {
       classification,
       title, // 工商注册的全称
       summary, // 公司业务简介
-      adress, // 公司地址
+      address, // 公司地址
       phone, // 联系电话
       email, // 电子邮箱
       linkman // 负责人
@@ -168,7 +180,7 @@ class APIController extends Controller {
       classification: 'object',
       title: 'string', // 工商注册的全称
       summary: 'string', // 公司业务简介
-      adress: 'string', // 公司地址
+      address: 'string', // 公司地址
       phone: 'string', // 联系电话
       email: 'string', // 电子邮箱
       linkman: 'string' // 负责人
@@ -181,18 +193,20 @@ class APIController extends Controller {
       classification,
       title, // 工商注册的全称
       summary, // 公司业务简介
-      adress, // 公司地址
+      address, // 公司地址
       phone, // 联系电话
       email, // 电子邮箱
       linkman // 负责人
     } = request.body;
     let data = await model.Company.findOne({ openid });
     if(data){
+      const updateTime = Date.now();
       await model.Company.update({ openid }, {
+        updateTime,
         classification,
         title, // 工商注册的全称
         summary, // 公司业务简介
-        adress, // 公司地址
+        address, // 公司地址
         phone, // 联系电话
         email, // 电子邮箱
         linkman // 负责人
@@ -203,7 +217,7 @@ class APIController extends Controller {
         classification,
         title, // 工商注册的全称
         summary, // 公司业务简介
-        adress, // 公司地址
+        address, // 公司地址
         phone, // 联系电话
         email, // 电子邮箱
         linkman // 负责人

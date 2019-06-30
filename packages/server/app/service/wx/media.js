@@ -52,7 +52,8 @@ class WxService extends Service {
       ctx.validate(updateRule, o);
       o.summary = o.summary || o.classification.name || '';
       const { openid, topical, refer, type, url, summary, mediaid, classification } = o;
-      const data = { openid, topical, refer, type, url, summary, mediaid, classification };
+      const updateTime = Date.now();
+      const data = { openid, topical, refer, type, url, summary, mediaid, classification, updateTime };
       if(multiple){
         await model.Media.create(data);
       }else{

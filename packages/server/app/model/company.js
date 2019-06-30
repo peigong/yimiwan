@@ -12,10 +12,13 @@ module.exports = app => {
 
     title: { type: String, default: '' }, // 工商注册的全称
     summary: { type: String, default: '' }, // 公司业务简介
-    adress: { type: String, default: '' }, // 公司地址
+    address: { type: String, default: '' }, // 公司地址
     phone: { type: String, default: '' }, // 联系电话
     email: { type: String, default: '' }, // 电子邮箱
     linkman: { type: String, default: '' }, // 负责人
+    
+    createTime: { type: Date, default: Date.now() },
+    updateTime: { type: Date, default: Date.now() },
 
     classification: {
       sn: { type: String, default: '' },

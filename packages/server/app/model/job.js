@@ -31,6 +31,9 @@ module.exports = app => {
 
     jobcontent: { type: String, default: '' }, // 工作内容
     requirement : { type: String, default: '' }, // 工作要求
+    
+    createTime: { type: Date, default: Date.now() },
+    updateTime: { type: Date, default: Date.now() },
 
     classification: {
       sn: { type: String, default: '' },

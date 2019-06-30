@@ -14,7 +14,7 @@
     <wv-group title="联系方式">
       <wv-input label="地址" placeholder="请输入公司地址"
         :validate-mode="{onFocus: false}"
-        v-model="params.adress">
+        v-model="params.address">
       </wv-input>
       <wv-input label="电话" placeholder="请输入联系电话" required v-model="params.phone"></wv-input>
       <wv-input label="邮箱" placeholder="请输入电子邮箱"
@@ -62,7 +62,7 @@ export default {
       params: {
         title: '', // 工商注册的全称
         summary: '', // 公司业务简介
-        adress: '', // 公司地址
+        address: '', // 公司地址
         phone: '', // 联系电话
         email: '', // 电子邮箱
         linkman: '' // 负责人
@@ -109,7 +109,7 @@ export default {
 
       this.params.title = item.title || '' // 工商注册的全称
       this.params.summary = item.summary || '' // 公司业务简介
-      this.params.adress = item.adress || '' // 公司地址
+      this.params.address = item.address || '' // 公司地址
       this.params.phone = item.phone || '' // 联系电话
       this.params.email = item.email || '' // 电子邮箱
       this.params.linkman = item.linkman || '' // 负责人

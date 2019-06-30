@@ -53,8 +53,15 @@ export default {
         .then(data => {
           this.item = data
           this.companyId  = data._id || ''
-          this.logo = data.logo  || {}
-          this.licence = data.licence  || {}
+
+          const logo = data.logo  || {}
+          logo.url = getMediaUrl(logo)
+          this.logo = logo
+
+          const licence = data.licence  || {}
+          licence.url = getMediaUrl(licence)
+          this.licence = licence
+          
           const images = data.images || []
           this.companyImages = images.map(item => {
             item.url = getMediaUrl(item)

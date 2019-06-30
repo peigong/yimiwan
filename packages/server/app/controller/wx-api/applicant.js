@@ -80,7 +80,9 @@ class APIController extends Controller {
     } = request.body;
     const data = await model.Applicant.findOne({ openid });
     if(data){
+      const updateTime = Date.now();
       await model.Applicant.update({ openid }, {
+        updateTime,
         title, // 求职意向
         name,  // 姓名
         sex,
