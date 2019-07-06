@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import { MediaType, Status } from '@/x/enums'
 import { catchHandler, success } from '@/x/util/ui'
 import { createMessage } from '@/x/service/message'
 

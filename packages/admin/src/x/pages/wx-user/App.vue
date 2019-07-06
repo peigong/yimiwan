@@ -4,9 +4,10 @@
       <el-table :data="items" style="width: 100%">
         <el-table-column label="头像">
           <template slot-scope="scope">
-            <el-image :src="scope.row.headimgurl"></el-image>
+            <el-image :src="scope.row.headimgurl" class="head-img"></el-image>
           </template>
         </el-table-column>
+        <el-table-column prop="openid" label="ID"></el-table-column>
         <el-table-column label="微信">
           <template slot-scope="scope">
             <wx-user-info :item="scope.row"></wx-user-info>
@@ -59,4 +60,7 @@ export default {
 </script>
 
 <style>
+.head-img {
+  width: 30px;
+}
 </style>

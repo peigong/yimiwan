@@ -5,8 +5,10 @@
         <applicant-edit :item="applicant" @changed="applicantEditChangeHandler" />
       </wv-tab>
       <wv-tab title="我的照片">
+        <div v-if="!applicantId" class="alert alert-info">请先完善个人基本信息</div>
         <div v-if="!!applicantId">
-          <image-list :classifications="classifications" :items="applicantImages" />
+          <div v-if="!applicantImages.length" class="alert alert-info">暂无照片，或者系统暂未审核通过</div>
+          <image-list :classifications="classifications" :items="applicantImages" v-if="applicantImages.length" />
           <image-upload
             type="applicant-image"
             refer="applicant"

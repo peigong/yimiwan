@@ -14,7 +14,9 @@
       <wv-tab title="公司照片">
         <!--<wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />-->
         <!--<image-list type="company-image" item-type="company" :item-id="companyId" :items='companyImages' />-->
+        <div v-if="!companyId" class="alert alert-info">请先完善公司基本信息</div>
         <div v-if="!!companyId">
+          <div v-if="!companyImages.length" class="alert alert-info">暂无照片，或者系统暂未审核通过</div>
           <image-list :classifications="companyImageClassifications" :items="companyImages" />
           <image-upload
             type="company-image"
@@ -27,21 +29,26 @@
       </wv-tab>
       <wv-tab title="公司视频">
         <!--<wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />-->
+        <div v-if="!companyId" class="alert alert-info">请先完善公司基本信息</div>
         <div v-if="!!companyId">
+          <div v-if="!videos.length" class="alert alert-info">暂无视频信息</div>
           <tx-video-player v-for="item in videos" :item-id="item.mediaid" :key='mediaid' />
         </div>
       </wv-tab>
       <wv-tab title="我的岗位">
         <!--<wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />-->
+        <div v-if="!companyId" class="alert alert-info">请先完善公司基本信息</div>
         <div v-if="!!companyId">
           <wv-group title="岗位列表">
-            <wv-cell :title="item.title" is-link @click="showJobEdit(item)" v-for="(item, key) in jobList" :key="key" />
+            <wv-cell v-if="!jobList.length" title="暂无岗位信息，或者系统暂未审核通过" />
+            <wv-cell v-if="jobList.length" :title="item.title" is-link @click="showJobEdit(item)" v-for="(item, key) in jobList" :key="key" />
           </wv-group>
           <wv-button type="default" class="btn-handler" :mini="true" @click="showJobEdit()">添加岗位信息</wv-button>
         </div>
       </wv-tab>
       <wv-tab title="岗位照片">
         <!--<wv-cell title="选择公司" is-link :value="company.title" @click.native="ctrl.companyPicker = true" />-->
+        <div v-if="!companyId" class="alert alert-info">请先完善公司基本信息</div>
         <div v-if="!!companyId">
           <wv-cell title="选择岗位" is-link :value="job.title" @click.native="ctrl.jobPicker = true" />
           <div v-if="!!jobId">

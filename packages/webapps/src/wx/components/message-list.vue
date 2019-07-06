@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!items.length">暂无消息</div>
+    <div v-if="!items.length" class="alert alert-info">暂无消息</div>
     <div class="flow-list" v-if="items.length">
       <message-item v-for="(item, key) in items" :item="item" :key="key" />
     </div>

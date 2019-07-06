@@ -1,20 +1,14 @@
 <template>
   <div>
-    <div>
-      <span>{{ item.nickname }}</span>
-      <span class="x-userinfo-sep">|</span>
-      <span>{{ item.sex | formatSex }}</span>
-    </div>
-    <div>
-      <span>{{ item.province }}</span>
-      <span class="x-userinfo-sep">|</span>
-      <span>{{ item.city }}</span>
-      <span class="x-userinfo-sep">|</span>
-      <span>{{ item.type | formatType }}</span>
-    </div>
-    <div>
-      <span>ID：{{ item.openid }}</span>
-    </div>
+    <span>{{ item.nickname }}</span>
+    <span class="x-userinfo-sep">|</span>
+    <span>{{ item.sex | formatSex }}</span>
+    <span class="x-userinfo-sep">|</span>
+    <span>{{ item.province }}</span>
+    <span class="x-userinfo-sep">|</span>
+    <span>{{ item.city }}</span>
+    <span class="x-userinfo-sep">|</span>
+    <span>{{ item.type | formatType }}</span>
   </div>
 </template>
 
