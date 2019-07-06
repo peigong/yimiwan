@@ -12,4 +12,5 @@ module.exports = app => {
   router.resources('media', '/media', controller.xApi.media)
   router.resources('job', '/job', controller.xApi.job)
   router.resources('applicant', '/applicant', controller.xApi.applicant)
+  router.resources('messages', '/messages', controller.xApi.message)
 };

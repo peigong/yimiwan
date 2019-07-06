@@ -1,11 +1,5 @@
 import { api } from '@/x/util/axios'
-
-export const Status = {
-  'None': 0,
-  'Unaudited': 1,
-  'Approved': 2,
-  'Rejective': 3
-}
+import { Status } from '@/x/enums'
 
 export const getCompanyList = async function(params = {}){
   return await api.get('companies', params)

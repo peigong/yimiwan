@@ -51,9 +51,10 @@
 </template>
 
 <script>
+import { Status } from '@/x/enums'
 import { catchHandler, success } from '@/x/util/ui'
 import { getClassificationList } from '@/x/service/classification'
-import { Status, getCompanyList, approve, reject } from '@/x/service/company'
+import { getCompanyList, approve, reject } from '@/x/service/company'
 import xLayout from '@/x/components/x-layout'
 import txVideoEditor from '@/x/components/tx-video-editor'
 import companyDetails from '@/x/components/company-details'

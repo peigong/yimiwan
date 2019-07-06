@@ -1,17 +1,5 @@
 import { api } from '@/x/util/axios'
-
-export const Type = {
-  'None': 0,
-  'Image': 1,
-  'Video': 2,
-  'TxVideo': 3
-}
-export const Status = {
-  'None': 0,
-  'Unaudited': 1,
-  'Approved': 2,
-  'Rejective': 3
-}
+import { Status } from '@/x/enums'
 
 export const getMediaUrl = function(media = {}){
   let url = media.url || ''

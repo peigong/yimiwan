@@ -9,7 +9,7 @@
 
 <script>
 import { catchHandler, success, fail } from '@/wx/util/ui'
-import { MessageType } from '@/wx/enums'
+import { Status, MessageType } from '@/wx/enums'
 import { getMyInfo } from '@/wx/service/applicant'
 import { createMessage } from '@/wx/service/message'
 
@@ -44,6 +44,13 @@ export default {
     getParams(){
       const params = { ...this.params }
       params.type = this.type || MessageType.None
+      switch (+this.type) {
+        case MessageType.ToJobIntent:
+          params.status = Status.Approved
+          break;
+        default:
+          params.status = Status.Unaudited
+      }
       const { openid, title, topical } = this.item
       const { _id, name } = this.applicant
       params.title = `${ name }求职${ topical.company.title } - ${ title }`

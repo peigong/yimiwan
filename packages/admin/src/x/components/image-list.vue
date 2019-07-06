@@ -20,8 +20,9 @@
 </template>
 
 <script>
+import { Status } from '@/x/enums'
 import { catchHandler, success } from '@/x/util/ui'
-import { Status, approve, reject } from '@/x/service/media'
+import { approve, reject } from '@/x/service/media'
 
 export default {
   props: ['items'],

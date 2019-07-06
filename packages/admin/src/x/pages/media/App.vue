@@ -66,8 +66,9 @@
 </template>
 
 <script>
+import { Status } from '@/x/enums'
 import { catchHandler, success } from '@/x/util/ui'
-import { Status, getMediaUrl, getMediaList, approve, reject } from '@/x/service/media'
+import { getMediaUrl, getMediaList, approve, reject } from '@/x/service/media'
 import xLayout from '@/x/components/x-layout'
 import imageViewer from '@/x/components/image-viewer'
 import txVideoViewer from '@/x/components/tx-video-viewer'

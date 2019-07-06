@@ -42,9 +42,10 @@
 </template>
 
 <script>
+import { Status } from '@/x/enums'
 import { catchHandler, success } from '@/x/util/ui'
 import { getMediaUrl } from '@/x/service/media'
-import { Status, getJobDetails, approve, reject } from '@/x/service/job'
+import { getJobDetails, approve, reject } from '@/x/service/job'
 import imageList from '@/x/components/image-list'
 
 export default {

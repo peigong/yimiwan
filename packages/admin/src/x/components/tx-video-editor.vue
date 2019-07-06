@@ -18,8 +18,9 @@
 </template>
 
 <script>
+import { MediaType, Status } from '@/x/enums'
 import { catchHandler, success } from '@/x/util/ui'
-import { Type, Status, createMedia } from '@/x/service/media'
+import { createMedia } from '@/x/service/media'
 
 export default {
   props: ['type', 'item', 'bell'],
@@ -62,7 +63,7 @@ export default {
       this.options.unionid = unionid || ''
       this.options.topical = topical || ''
       this.options.refer = refer || ''
-      this.options.type = Type.TxVideo
+      this.options.type = MediaType.TxVideo
       this.options.status = Status.Approved
     },
     submit(){

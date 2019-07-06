@@ -11,7 +11,7 @@
 
 <script>
 import { catchHandler, success, fail } from '@/wx/util/ui'
-import { JobType, MessageType, Refer } from '@/wx/enums'
+import { Status, JobType, MessageType, Refer } from '@/wx/enums'
 import { getCompanyList } from '@/wx/service/company'
 import { getMyCompanyJob } from '@/wx/service/job'
 import { getMyCompany } from '@/wx/service/company'
@@ -85,6 +85,13 @@ export default {
       if(!params.type){
         fail('消息类型异常')
         return false
+      }
+      switch (+this.type) {
+        case MessageType.ToApplicantIntent:
+          params.status = Status.Approved
+          break;
+        default:
+          params.status = Status.Unaudited
       }
       params.title = `${ company.title } - ${ title } 信息`
       const { openid } = this.item

@@ -17,11 +17,9 @@ class APIController extends Controller {
     const { logger, cookies, model } = ctx;
     const openid = cookies.get('cid') || '';
     const conditions = {
-      /*
       active: true,
       del: false,
-      status: enums.Status.Approved
-      */
+      status: enums.Status.Approved,
       $or: [ { openid }, { to: openid } ],
       type: { $ne: enums.MessageType.ToMessage }
     };
@@ -34,14 +32,12 @@ class APIController extends Controller {
     const { id } = params;
     const openid = cookies.get('cid') || '';
     const conditions = {
+      active: true,
+      del: false,
+      status: enums.Status.Approved,
       type: enums.MessageType.ToMessage,
       topical: id,
       to: openid
-      /*
-      active: true,
-      del: false,
-      status: enums.Status.Approved
-      */
     };
     let data = await model.Message.find(conditions);
     ctx.body = data;
@@ -60,9 +56,11 @@ class APIController extends Controller {
       title,
       content
     } = request.body;
+    const status = request.body.status || enums.Status.Unaudited
     await model.Message.create({
       openid,
       type,
+      status,
       topical,
       refer,
       to,
