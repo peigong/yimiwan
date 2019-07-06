@@ -32,8 +32,9 @@
 
 <script>
 import { MessageType } from '@/wx/enums'
-import companyDetails from '@/wx/components/company-details'
 import jobDetails from '@/wx/components/job-details'
+import companyDetails from '@/wx/components/company-details'
+import applicantDetails from '@/wx/components/applicant-details'
 import messageReplyList from '@/wx/components/message-reply-list'
 import messageReply from '@/wx/components/message-reply'
 
@@ -41,8 +42,9 @@ export default {
   name: 'message-item',
   props: [ 'item' ],
   components: {
-    companyDetails,
     jobDetails,
+    companyDetails,
+    applicantDetails,
     messageReplyList,
     messageReply
   },
