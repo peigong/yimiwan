@@ -1,0 +1,16 @@
+{"_id":{"$oid":"5ce9232448f3124514ac7f8e"},"active":true,"sn":"industry-code","name":"行业分类","__v":0,"parent":{"sn":"top","name":"顶级分类"},"position":1000000,"remark":"招聘求职使用的行业分类"}
+{"_id":{"$oid":"5ce9289948f3124514ac7f8f"},"active":true,"sn":"hard-coded-enum","name":"硬编码枚举","__v":0,"parent":{"sn":"top","name":"顶级分类"},"position":1000000,"remark":"写死在系统中的枚举编码"}
+{"_id":{"$oid":"5cf1e90be342163bd4e4cf73"},"parent":{"sn":"top","name":"顶级分类"},"active":true,"position":1000000,"sn":"applicant-image","name":"应聘者图片","remark":"","__v":0}
+{"_id":{"$oid":"5cf1f9b6de96c3361441efa7"},"parent":{"sn":"hard-coded-enum","name":"硬编码枚举"},"active":true,"position":1000000,"sn":"company-logo","name":"公司LOGO","remark":"","__v":0}
+{"_id":{"$oid":"5cf1f9ecde96c3361441efa8"},"parent":{"sn":"hard-coded-enum","name":"硬编码枚举"},"active":true,"position":1000000,"sn":"company-licence","name":"公司营业执照","remark":"","__v":0}
+{"_id":{"$oid":"5cf22149ea721b4ac0861560"},"parent":{"sn":"industry-code","name":"行业分类"},"active":true,"position":1000000,"sn":"it","name":"IT行业","remark":"","__v":0}
+{"_id":{"$oid":"5cf2216bea721b4ac0861561"},"parent":{"sn":"industry-code","name":"行业分类"},"active":true,"position":10000,"sn":"edu","name":"教育行业","remark":"","__v":0}
+{"_id":{"$oid":"5cf398343af00f57d4979959"},"parent":{"sn":"top","name":"顶级分类"},"active":true,"position":1000000,"sn":"company-image","name":"公司图片","remark":"","__v":0}
+{"_id":{"$oid":"5cf3985a3af00f57d497995a"},"parent":{"sn":"company-image","name":"公司图片"},"active":true,"position":1000000,"sn":"company-environment","name":"公司环境照片","remark":"","__v":0}
+{"_id":{"$oid":"5cf398723af00f57d497995b"},"parent":{"sn":"company-image","name":"公司图片"},"active":true,"position":1000000,"sn":"company-honor","name":"公司荣誉照片","remark":"","__v":0}
+{"_id":{"$oid":"5cf3a3bb437da03b60dd589c"},"parent":{"sn":"hard-coded-enum","name":"硬编码枚举"},"active":true,"position":1000000,"sn":"company-video","name":"公司视频","remark":"","__v":0}
+{"_id":{"$oid":"5d04a6ca24c33f08b46faf86"},"parent":{"sn":"top","name":"顶级分类"},"active":true,"position":1000000,"sn":"job-image","name":"职位图片","remark":"","__v":0}
+{"_id":{"$oid":"5d04a87824c33f08b46faf87"},"parent":{"sn":"job-image","name":"职位图片"},"active":true,"position":1000000,"sn":"job-environment","name":"工作环境照片","remark":"","__v":0}
+{"_id":{"$oid":"5d060bf3392ebd1fa02d3bdf"},"parent":{"sn":"job-image","name":"职位图片"},"active":true,"position":1000000,"sn":"job-fun","name":"工作趣事照片","remark":"","__v":0}
+{"_id":{"$oid":"5d064dbe8696d41c54859a80"},"parent":{"sn":"applicant-image","name":"应聘者图片"},"active":true,"position":1000000,"sn":"applicant-study","name":"学习历程照片","remark":"","__v":0}
+{"_id":{"$oid":"5d064dd68696d41c54859a81"},"parent":{"sn":"applicant-image","name":"应聘者图片"},"active":true,"position":1000000,"sn":"applicant-life","name":"生活风采照片","remark":"","__v":0}
