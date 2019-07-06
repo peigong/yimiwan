@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="flow-list">
+    <div v-if="!items.length" class="alert alert-info">暂无岗位，或者系统暂未审核通过</div>
+    <div class="flow-list" v-if="items.length">
       <job-item v-for="(item, key) in items" :item="item" :key="key" @message="messageHandler" />
     </div>
     <wv-popup :visible.sync="ctrl.message">
