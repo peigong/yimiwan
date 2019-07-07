@@ -10,7 +10,6 @@ let ticket = '';
 let expired = 0;
 let timestamp = '';
 let nonceStr = '';
-let signature = '';
 
 class WxService extends Service {
   getTimestamp(){
@@ -128,22 +127,20 @@ class WxService extends Service {
     const { appId } = config.wx;
     token = await this.getAccessToken();
     ticket = await this.getJsApiTicket(token);
-    if(!signature){
-      const params = {
-        noncestr: nonceStr,
-        jsapi_ticket: ticket,
-        timestamp: timestamp,
-        url: url
-      };
-      const str1 = Object.keys(params).sort().map(key => [key, params[key]].join('=')).join('&');
-      const hashCode = crypto.createHash('sha1'); //创建加密类型
-      signature = hashCode.update(str1, 'utf8').digest('hex'); //对传入的字符串进行加密
-    }
+    const params = {
+      noncestr: nonceStr,
+      jsapi_ticket: ticket,
+      timestamp: timestamp,
+      url: url
+    };
+    const str1 = Object.keys(params).sort().map(key => [key, params[key]].join('=')).join('&');
+    const hashCode = crypto.createHash('sha1'); //创建加密类型
+    const signature = hashCode.update(str1, 'utf8').digest('hex'); //对传入的字符串进行加密
     return {
-      appId: appId, // 必填，公众号的唯一标识
-      timestamp: timestamp, // 必填，生成签名的时间戳
-      nonceStr: nonceStr, // 必填，生成签名的随机串
-      signature: signature // 必填，签名
+      appId, // 必填，公众号的唯一标识
+      timestamp, // 必填，生成签名的时间戳
+      nonceStr, // 必填，生成签名的随机串
+      signature // 必填，签名
     };
   }
 }
