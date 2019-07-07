@@ -65,9 +65,9 @@ export default {
         if(len > 2){
           item.width = '32%'
         }else if (len > 1) {
-          item.width = '49%'
+          item.width = '48%'
         }else{
-          item.width = '99%'
+          item.width = '96%'
         }
       })
     },
